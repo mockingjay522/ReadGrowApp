@@ -10,14 +10,33 @@
     <string name="signUp1_username_hint">Create a Username</string>
     <string name="signUp1_username_email">Enter your email Address</string>
     <string name="signUp1_password_hint">Create Password</string>
-    <string name ="signUp1_button_text">Next</string>
-    <string name ="signUp1_Account_text">Already have an account?</string>
-    <string name ="signUp1_signin_text"><u><b>Sign In.</b></u></string>
+    <string name="signUp1_button_text">Next</string>
+    <string name="signUp1_Account_text">Already have an account?</string>
+    <string name="signUp1_signin_text"><u><b>Sign In.</b></u></string>
     <string name="signUp1_name_hint">Enter Your Full Name</string>
     <string name="signUp2_country_hint">Select Country</string>
+    <string name="addBook">Add Book</string>
+    <string name="updateBook">Update Book</string>
+    <string name="bookName">Name of Book</string>
+    <string name="bookAuthor">Author</string>
+    <string name="publication">Publication</string>
+    <string name="yearPublication">Year</string>
+    <string name="share">Share</string>
+    <string name="giveaway">Give Away</string>
+    <string name="rent">Rent</string>
+    <string name="btnAdd">Add</string>
+    <string name="btnUpdate">Update</string>
+    <string name="giveAway">Give Away</string>
+    <string name="totalCost">$ Total Cost</string>
+    <string name="rentHint">$ Cost per week</string>
     <string-array name="signUp2_countries">
         <item>Canada</item>
         <item>United States</item>
+    </string-array>
+    <string-array name="status">
+        <item>Status</item>
+        <item>Available</item>
+        <item>Unavailable</item>
     </string-array>
     <string-array name="signUp2_province">
         <item>Ontario</item>
@@ -32,7 +51,7 @@
         <item>Newfoundland and Labrador</item>
     </string-array>
     <string name="signUp2_province_hint">Select Province</string>
-    <string name ="signUp2_postalCode_hint">Enter Postal Code</string>
+    <string name="signUp2_postalCode_hint">Enter Postal Code</string>
     <string name="signUp2_address_hint">Enter Full Address</string>
     <string name="SignUp2_button_text">Create Account</string>
     <string name="signUp2_age_hint">Enter Age</string>

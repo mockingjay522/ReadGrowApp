@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddBookPage">
+
+    <EditText
+        android:id="@+id/txtBookName"
+        android:layout_width="381dp"
+        android:layout_height="51dp"
+        android:padding="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="14dp"
+        android:background="@drawable/text_border"
+        android:ems="10"
+        android:hint="@string/bookName"
+        android:inputType="textPersonName"
+        android:textColorHint="#757575"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/txtAuthor"
+        android:layout_width="125dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="16dp"
+        android:padding="5dp"
+        android:background="@drawable/text_border"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/bookAuthor"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textColorHint="#757575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtBookName" />
+
+    <EditText
+        android:id="@+id/txtPublication"
+        android:layout_width="125dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="8dp"
+        android:padding="5dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:background="@drawable/text_border"
+        android:hint="@string/publication"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textColorHint="#757575"
+        app:layout_constraintStart_toEndOf="@+id/txtAuthor"
+        app:layout_constraintTop_toBottomOf="@+id/txtBookName" />
+
+    <EditText
+        android:id="@+id/txtDate"
+        android:layout_width="115dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="14dp"
+        android:padding="5dp"
+        android:ems="10"
+        android:background="@drawable/text_border"
+        android:hint="@string/yearPublication"
+        android:importantForAutofill="no"
+        android:inputType="date"
+        android:textColorHint="#757575"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtPublication"
+        app:layout_constraintTop_toBottomOf="@+id/txtBookName" />
+
+    <EditText
+        android:id="@+id/txtShareCost"
+        android:layout_width="150dp"
+        android:layout_height="51dp"
+        android:padding="5dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/text_border"
+        android:ems="10"
+        android:hint="@string/totalCost"
+        android:inputType="number"
+        android:textColorHint="#757575"
+        app:layout_constraintStart_toEndOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/txtPublication"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/txtRentCost"
+        android:layout_width="150dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="7dp"
+        android:padding="5dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/rentHint"
+        android:background="@drawable/text_border"
+        android:inputType="number"
+        android:textColorHint="#757575"
+        app:layout_constraintStart_toEndOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/txtShareCost"
+        android:importantForAutofill="no" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="126dp"
+        android:layout_height="193dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAuthor">
+
+        <RadioButton
+            android:id="@+id/rdShareBtn"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:background="@drawable/radio_selected"
+            android:button="@null"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="@string/share"
+            android:textColor="#D7CCC8"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/radio_selected"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/rent"
+            android:textColor="#D7CCC8" />
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/radio_selected"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/giveaway"
+            android:textColor="#D7CCC8" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="381dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="162dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginEnd="162dp"
+        android:background="@color/btnColor"
+        app:backgroundTint="@color/btnColor"
+        android:text="@string/btnAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRentCost" />
+</androidx.constraintlayout.widget.ConstraintLayout>

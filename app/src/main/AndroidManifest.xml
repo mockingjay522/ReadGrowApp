@@ -10,13 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReadGrow">
         <activity
-            android:name=".SignUpActivity2"
-            android:exported="false" />
+            android:name=".UpdateBook"
+            android:exported="false">
+        </activity>
         <activity
-            android:name=".SignUpActivity1"
-            android:exported="false" />
+            android:name=".AddBookPage"
+            android:exported="false">
+
+        </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".AddBook"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +27,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SignUpActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity1"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
