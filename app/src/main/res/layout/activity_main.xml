@@ -11,7 +11,7 @@
         android:layout_width="319dp"
         android:layout_height="73dp"
         android:layout_marginStart="46dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="46dp"
         android:contentDescription="@string/app_logo_description"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,28 +21,11 @@
         app:srcCompat="@drawable/logo" />
 
     <EditText
-        android:id="@+id/login_username"
-        android:layout_width="359dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/login_username_hint"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:textAlignment="center"
-        android:textColorHint="#757575"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_logo" />
-
-    <EditText
         android:id="@+id/login_password"
         android:layout_width="359dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="112dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/login_password_hint"
@@ -54,25 +37,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_logo" />
 
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="359dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="#3F51B5"
+        android:text="@string/login_button_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_showPassword" />
+
     <TextView
-        android:id="@+id/login_showPassword"
+        android:id="@+id/login_signUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="28dp"
-        android:text="@string/login_showPassword"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="104dp"
+        android:text="@string/login_signup_text"
         android:textColor="#1976D2"
         android:textIsSelectable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_password" />
 
     <TextView
-        android:id="@+id/login_signUp"
+        android:id="@+id/login_showPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="172dp"
-        android:layout_marginEnd="104dp"
-        android:text="@string/login_signup_text"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/login_showPassword"
         android:textColor="#1976D2"
         android:textIsSelectable="false"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +76,7 @@
         android:id="@+id/login_noAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="172dp"
+        android:layout_marginTop="176dp"
         android:layout_marginEnd="160dp"
         android:text="@string/login_noAccount_text"
         android:textColor="#464749"
@@ -90,15 +84,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_password" />
 
-    <Button
-        android:id="@+id/login_button"
+    <EditText
+        android:id="@+id/login_username"
         android:layout_width="359dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="#3F51B5"
-        android:text="@string/login_button_text"
+        android:layout_marginTop="36dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/login_username_hint"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_showPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/login_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

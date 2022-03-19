@@ -177,7 +177,8 @@
         android:spinnerMode="dropdown"
         app:layout_constraintCircleRadius="5dp"
         app:layout_constraintStart_toEndOf="@+id/txtShareCost"
-        app:layout_constraintTop_toBottomOf="@+id/txtDate" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDate"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <Spinner
         android:id="@+id/shareSpinner2"
@@ -191,4 +192,17 @@
         app:layout_constraintCircleRadius="5dp"
         app:layout_constraintStart_toEndOf="@+id/txtRentCost"
         app:layout_constraintTop_toBottomOf="@+id/shareSpinner" />
+
+    <Spinner
+        android:id="@+id/shareSpinner3"
+        android:layout_width="110dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="19dp"
+        android:background="@drawable/text_border"
+        android:entries="@array/status"
+        android:spinnerMode="dropdown"
+        app:layout_constraintCircleRadius="5dp"
+        app:layout_constraintStart_toEndOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/txtRentCost" />
 </androidx.constraintlayout.widget.ConstraintLayout>

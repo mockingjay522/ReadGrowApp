@@ -10,14 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReadGrow">
         <activity
+            android:name=".HomePage"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateBook0"
+            android:exported="false" />
+        <activity
+            android:name=".RequestBookActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindBookActivity"
+            android:exported="false" />
+        <activity
             android:name=".UpdateBook"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".AddBookPage"
-            android:exported="false">
-
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".AddBook"
             android:exported="true">

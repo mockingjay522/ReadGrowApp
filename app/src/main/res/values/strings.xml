@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ReadGrow</string>
     <string name="app_logo_description">Logo of the Application</string>
-    <string name="login_username_hint">Username/ Email</string>
+    <string name="login_username_hint">Email</string>
     <string name="login_password_hint">Password</string>
     <string name="login_showPassword"><u>Show Password</u></string>
     <string name="login_button_text">Log In</string>
@@ -60,4 +60,22 @@
         <item>Fiction</item>
         <item>Non-Fiction</item>
     </string-array>
+    <string name="findBook_label">Showing books near <u>(location)</u></string>
+    <string name="requestBook_bookname_label">Book Name</string>
+    <string name="requestBook_authorname_label">Author Name</string>
+    <string name="requestBook_publication_label">Publication</string>
+    <string name="requestBook_year_label">Year</string>
+    <string name="requestBook_bookOwnerName_label">Book Owner Name</string>
+    <string name="requestBook_email_label">Email</string>
+    <string name="requestBook_location_label">Pickup Location</string>
+    <string name="requestBook_cost_display">The total cost is <u>$(cost)</u></string>
+    <string name="requestBook_message">Type message</string>
+    <string name="requestBook_send_button">Send</string>
+    <string name="textview">TextView</string>
+    <string name="updateBook0_title">MY BOOKS</string>
+    <string name="homepage_addUpdateBook">Add/Update a Book</string>
+    <string name="homepage_findBook">Find a book</string>
+    <string name="homepage_readingTracker">Reading Tracker</string>
+    <string name="homepage_text">Hi User,</string>
+    <string name="homepage_text2">What would you like to do today?</string>
 </resources>
