@@ -36,19 +36,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:layout_marginTop="89dp"
+        android:layout_marginTop="20dp"
         android:text="@string/signUp1_signin_text"
         android:textColor="#1976D2"
         android:textIsSelectable="false"
         app:layout_constraintStart_toEndOf="@+id/signUp1_account"
-        app:layout_constraintTop_toBottomOf="@+id/login_showPassword4" />
+        app:layout_constraintTop_toBottomOf="@+id/signUp1_button" />
 
     <EditText
         android:id="@+id/signUp1_password"
         android:layout_width="359dp"
         android:layout_height="0dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="148dp"
+        android:layout_marginEnd="20dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/signUp1_password_hint"
@@ -57,6 +58,7 @@
         android:textAlignment="center"
         android:textColorHint="#757575"
         android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SignUp_1_Logo" />
 
@@ -64,8 +66,9 @@
         android:id="@+id/signUp1_username"
         android:layout_width="359dp"
         android:layout_height="0dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="84dp"
+        android:layout_marginEnd="20dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/signUp1_username_hint"
@@ -74,6 +77,7 @@
         android:textAlignment="center"
         android:textColorHint="#757575"
         android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SignUp_1_Logo" />
 
@@ -81,7 +85,7 @@
         android:id="@+id/login_showPassword4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="52dp"
         android:text="@string/login_showPassword"
         android:textColor="#1976D2"
@@ -93,8 +97,9 @@
         android:id="@+id/signUp1_email"
         android:layout_width="359dp"
         android:layout_height="0dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="220dp"
+        android:layout_marginEnd="20dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/signUp1_username_email"
@@ -103,6 +108,7 @@
         android:textAlignment="center"
         android:textColorHint="#757575"
         android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SignUp_1_Logo" />
 
@@ -110,8 +116,9 @@
         android:id="@+id/signUp1_name"
         android:layout_width="359dp"
         android:layout_height="0dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/signUp1_name_hint"
@@ -120,6 +127,7 @@
         android:textAlignment="center"
         android:textColorHint="#757575"
         android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SignUp_1_Logo" />
 
@@ -127,7 +135,7 @@
         android:id="@+id/signUp1_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
+        android:layout_marginStart="110dp"
         android:layout_marginTop="20dp"
         android:text="@string/signUp1_Account_text"
         android:textColor="#464749"

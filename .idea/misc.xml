@@ -12,11 +12,16 @@
         <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/drawable/radio_selected.xml" value="0.1" />
         <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/drawable/radion_buttom_addbook_page.xml" value="0.3275" />
         <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/drawable/rounded_button.xml" value="0.173" />
+        <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/drawable/text_area_border.xml" value="0.1775" />
         <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/drawable/text_border.xml" value="0.1" />
         <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_add_book.xml" value="0.22" />
         <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_add_book_page.xml" value="0.33" />
+        <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_find_book.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_home_page.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_request_book.xml" value="0.25" />
         <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_sign_up1.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_sign_up2.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_sign_up2.xml" value="0.33" />
         <entry key="..\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_update_book.xml" value="0.25" />
       </map>
     </option>
