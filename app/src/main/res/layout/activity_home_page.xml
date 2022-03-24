@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomePage">
+
+    <Button
+        android:id="@+id/home_addBook"
+        android:layout_width="179dp"
+        android:layout_height="163dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="116dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/homepage_addUpdateBook"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/btnColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/home_findBook"
+        android:layout_width="179dp"
+        android:layout_height="163dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="348dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/homepage_findBook"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/btnColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/home_readingTracker"
+        android:layout_width="179dp"
+        android:layout_height="163dp"
+        android:layout_marginTop="348dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/homepage_readingTracker"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/btnColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/home_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="175dp"
+        android:layout_marginTop="86dp"
+        android:text="@string/homepage_text"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/home_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="124dp"
+        android:text="@string/homepage_text2"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
