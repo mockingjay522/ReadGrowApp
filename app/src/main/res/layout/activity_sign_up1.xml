@@ -24,10 +24,12 @@
         android:id="@+id/signUp1_button"
         android:layout_width="359dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="76dp"
+        android:layout_marginEnd="20dp"
         android:backgroundTint="#3F51B5"
         android:text="@string/signUp1_button_text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUp1_email" />
 
@@ -48,9 +50,10 @@
         android:layout_width="359dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="20dp"
         android:autofillHints=""
+        android:background="@drawable/text_border"
         android:ems="10"
         android:hint="@string/signUp1_password_hint"
         android:inputType="textPassword"
@@ -60,16 +63,17 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SignUp_1_Logo" />
+        app:layout_constraintTop_toBottomOf="@+id/signUp1_username" />
 
     <EditText
         android:id="@+id/signUp1_username"
         android:layout_width="359dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="20dp"
         android:autofillHints=""
+        android:background="@drawable/text_border"
         android:ems="10"
         android:hint="@string/signUp1_username_hint"
         android:inputType="textPersonName"
@@ -79,14 +83,14 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SignUp_1_Logo" />
+        app:layout_constraintTop_toBottomOf="@+id/signUp1_name" />
 
     <TextView
         android:id="@+id/login_showPassword4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="26dp"
         android:text="@string/login_showPassword"
         android:textColor="#1976D2"
         android:textIsSelectable="false"
@@ -98,9 +102,10 @@
         android:layout_width="359dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="20dp"
         android:autofillHints=""
+        android:background="@drawable/text_border"
         android:ems="10"
         android:hint="@string/signUp1_username_email"
         android:inputType="textEmailAddress"
@@ -110,16 +115,17 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SignUp_1_Logo" />
+        app:layout_constraintTop_toBottomOf="@+id/signUp1_password" />
 
     <EditText
         android:id="@+id/signUp1_name"
         android:layout_width="359dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:autofillHints=""
+        android:background="@drawable/text_border"
         android:ems="10"
         android:hint="@string/signUp1_name_hint"
         android:inputType="textPersonName"

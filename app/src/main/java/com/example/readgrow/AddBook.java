@@ -21,14 +21,14 @@ public class AddBook extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AddBook.this, SignUpActivity1.class));
+                startActivity(new Intent(AddBook.this, AddBookPage.class));
             }
         });
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(AddBook.this, UpdateBook0.class));
             }
         });
     }
