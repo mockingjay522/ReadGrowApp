@@ -1,6 +1,5 @@
 package com.example.readgrow;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -29,7 +28,7 @@ public class SignUpActivity1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up1);
-        /**Arraylist to store Object BookUser*/
+        /**Arraylist to store Object com.example.readgrow.BookUser*/
         ArrayList <BookUser> listBookUser = new ArrayList<>();
 
        bookDataBaseHelper = new BookDatabaseHelper(this);

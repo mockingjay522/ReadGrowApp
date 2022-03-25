@@ -2,6 +2,7 @@ package com.example.readgrow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -85,6 +86,7 @@ public class SignUpActivity2 extends AppCompatActivity {
                     if(ID > 0 && interestID>0){
                         Toast.makeText(SignUpActivity2.this, Html.fromHtml("<big>data is inserted successfully</big>"),
                                 Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SignUpActivity2.this, MainActivity.class));
                     }else{
                         Toast.makeText(SignUpActivity2.this, "Create account not successful", Toast.LENGTH_SHORT).show();
                     }

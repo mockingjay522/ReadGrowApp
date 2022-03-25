@@ -1,6 +1,5 @@
 package com.example.readgrow;
 
-
 public class BookUser {
     private String fName;
     private String email;
@@ -16,7 +15,6 @@ public class BookUser {
         this.password = password;
         this.age = age;
         this.address = address;
-
     }
 
     public String getAddress() {

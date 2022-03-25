@@ -49,7 +49,7 @@ public class AddBookPage extends AppCompatActivity {
                 String _publication = publication.getText().toString();
                 String _year = year.getText().toString();
                 double tCost = Double.parseDouble(totalCost.getText().toString());
-                double weekCost = Double.parseDouble(costPerWeek.getText().toString());;
+                double weekCost = Double.parseDouble(costPerWeek.getText().toString());
 
                 /*getting Radio Selected Id*/
                 int selectedId = options.getCheckedRadioButtonId();

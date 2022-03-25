@@ -137,7 +137,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
      * @param publishDate
      * @param book_status
      */
-    public int AddBook(int readerId,String title,String publisher,String publishDate, int book_status ){
+    public int AddBook(int readerId,String title,String publisher,String publishDate, int book_status){
         ContentValues bookTableValues = new ContentValues();
         bookTableValues.put("reader_id",readerId);
         bookTableValues.put("title",title);
@@ -185,7 +185,6 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         Log.i("addRecordGiveBook", String.valueOf(recordId));
 
         return (int)recordId;
-
     }
 
     /***
@@ -194,7 +193,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
      * @param readerId
      * @param date
      */
-    public int AddShareBook(int bookId, int readerId,String date ){
+    public int AddShareBook(int bookId, int readerId,String date){
         ContentValues shareBookTableValues = new ContentValues();
         shareBookTableValues.put("book_id",bookId);
         shareBookTableValues.put("reader_id",readerId);
@@ -204,7 +203,6 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         Log.i("addRecordShareBook", String.valueOf(recordId));
 
         return (int)recordId;
-
     }
 
     /***
@@ -230,7 +228,6 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         Log.i("addRecordRentBook", String.valueOf(recordId));
 
         return (int)recordId;
-
     }
 
     /***
