@@ -55,14 +55,14 @@ public class SignUpActivity1 extends AppCompatActivity {
                 /**if statement for check the account exiting or not*/
                 if(cursor.getCount()>0){
                     while (cursor.moveToNext()){
-
+//                        str.append(" name " + cursor.getString(0)); //userID
 //                        str.append(" name " + cursor.getString(1)); //name
 //                        str.append(" age " + cursor.getString(2)); //age
 //                        str.append(" address " + cursor.getString(3)); //address
 //                        str.append(" email " + cursor.getString(4)); //email
 //                        str.append(" password " + cursor.getString(5)); //password
                         /**store the data into ListArray */
-                        listBookUser.add(new BookUser(cursor.getString(1), cursor.getString(4), cursor.getString(5),
+                        listBookUser.add(new BookUser(cursor.getString(0), cursor.getString(1), cursor.getString(4), cursor.getString(5),
                                 Integer.parseInt(cursor.getString(2)), cursor.getString(3)));
                     }
                     showTest.setText(str);

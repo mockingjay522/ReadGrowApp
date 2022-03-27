@@ -6,10 +6,12 @@ public class BookUser {
     private String password;
     private int age;
     private String address;
+    private String userID;
 
 
 
-    public BookUser(String fName, String email, String password, int age, String address) {
+    public BookUser(String userID, String fName, String email, String password, int age, String address) {
+        this.userID = userID;
         this.fName = fName;
         this.email = email;
         this.password = password;
@@ -57,4 +59,11 @@ public class BookUser {
         this.fName = fName;
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 }

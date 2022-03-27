@@ -3,8 +3,10 @@ package com.example.readgrow;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     String email;
     String passWord;
     BookDatabaseHelper bookDatabaseHelper;
+    SharedPreferences shareFromLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +35,14 @@ public class MainActivity extends AppCompatActivity {
         EditText txtPassword = findViewById(R.id.login_password);
         Button btnLogin = findViewById(R.id.login_button);
 
+        shareFromLogin = PreferenceManager.getDefaultSharedPreferences(this);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                /**SharedPreference to save UserID for Add book activity*/
+
                 if(TextUtils.isEmpty(txtEmail.getText().toString()) || TextUtils.isEmpty(txtPassword.getText().toString())) {
                     if (TextUtils.isEmpty(txtEmail.getText().toString())) {
                         txtEmail.setError("Your Email is missing");
@@ -51,15 +59,15 @@ public class MainActivity extends AppCompatActivity {
                     /**if statement for check the account exiting or not*/
                     if (cursor.getCount() > 0) {
                         while (cursor.moveToNext()) {
-
+//                        str.append(" userID " + cursor.getString(0)); //userID
 //                        str.append(" name " + cursor.getString(1)); //name
 //                        str.append(" age " + cursor.getString(2)); //age
 //                        str.append(" address " + cursor.getString(3)); //address
 //                        str.append(" email " + cursor.getString(4)); //email
 //                        str.append(" password " + cursor.getString(5)); //password
                             /**store the data into ListArray */
-                            listBookUser.add(new BookUser(cursor.getString(1), cursor.getString(4), cursor.getString(5),
-                                    Integer.parseInt(cursor.getString(2)), cursor.getString(3)));
+                            listBookUser.add(new BookUser(cursor.getString(0),cursor.getString(1), cursor.getString(4),
+                                    cursor.getString(5), Integer.parseInt(cursor.getString(2)), cursor.getString(3)));
                         }
 
                     }
@@ -77,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
                                 exitingEmail = 1;
                                 if(listBookUser.get(i).getPassword().equals(passWord)){
                                     exitingPassword = 1;
+
+                                    /**Create SharePreference to get userIN for Add book activity*/
+
+                                    SharedPreferences.Editor editID = shareFromLogin.edit();
+                                    editID.putString("userID", listBookUser.get(i).getUserID());
+                                    editID.apply();
                                 }
                             }
                         }
@@ -87,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(new Intent(MainActivity.this, HomePage.class));
                         } else {
 
-                            Toast.makeText(MainActivity.this, "Wrong Email or Password! Please enter agian", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Wrong Email or Password! Please enter agian",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
