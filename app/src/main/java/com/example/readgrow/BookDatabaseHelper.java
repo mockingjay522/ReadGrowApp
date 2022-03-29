@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 public class BookDatabaseHelper extends SQLiteOpenHelper {
     SQLiteDatabase shareBookDB;
     public BookDatabaseHelper( Context context) {
-        super(context, "shareBook.db", null, 1);
+        super(context, "shareBook.db", null, 2);
         this.shareBookDB = this.getWritableDatabase();
     }
 
@@ -36,6 +36,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE book (book_id integer primary key," +
                 "reader_id integer," +
                 "title Text," +
+                "author Text," +
                 "publisher Text," +
                 " publish_date Text," +
                 "book_status integer," +
@@ -59,20 +60,20 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
 //                " FOREIGN KEY(admin_id) REFERENCES admin(admin_id));");
 //
 //
-//        this.shareBookDB.execSQL("CREATE TABLE share_book (share_id integer primary key," +
+//        db.execSQL("CREATE TABLE share_book (share_id integer primary key," +
 //                "book_id integer," +
 //                "reader_id integer, " +
 //                "date Text," +
 //                "FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
 //
-//        this.shareBookDB.execSQL("CREATE TABLE give_book (give_id integer primary key," +
+//        db.execSQL("CREATE TABLE give_book (give_id integer primary key," +
 //                "book_id integer," +
 //                "reader_id integer, " +
 //                "date Text," +
 //                "FOREIGN KEY(book_id) REFERENCES book(book_id)," +
 //                "FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
 //
-//        this.shareBookDB.execSQL("CREATE TABLE rent_book (rent_id integer primary key," +
+//        db.execSQL("CREATE TABLE rent_book (rent_id integer primary key," +
 //                "book_id integer," +
 //                "reader_id integer," +
 //                "price real," +
@@ -88,7 +89,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 //        this.shareBookDB.execSQL("DROP TABLE IF EXISTS admin");
         this.shareBookDB.execSQL("DROP TABLE IF EXISTS book_reader");
-//        this.shareBookDB.execSQL("DROP TABLE IF EXISTS book");
+        this.shareBookDB.execSQL("DROP TABLE IF EXISTS book");
         this.shareBookDB.execSQL("DROP TABLE IF EXISTS book_reader_interest");
 //        this.shareBookDB.execSQL("DROP TABLE IF EXISTS share_book");
 //        this.shareBookDB.execSQL("DROP TABLE IF EXISTS give_book");
@@ -137,10 +138,11 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
      * @param publishDate
      * @param book_status
      */
-    public int AddBook(int readerId,String title,String publisher,String publishDate, int book_status){
+    public int AddBook(int readerId,String title,String author, String publisher,String publishDate, int book_status){
         ContentValues bookTableValues = new ContentValues();
         bookTableValues.put("reader_id",readerId);
         bookTableValues.put("title",title);
+        bookTableValues.put("author",author);
         bookTableValues.put("publisher",publisher);
         bookTableValues.put("publish_date",publishDate);
         bookTableValues.put("book_status",book_status);

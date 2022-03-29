@@ -1,20 +1,21 @@
+package com.example.readgrow;
 public class BookInfo {
     private String bookName;
     private String author ;
     private String publication;
     private String year;
-    private double costPerWeek;
+    private int status;
     private String option;
 
     public BookInfo() {
     }
 
-    public BookInfo(String bookName, String author, String publication, String year, double costPerWeek, String option) {
+    public BookInfo(String bookName, String author, String publication, String year, double costPerWeek, int status, String option) {
         this.bookName = bookName;
         this.author = author;
         this.publication = publication;
         this.year = year;
-        this.costPerWeek = costPerWeek;
+        this.status = status;
         this.option = option;
     }
 
@@ -50,13 +51,13 @@ public class BookInfo {
         this.year = year;
     }
 
-    public double getCostPerWeek() {
-        return costPerWeek;
-    }
-
-    public void setCostPerWeek(double costPerWeek) {
-        this.costPerWeek = costPerWeek;
-    }
+//    public double getCostPerWeek() {
+//        return costPerWeek;
+//    }
+//
+//    public void setCostPerWeek(double costPerWeek) {
+//        this.costPerWeek = costPerWeek;
+//    }
 
     public String getOption() {
         return option;
@@ -64,5 +65,13 @@ public class BookInfo {
 
     public void setOption(String option) {
         this.option = option;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

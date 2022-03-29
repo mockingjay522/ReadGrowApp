@@ -128,7 +128,7 @@
             tools:ignore="DuplicateSpeakableTextCheck" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/rdRent"
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="51dp"
@@ -140,7 +140,7 @@
             android:textColor="#D7CCC8" />
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/rdGiveAway"
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="51dp"
