@@ -377,11 +377,12 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         return numberOfRecords;
     }
 
-    public int UpdateBook(int book_id,int readerId,String title,String publisher,String publishDate, int book_status){
+    public int UpdateBook(int book_id,int readerId,String title,String author,String publisher,String publishDate, int book_status){
         ContentValues bookTableValues = new ContentValues();
 
         bookTableValues.put("reader_id",readerId);
         bookTableValues.put("title",title);
+        bookTableValues.put("author",author);
         bookTableValues.put("publisher",publisher);
         bookTableValues.put("publish_date",publishDate);
         bookTableValues.put("book_status",book_status);

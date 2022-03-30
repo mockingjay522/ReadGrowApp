@@ -5,18 +5,18 @@ public class BookInfo {
     private String publication;
     private String year;
     private int status;
-    private String option;
+    //private String option;
 
     public BookInfo() {
     }
 
-    public BookInfo(String bookName, String author, String publication, String year, double costPerWeek, int status, String option) {
+    public BookInfo(String bookName, String author, String publication, String year, int status) {
         this.bookName = bookName;
         this.author = author;
         this.publication = publication;
         this.year = year;
         this.status = status;
-        this.option = option;
+        //this.option = option;
     }
 
     public String getBookName() {
@@ -59,13 +59,13 @@ public class BookInfo {
 //        this.costPerWeek = costPerWeek;
 //    }
 
-    public String getOption() {
-        return option;
-    }
-
-    public void setOption(String option) {
-        this.option = option;
-    }
+//    public String getOption() {
+//        return option;
+//    }
+//
+//    public void setOption(String option) {
+//        this.option = option;
+//    }
 
     public int getStatus() {
         return status;

@@ -3,7 +3,6 @@ package com.example.readgrow;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -40,20 +39,20 @@ public class AddBookPage extends AppCompatActivity {
         setContentView(R.layout.activity_add_book_page);
 
         bookDatabaseHelper = new BookDatabaseHelper(this);
-        btnAddBook = findViewById(R.id.btnAdd);
+        btnAddBook = findViewById(R.id.btn_Update_Book);
 
-        bName = findViewById(R.id.txtBookName);
-        author = findViewById(R.id.txtAuthor);
-        publication = findViewById(R.id.txtPublication);
-        year = findViewById(R.id.txtDate);
+        bName = findViewById(R.id.txtUpdate_Title);
+        author = findViewById(R.id.txtUpdate_Author);
+        publication = findViewById(R.id.txtUpdate_Publication);
+        year = findViewById(R.id.txtUpdate_Year);
         totalCost = findViewById(R.id.txtTotalCost);
         costPerWeek = findViewById(R.id.txtWeekCost);
         options = findViewById(R.id.optionsGroup);
 
         /*getting Radio Selected Id*/
-        RadioButton btnShareBook = findViewById(R.id.rdShareBtn);
-        RadioButton btnRentBook = findViewById(R.id.rdRent);
-        RadioButton btnGiveAway = findViewById(R.id.rdGiveAway);
+        RadioButton btnShareBook = findViewById(R.id.rdUpdate_ShareBtn);
+        RadioButton btnRentBook = findViewById(R.id.rdUpdate_Rent);
+        RadioButton btnGiveAway = findViewById(R.id.rdUpdate_GiveAway);
 
         TextView testID = findViewById(R.id.txtTestID);
 
@@ -86,7 +85,6 @@ public class AddBookPage extends AppCompatActivity {
                     String _publication = publication.getText().toString();
                     String _year = year.getText().toString();
 
-
                     SharedPreferences.Editor editBookID = preferencesFromAddBook.edit();
 
                     /**Set status for the book*/
@@ -114,7 +112,6 @@ public class AddBookPage extends AppCompatActivity {
                                 rentCost = Double.parseDouble(totalCost.getText().toString());
                                 editBookID.putString("rentCost",Double.toString(rentCost));
                                 editBookID.apply();
-
                             }
                         }
                         if(btnGiveAway.isChecked()){
@@ -126,8 +123,6 @@ public class AddBookPage extends AppCompatActivity {
                     }else{
                         Toast.makeText(AddBookPage.this, "Please select a status", Toast.LENGTH_SHORT).show();
                     }
-
-
                 }
             }
         });
