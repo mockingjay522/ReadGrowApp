@@ -21,6 +21,7 @@
             android:name=".RequestBookActivity"
             android:exported="false" />
         <activity
+
             android:name=".FindBookActivity"
             android:exported="false" />
         <activity

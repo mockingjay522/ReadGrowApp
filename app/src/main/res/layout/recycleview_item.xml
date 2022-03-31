@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:layout_marginStart="30dp"
+        android:textColor="@color/black"
+        android:id="@+id/recycleview_title">
+
+    </TextView>
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:background="#1976D2"
+        android:textColor="@color/white"
+        android:id="@+id/recycleview_stutus">
+
+    </TextView>
+
+
+
+</LinearLayout>
