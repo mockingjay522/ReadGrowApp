@@ -181,27 +181,34 @@
 
     <EditText
         android:id="@+id/requestBook_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="257dp"
+        android:layout_height="145dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="28dp"
+        android:autofillHints=""
+        android:background="@drawable/text_area_border"
         android:ems="10"
+        android:minLines="3"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical"
+        android:gravity="center"
         android:hint="@string/requestBook_message"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:textColorHint="#757575"
+        android:textColorHint="#5A6168"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requestBook_totalCost"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/requestBook_totalCost" />
 
     <Button
         android:id="@+id/requestBook_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/btnColor"
         android:text="@string/requestBook_send_button"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requestBook_message" />
+        app:layout_constraintTop_toBottomOf="@+id/requestBook_message"
+        tools:ignore="TouchTargetSizeCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

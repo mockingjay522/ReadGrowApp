@@ -11,7 +11,9 @@
         android:theme="@style/Theme.ReadGrow">
         <activity
             android:name=".HomePage"
-            android:exported="false" />
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".UpdateBook0"
             android:exported="false" />
@@ -19,6 +21,7 @@
             android:name=".RequestBookActivity"
             android:exported="false" />
         <activity
+
             android:name=".FindBookActivity"
             android:exported="false" />
         <activity
@@ -28,22 +31,24 @@
             android:name=".AddBookPage"
             android:exported="false" />
         <activity
-            android:name=".AddBook"
+
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".SignUpActivity2"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity1"
+            android:name=".AddBook"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SignUpActivity1"
             android:exported="false" />
     </application>
 

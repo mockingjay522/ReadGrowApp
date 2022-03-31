@@ -7,7 +7,7 @@
     tools:context=".AddBookPage">
 
     <EditText
-        android:id="@+id/txtBookName"
+        android:id="@+id/txtUpdate_Title"
         android:layout_width="381dp"
         android:layout_height="51dp"
         android:padding="5dp"
@@ -25,7 +25,7 @@
         android:importantForAutofill="no" />
 
     <EditText
-        android:id="@+id/txtAuthor"
+        android:id="@+id/txtUpdate_Author"
         android:layout_width="125dp"
         android:layout_height="51dp"
         android:layout_marginStart="16dp"
@@ -38,10 +38,10 @@
         android:inputType="textPersonName"
         android:textColorHint="#757575"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtBookName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUpdate_Title" />
 
     <EditText
-        android:id="@+id/txtPublication"
+        android:id="@+id/txtUpdate_Publication"
         android:layout_width="125dp"
         android:layout_height="51dp"
         android:layout_marginStart="8dp"
@@ -53,11 +53,11 @@
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:textColorHint="#757575"
-        app:layout_constraintStart_toEndOf="@+id/txtAuthor"
-        app:layout_constraintTop_toBottomOf="@+id/txtBookName" />
+        app:layout_constraintStart_toEndOf="@+id/txtUpdate_Author"
+        app:layout_constraintTop_toBottomOf="@+id/txtUpdate_Title" />
 
     <EditText
-        android:id="@+id/txtDate"
+        android:id="@+id/txtUpdate_Year"
         android:layout_width="115dp"
         android:layout_height="51dp"
         android:layout_marginStart="8dp"
@@ -71,11 +71,11 @@
         android:inputType="date"
         android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txtPublication"
-        app:layout_constraintTop_toBottomOf="@+id/txtBookName" />
+        app:layout_constraintStart_toEndOf="@+id/txtUpdate_Publication"
+        app:layout_constraintTop_toBottomOf="@+id/txtUpdate_Title" />
 
     <EditText
-        android:id="@+id/txtShareCost"
+        android:id="@+id/txtTotalCost"
         android:layout_width="150dp"
         android:layout_height="51dp"
         android:padding="5dp"
@@ -86,12 +86,12 @@
         android:hint="@string/totalCost"
         android:inputType="number"
         android:textColorHint="#757575"
-        app:layout_constraintStart_toEndOf="@+id/radioGroup"
-        app:layout_constraintTop_toBottomOf="@+id/txtPublication"
+        app:layout_constraintStart_toEndOf="@+id/optionsGroup"
+        app:layout_constraintTop_toBottomOf="@+id/txtUpdate_Publication"
         android:importantForAutofill="no" />
 
     <EditText
-        android:id="@+id/txtRentCost"
+        android:id="@+id/txtWeekCost"
         android:layout_width="150dp"
         android:layout_height="51dp"
         android:layout_marginStart="7dp"
@@ -102,21 +102,21 @@
         android:background="@drawable/text_border"
         android:inputType="number"
         android:textColorHint="#757575"
-        app:layout_constraintStart_toEndOf="@+id/radioGroup"
-        app:layout_constraintTop_toBottomOf="@+id/txtShareCost"
+        app:layout_constraintStart_toEndOf="@+id/optionsGroup"
+        app:layout_constraintTop_toBottomOf="@+id/txtTotalCost"
         android:importantForAutofill="no" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/optionsGroup"
         android:layout_width="126dp"
         android:layout_height="193dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtAuthor">
+        app:layout_constraintTop_toBottomOf="@+id/txtUpdate_Author">
 
         <RadioButton
-            android:id="@+id/rdShareBtn"
+            android:id="@+id/rdUpdate_ShareBtn"
             android:layout_width="match_parent"
             android:layout_height="51dp"
             android:background="@drawable/radio_selected"
@@ -128,7 +128,7 @@
             tools:ignore="DuplicateSpeakableTextCheck" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/rdUpdate_Rent"
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="51dp"
@@ -140,7 +140,7 @@
             android:textColor="#D7CCC8" />
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/rdUpdate_GiveAway"
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="51dp"
@@ -153,7 +153,7 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/btnAdd"
+        android:id="@+id/btn_Update_Book"
         android:layout_width="381dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="162dp"
@@ -164,5 +164,16 @@
         android:text="@string/btnAdd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRentCost" />
+        app:layout_constraintTop_toBottomOf="@+id/txtWeekCost" />
+
+    <TextView
+        android:id="@+id/txtTestID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="81dp"
+        android:layout_marginBottom="132dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_Update_Book" />
 </androidx.constraintlayout.widget.ConstraintLayout>
