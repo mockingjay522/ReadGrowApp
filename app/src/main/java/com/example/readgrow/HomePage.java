@@ -39,7 +39,7 @@ public class HomePage extends AppCompatActivity {
         readingTracker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(HomePage.this, ReadingActivity.class));
+                startActivity(new Intent(HomePage.this, ReadingTracker.class));
             }
         });
     }

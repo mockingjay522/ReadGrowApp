@@ -19,8 +19,8 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-//       this.shareBookDB.execSQL("CREATE TABLE admin (admin_id integer primary key," +
-//                "name Text);");
+       this.shareBookDB.execSQL("CREATE TABLE admin (admin_id integer primary key," +
+                "name Text);");
 
         db.execSQL("CREATE TABLE book_reader (reader_id integer primary key," +
                 " name Text," +
@@ -42,60 +42,61 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
                 "book_status integer," +
                 " FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
 
-//        this.shareBookDB.execSQL("CREATE TABLE reader_message (message_id integer primary key," +
-//                "sender_id integer," +
-//                "receiver_id integer," +
-//                "message_title text," +
-//                "message_content text," +
-//                "date text," +
-//                "FOREIGN KEY(sender_id,receiver_id) REFERENCES book_reader(reader_id,reader_id));");
-//
-//        this.shareBookDB.execSQL("CREATE TABLE admin_message (message_id integer primary key," +
-//                "admin_id integer," +
-//                "reader_id integer," +
-//                "message_title text," +
-//                "message_content text," +
-//                " date text," +
-//                " FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id)," +
-//                " FOREIGN KEY(admin_id) REFERENCES admin(admin_id));");
-//
-//
-//        db.execSQL("CREATE TABLE share_book (share_id integer primary key," +
-//                "book_id integer," +
-//                "reader_id integer, " +
-//                "date Text," +
-//                "FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
-//
-//        db.execSQL("CREATE TABLE give_book (give_id integer primary key," +
-//                "book_id integer," +
-//                "reader_id integer, " +
-//                "date Text," +
-//                "FOREIGN KEY(book_id) REFERENCES book(book_id)," +
-//                "FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
-//
-//        db.execSQL("CREATE TABLE rent_book (rent_id integer primary key," +
-//                "book_id integer," +
-//                "reader_id integer," +
-//                "price real," +
-//                "date Text," +
-//                "address text," +
-//                "postalCode text," +
-//                "FOREIGN KEY(book_id) REFERENCES book(book_id)," +
-//                "FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
+        this.shareBookDB.execSQL("CREATE TABLE reader_message (message_id integer primary key," +
+                "sender_id integer," +
+                "receiver_id integer," +
+                "message_title text," +
+                "message_content text," +
+                "date text," +
+                "FOREIGN KEY(sender_id,receiver_id) REFERENCES book_reader(reader_id,reader_id));");
+
+
+        this.shareBookDB.execSQL("CREATE TABLE admin_message (message_id integer primary key," +
+                "admin_id integer," +
+                "reader_id integer," +
+                "message_title text," +
+                "message_content text," +
+                " date text," +
+                " FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id)," +
+                " FOREIGN KEY(admin_id) REFERENCES admin(admin_id));");
+
+
+        db.execSQL("CREATE TABLE share_book (share_id integer primary key," +
+                "book_id integer," +
+                "reader_id integer, " +
+                "date Text," +
+                "FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
+
+        db.execSQL("CREATE TABLE give_book (give_id integer primary key," +
+                "book_id integer," +
+                "reader_id integer, " +
+                "date Text," +
+                "FOREIGN KEY(book_id) REFERENCES book(book_id)," +
+                "FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
+
+        db.execSQL("CREATE TABLE rent_book (rent_id integer primary key," +
+                "book_id integer," +
+                "reader_id integer," +
+                "price real," +
+                "date Text," +
+              "address text," +
+               "postalCode text," +
+               "FOREIGN KEY(book_id) REFERENCES book(book_id)," +
+                "FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        this.shareBookDB.execSQL("DROP TABLE IF EXISTS admin");
+        this.shareBookDB.execSQL("DROP TABLE IF EXISTS admin");
         this.shareBookDB.execSQL("DROP TABLE IF EXISTS book_reader");
         this.shareBookDB.execSQL("DROP TABLE IF EXISTS book");
         this.shareBookDB.execSQL("DROP TABLE IF EXISTS book_reader_interest");
-//        this.shareBookDB.execSQL("DROP TABLE IF EXISTS share_book");
-//        this.shareBookDB.execSQL("DROP TABLE IF EXISTS give_book");
-//        this.shareBookDB.execSQL("DROP TABLE IF EXISTS rent_book");
-//        this.shareBookDB.execSQL("DROP TABLE IF EXISTS reader_message");
-//        this.shareBookDB.execSQL("DROP TABLE IF EXISTS admin_message");
+        this.shareBookDB.execSQL("DROP TABLE IF EXISTS share_book");
+        this.shareBookDB.execSQL("DROP TABLE IF EXISTS give_book");
+        this.shareBookDB.execSQL("DROP TABLE IF EXISTS rent_book");
+        this.shareBookDB.execSQL("DROP TABLE IF EXISTS reader_message");
+        this.shareBookDB.execSQL("DROP TABLE IF EXISTS admin_message");
           onCreate(db);
 
     }
@@ -492,6 +493,20 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     public Cursor GetBookReaderById(int readerId){
         return  this.shareBookDB.rawQuery("Select * from book_reader Where reader_id = ?",new String[]{
                 String.valueOf(readerId)
+        });
+    }
+
+    /***
+     * it is used to validate the user
+     * @param password
+     * @param email
+     * @return we need to get the user id to pass it into SharePrefrence
+     */
+    public Cursor GetBookReaderByPassAndEmail(String password,String email){
+        return  this.shareBookDB.rawQuery("Select * from book_reader Where password = ? and email=? ",new String[]{
+                String.valueOf(password),
+                String.valueOf(email)
+
         });
     }
 

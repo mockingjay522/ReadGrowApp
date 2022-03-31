@@ -81,4 +81,5 @@
     <string name="homepage_text2">What would you like to do today?</string>
     <string name="findBook_BTN_Search">Search</string>
     <string name="findBook_hint_postal_code">Enter Postal Code</string>
+    <string name="readingTrickerTitle">Reading Tracker</string>
 </resources>
