@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<BookUser> listBookUser = new ArrayList<>();
+        //ArrayList<BookUser> listBookUser = new ArrayList<>();
         bookDatabaseHelper = new BookDatabaseHelper(this);
 
         TextView signUp = findViewById(R.id.login_signUp);
