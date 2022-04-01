@@ -1,5 +1,6 @@
 package com.example.readgrow;
 public class BookInfo {
+    private int bookID;
     private String bookName;
     private String author ;
     private String publication;
@@ -10,13 +11,23 @@ public class BookInfo {
     public BookInfo() {
     }
 
-    public BookInfo(String bookName, String author, String publication, String year, int status) {
+    public BookInfo(int bookID, String bookName, String author, String publication, String year, int status) {
+        this.bookID = bookID;
         this.bookName = bookName;
         this.author = author;
         this.publication = publication;
         this.year = year;
         this.status = status;
         //this.option = option;
+    }
+
+    public BookInfo( String bookName, String author, String publication, String year, int status) {
+
+        this.bookName = bookName;
+        this.author = author;
+        this.publication = publication;
+        this.year = year;
+        this.status = status;
     }
 
     public String getBookName() {
@@ -51,21 +62,6 @@ public class BookInfo {
         this.year = year;
     }
 
-//    public double getCostPerWeek() {
-//        return costPerWeek;
-//    }
-//
-//    public void setCostPerWeek(double costPerWeek) {
-//        this.costPerWeek = costPerWeek;
-//    }
-
-//    public String getOption() {
-//        return option;
-//    }
-//
-//    public void setOption(String option) {
-//        this.option = option;
-//    }
 
     public int getStatus() {
         return status;
@@ -73,5 +69,18 @@ public class BookInfo {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(int bookID) {
+        this.bookID = bookID;
+    }
+
+    @Override
+    public String toString() {
+        return "bookID=" + bookID + ", book Name='" + bookName + '\'' + ", author='" + author + '\'' + ", year='" + year;
     }
 }

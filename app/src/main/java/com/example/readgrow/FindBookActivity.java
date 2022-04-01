@@ -8,37 +8,62 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-public class FindBookActivity extends AppCompatActivity implements RecycleViewAdapter.ItemClickListener {
-    String [] testTitle = {"The lord of the ring", "Rich dad poor dad", "Sherlock Home", "Robinson Crusue"};
-    String [] testStatus = {"Rent", "Share", "Give away", "Share"};
-    RecyclerView recyclerView;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class FindBookActivity extends AppCompatActivity{
     BookDatabaseHelper databaseHelper;
+    Spinner spinner;
+    Button sortBtn;
+    ListView resultListView;
+    private Object ArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_book);
 
-         recyclerView = findViewById(R.id.availBook_RecycleView);
-        int numOfCol =1;
+        instantiateControllers();
 
+        sortBtn.setOnClickListener(this::SortOption);
 
+    }
+
+    private void SortOption(View view) {
+        int sortOption = spinner.getSelectedItemPosition();
+        List<BookInfo> books = new  ArrayList<>();
+        Cursor getBooks =  databaseHelper.GetBookByStatus(sortOption);
+
+        if(getBooks.getCount()>0)
+            while(getBooks.moveToNext())
+                books.add(new BookInfo(getBooks.getInt(0),
+                        getBooks.getString(1)
+                        ,getBooks.getString(2)
+                        ,getBooks.getString(3)
+                        ,getBooks.getString(4)
+                        ,getBooks.getInt(5)));
+
+        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,books);
+
+        resultListView.setAdapter(adapter);
+
+    }
+
+    public void instantiateControllers(){
         databaseHelper = new BookDatabaseHelper(this);
-        Cursor cursor = databaseHelper.GetBooksByReaderId(1);
-
-
-        RecycleViewAdapter adapter = new RecycleViewAdapter(this, testTitle,testStatus);
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter.setClickListener(this);
+        spinner = findViewById(R.id.searchBookSpinner);
+        sortBtn = findViewById(R.id.btnSortOption);
+        resultListView = findViewById(R.id.availBookListView);
 
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-        Toast.makeText(FindBookActivity.this, "Test Sucessful", Toast.LENGTH_SHORT).show();
-    }
 }

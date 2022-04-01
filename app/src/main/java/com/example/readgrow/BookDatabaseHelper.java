@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
 public class BookDatabaseHelper extends SQLiteOpenHelper {
     SQLiteDatabase shareBookDB;
     public BookDatabaseHelper( Context context) {
@@ -571,6 +569,10 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         return  this.shareBookDB.rawQuery("Select * from share_book Where reader_id = ?",new String[]{String.valueOf(readerId)});
     }
 
+    public Cursor GetBookByStatus(int option) {
+        return  this.shareBookDB.rawQuery("Select * from book Where book_status = ?",new String[]{String.valueOf(option)});
+
+    }
 
 
     //</editor-fold>
