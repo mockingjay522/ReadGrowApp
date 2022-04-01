@@ -30,12 +30,12 @@ public class UpdateBook extends AppCompatActivity {
         EditText author = findViewById(R.id.txtUpdate_Author);
         EditText publication = findViewById(R.id.txtUpdate_Publication);
         EditText year = findViewById(R.id.txtUpdate_Year);
-        RadioButton shareRdBtn = findViewById(R.id.rdUpdate_ShareBtn);
-        RadioButton rentRdBtn = findViewById(R.id.rdUpdate_Rent);
+        RadioButton shareRdBtn = findViewById(R.id.rd_ShareBtn);
+        RadioButton rentRdBtn = findViewById(R.id.rd_Rent);
         RadioButton give_AwayRdBtn = findViewById(R.id.rdUpdate_GiveAway);
         Spinner avail_Or_Not = findViewById(R.id.avail_or_Not);
 
-        Button updateBook = findViewById(R.id.btn_Update_Book);
+        Button updateBook = findViewById(R.id.btnAddNewBook);
 
 
 

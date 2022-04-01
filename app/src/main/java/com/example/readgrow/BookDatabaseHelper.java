@@ -38,8 +38,10 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
                 "title Text," +
                 "author Text," +
                 "publisher Text," +
-                " publish_date Text," +
+                "publish_date Text," +
                 "book_status integer," +
+                "book_rent_price integer," +
+                "book_link Text," +
                 " FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
 
         this.shareBookDB.execSQL("CREATE TABLE reader_message (message_id integer primary key," +
@@ -132,14 +134,18 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /***
-     * this method add a book to the book's table
+     *
      * @param readerId
      * @param title
+     * @param author
      * @param publisher
      * @param publishDate
      * @param book_status
+     * @param price
+     * @param link
+     * @return
      */
-    public int AddBook(int readerId,String title,String author, String publisher,String publishDate, int book_status){
+    public int AddBook(int readerId,String title,String author, String publisher,String publishDate, int book_status,int price, String link){
         ContentValues bookTableValues = new ContentValues();
         bookTableValues.put("reader_id",readerId);
         bookTableValues.put("title",title);
@@ -147,6 +153,8 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         bookTableValues.put("publisher",publisher);
         bookTableValues.put("publish_date",publishDate);
         bookTableValues.put("book_status",book_status);
+        bookTableValues.put("book_rent_price",price);
+        bookTableValues.put("book_link",link);
 
         long recordId = this.shareBookDB.insert("book",null,bookTableValues);
         Log.i("addRecordBook", String.valueOf(recordId));

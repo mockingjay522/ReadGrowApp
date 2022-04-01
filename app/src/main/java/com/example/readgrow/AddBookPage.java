@@ -2,7 +2,6 @@ package com.example.readgrow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -11,8 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddBookPage extends AppCompatActivity {
@@ -21,117 +18,96 @@ public class AddBookPage extends AppCompatActivity {
     EditText author;
     EditText publication;
     EditText year;
-    EditText totalCost;
-    EditText costPerWeek;
+    EditText rentPrice;
+    EditText linkBook;
     Button btnAddBook;
-    RadioGroup options;
-    RadioButton radioButton;
-    double shareCost,rentCost;
-
-    int status;
-
+    RadioButton shareRadio,rentRadio,giveRadio;
     BookDatabaseHelper bookDatabaseHelper;
-
     SharedPreferences  preferencesFromAddBook;
+    int status=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_page);
 
+        instatntiateContrllers();
+        btnAddBook.setOnClickListener(this::SubmitNewBook);
+    }
+
+    private void instatntiateContrllers() {
         bookDatabaseHelper = new BookDatabaseHelper(this);
-        btnAddBook = findViewById(R.id.btn_Update_Book);
 
         bName = findViewById(R.id.txtUpdate_Title);
         author = findViewById(R.id.txtUpdate_Author);
         publication = findViewById(R.id.txtUpdate_Publication);
         year = findViewById(R.id.txtUpdate_Year);
-        totalCost = findViewById(R.id.txtTotalCost);
-        costPerWeek = findViewById(R.id.txtWeekCost);
-        options = findViewById(R.id.optionsGroup);
+        rentPrice = findViewById(R.id.txtRentPrice);
+        linkBook = findViewById(R.id.linkBook);
+        btnAddBook = findViewById(R.id.btnAddNewBook);
 
-        /*getting Radio Selected Id*/
-        RadioButton btnShareBook = findViewById(R.id.rdUpdate_ShareBtn);
-        RadioButton btnRentBook = findViewById(R.id.rdUpdate_Rent);
-        RadioButton btnGiveAway = findViewById(R.id.rdUpdate_GiveAway);
+        shareRadio = findViewById(R.id.rd_ShareBtn);
+        rentRadio = findViewById(R.id.rd_Rent);
+        giveRadio = findViewById(R.id.rd_GiveAway);
+    }
 
-        TextView testID = findViewById(R.id.txtTestID);
+    private void SubmitNewBook(View view) {
+        //0- check if there is any error in the inputs
+        if (!ValidateInputs())
+            return;
 
-        /**Get userID from Login Activity*/
+        //1- get the value of user id
         SharedPreferences shareFormLogin = PreferenceManager.getDefaultSharedPreferences(this);
-        int uid = Integer.parseInt(shareFormLogin.getString("userID", ""));
+        int userID = Integer.parseInt(shareFormLogin.getString("userID", ""));
         preferencesFromAddBook = PreferenceManager.getDefaultSharedPreferences(this);
 
-        //testID.setText(test);
+        //2- get the value of all input
+        String booktitle = bName.getText().toString();
+        String authorName = author.getText().toString();
+        String publicationer = publication.getText().toString();
+        String yearofbook = year.getText().toString();
+        int rentPriceVlaue = Integer.parseInt(rentPrice.getText().toString());
+        String linkBookvlaue = linkBook.getText().toString();
 
-        btnAddBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        bookDatabaseHelper.AddBook(userID,booktitle,authorName,publicationer,yearofbook,status,rentPriceVlaue,linkBookvlaue);
 
-                if(TextUtils.isEmpty(bName.getText().toString()) || TextUtils.isEmpty(author.getText().toString()) ||
-                        TextUtils.isEmpty(publication.getText().toString()) || TextUtils.isEmpty(year.getText().toString())){
-                        //(btnShareBook.isSelected()==false) || (btnRentBook.isSelected()==false) || (btnGiveAway.isSelected()==false)){
-                    if(TextUtils.isEmpty(bName.getText().toString())) bName.setError("Missing the book title");
-                    if(TextUtils.isEmpty(author.getText().toString())) author.setError("Missing the book author");
-                    if(TextUtils.isEmpty(publication.getText().toString())) publication.setError("Missing the publication");
-                    if(TextUtils.isEmpty(year.getText().toString())) year.setError("Missing the publicated year");
-//                    if((btnShareBook.isSelected()==false) || (btnRentBook.isSelected()==false) || (btnGiveAway.isSelected()==false))
-//                        Toast.makeText(AddBookPage.this, "Please choose the status for rent or share or give away", Toast.LENGTH_SHORT).show();;
-                }else{
+        Toast.makeText(this, "the book is added", Toast.LENGTH_SHORT).show();
 
-                    String bookName = bName.getText().toString();
-                    String authorName = author.getText().toString();
-                    String _publication = publication.getText().toString();
-                    String _year = year.getText().toString();
-
-                    SharedPreferences.Editor editBookID = preferencesFromAddBook.edit();
-
-                    /**Set status for the book*/
-                    if(btnShareBook.isChecked()||btnRentBook.isChecked()||btnGiveAway.isChecked()){
-                        if(btnShareBook.isChecked()){
-                            status = 1;
-                            if(TextUtils.isEmpty(totalCost.getText().toString())) {
-                                totalCost.setError("Missing the total cost");
-                            } else {
-                                bookDatabaseHelper.AddBook(uid, bookName, authorName, _publication, _year, status);
-                                Toast.makeText(AddBookPage.this, "Add book successful", Toast.LENGTH_SHORT).show();
-                                shareCost = Double.parseDouble(totalCost.getText().toString());
-                                editBookID.putString("shareCost",Double.toString(shareCost));
-                                editBookID.apply();
-                                ResetInputs();
-
-                            }
-
-                        }
-                        if(btnRentBook.isChecked()){
-                            status = 2;
-                            if(TextUtils.isEmpty(costPerWeek.getText().toString())) costPerWeek.setError("Missing the total cost");
-                            else {
-                                bookDatabaseHelper.AddBook(uid, bookName, authorName, _publication, _year, status);
-                                Toast.makeText(AddBookPage.this, "Add book successful", Toast.LENGTH_SHORT).show();
-                                rentCost = Double.parseDouble(totalCost.getText().toString());
-                                editBookID.putString("rentCost",Double.toString(rentCost));
-                                editBookID.apply();
-                                ResetInputs();
-                            }
-                        }
-                        if(btnGiveAway.isChecked()){
-                            status = 3;
-                            bookDatabaseHelper.AddBook(uid, bookName, authorName, _publication, _year, status);
-                            Toast.makeText(AddBookPage.this, "Add book successful", Toast.LENGTH_SHORT).show();
-                            ResetInputs();
-                        }
-
-                    }else{
-                        Toast.makeText(AddBookPage.this, "Please select a status", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
     }
 
-    public void ResetInputs(){
-    startActivity(new Intent(AddBookPage.this,AddBookPage.class));
+    private boolean ValidateInputs(){
+        if(TextUtils.isEmpty(bName.getText().toString())) {
+            bName.setError("Missing the book title");
+        }
+        if(TextUtils.isEmpty(publication.getText().toString())){
+            publication.setError("Missing the book publication");
+        }
+        if(TextUtils.isEmpty(author.getText().toString())){
+            author.setError("Missing the book author");
+        }
+        if(TextUtils.isEmpty(rentPrice.getText().toString())) {
+            rentPrice.setError("Missing the book rent Price");
+            return false;
+        }
+        if(TextUtils.isEmpty(year.getText().toString())){
+            year.setError("Missing the book year");
+        }
+
+        if (shareRadio.isChecked())
+                status= 0;
+        if (rentRadio.isChecked())
+                status= 1;
+        if (giveRadio.isChecked())
+                 status= 2;
+
+        if (status==-1){
+            Toast.makeText(this, "Please specify the book status: Rent,Share,Give away", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+
+        return true;
     }
+
 
 }
