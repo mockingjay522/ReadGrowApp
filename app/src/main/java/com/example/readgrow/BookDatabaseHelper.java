@@ -17,7 +17,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-       this.shareBookDB.execSQL("CREATE TABLE admin (admin_id integer primary key," +
+       db.execSQL("CREATE TABLE admin (admin_id integer primary key," +
                 "name Text);");
 
         db.execSQL("CREATE TABLE book_reader (reader_id integer primary key," +
@@ -39,12 +39,12 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
                 "publisher Text," +
                 "publish_date Text," +
                 "book_status integer," +
-                "book_location Text," +
+                //"book_location Text," +
                 "book_rent_price integer," +
                 "book_link Text," +
                 " FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
 
-        this.shareBookDB.execSQL("CREATE TABLE reader_message (message_id integer primary key," +
+        db.execSQL("CREATE TABLE reader_message (message_id integer primary key," +
                 "sender_id integer," +
                 "receiver_id integer," +
                 "message_title text," +
@@ -53,7 +53,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(sender_id,receiver_id) REFERENCES book_reader(reader_id,reader_id));");
 
 
-        this.shareBookDB.execSQL("CREATE TABLE admin_message (message_id integer primary key," +
+        db.execSQL("CREATE TABLE admin_message (message_id integer primary key," +
                 "admin_id integer," +
                 "reader_id integer," +
                 "message_title text," +
@@ -124,7 +124,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         readerTableValues.put("name",readerName);
         readerTableValues.put("age",age);
         readerTableValues.put("address",address);
-        readerTableValues.put("address",postalCode);
+        readerTableValues.put("postal_code",postalCode);
         readerTableValues.put("email",email);
         readerTableValues.put("password",password);
 
@@ -522,6 +522,14 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
                 String.valueOf(password),
                 String.valueOf(email)
 
+        });
+    }
+    /**
+     * Check Email use to register is exiting or not
+     * **/
+    public Cursor CheckExitingEmail(String email){
+        return  this.shareBookDB.rawQuery("Select email from book_reader Where email like ? ",new String[]{
+                String.valueOf(email)
         });
     }
 

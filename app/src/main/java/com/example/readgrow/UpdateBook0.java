@@ -50,9 +50,9 @@ public class UpdateBook0 extends AppCompatActivity {
         }
         /**Convert the status number as a String*/
         for(int i =0; i<list_Num_Status.size(); i++){
-            if(list_Num_Status.get(i).equals("1")) bookStatus.add("Share");
-            else if(list_Num_Status.get(i).equals("2")) bookStatus.add("Rent");
-            else if(list_Num_Status.get(i).equals("3")) bookStatus.add("Give Away");
+            if(list_Num_Status.get(i).equals("0")) bookStatus.add("Rent");
+            else if(list_Num_Status.get(i).equals("1")) bookStatus.add("Share");
+            else if(list_Num_Status.get(i).equals("2")) bookStatus.add("Give Away");
             else bookStatus.add("Unavailable");
         }
         /**Set HashMap listView for the books found by Reader ID*/

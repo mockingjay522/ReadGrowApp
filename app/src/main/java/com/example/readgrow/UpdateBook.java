@@ -30,10 +30,12 @@ public class UpdateBook extends AppCompatActivity {
         EditText author = findViewById(R.id.txtUpdate_Author);
         EditText publication = findViewById(R.id.txtUpdate_Publication);
         EditText year = findViewById(R.id.txtUpdate_Year);
+        EditText rentCost = findViewById(R.id.txtWeekCost);
         RadioButton shareRdBtn = findViewById(R.id.rd_ShareBtn);
         RadioButton rentRdBtn = findViewById(R.id.rd_Rent);
         RadioButton give_AwayRdBtn = findViewById(R.id.rdUpdate_GiveAway);
-        Spinner avail_Or_Not = findViewById(R.id.avail_or_Not);
+        RadioButton unavailable_Btn = findViewById(R.id.rdUpdate_Unavailable);
+        //Spinner avail_Or_Not = findViewById(R.id.avail_or_Not);
 
         Button updateBook = findViewById(R.id.btnAddNewBook);
 
@@ -74,54 +76,37 @@ public class UpdateBook extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(TextUtils.isEmpty(bookTitle.getText().toString()) || TextUtils.isEmpty(author.getText().toString()) ||
-                        TextUtils.isEmpty(publication.getText().toString()) || TextUtils.isEmpty(year.getText().toString())){
+                        TextUtils.isEmpty(publication.getText().toString()) || TextUtils.isEmpty(year.getText().toString())
+                        ||TextUtils.isEmpty(rentCost.getText().toString())){
                     //(btnShareBook.isSelected()==false) || (btnRentBook.isSelected()==false) || (btnGiveAway.isSelected()==false)){
                     if(TextUtils.isEmpty(bookTitle.getText().toString())) bookTitle.setError("Missing the book title");
                     if(TextUtils.isEmpty(author.getText().toString())) author.setError("Missing the book author");
                     if(TextUtils.isEmpty(publication.getText().toString())) publication.setError("Missing the publication");
                     if(TextUtils.isEmpty(year.getText().toString())) year.setError("Missing the publicated year");
-//                    if((btnShareBook.isSelected()==false) || (btnRentBook.isSelected()==false) || (btnGiveAway.isSelected()==false))
-//                        Toast.makeText(AddBookPage.this, "Please choose the status for rent or share or give away", Toast.LENGTH_SHORT).show();;
+                    if(TextUtils.isEmpty(rentCost.getText().toString())) rentCost.setError("Missing the publicated year");
+//
                 }else {
-
-                    if(avail_Or_Not.getSelectedItem().toString().equals("Unavailable")){
-                        status = 0;
-                        updateBookInfo(pickBook_ID, userID, bookTitle.getText().toString(),author.getText().toString(),
-                                publication.getText().toString(), year.getText().toString(), status);
-//                        bookDatabaseHelper.UpdateBook(pickBook_ID, userID, bookTitle.getText().toString(),
-//                                author.getText().toString(),
-//                                publication.getText().toString(), year.getText().toString(), status);
-//                        Toast.makeText(UpdateBook.this, "Update book sucessful", Toast.LENGTH_SHORT).show();
-                    }else{
                         if (shareRdBtn.isChecked() || rentRdBtn.isChecked() || give_AwayRdBtn.isChecked()) {
 
+                            if (rentRdBtn.isChecked()) {
+                                status = 0;
+                                updateBookInfo(pickBook_ID, userID, bookTitle.getText().toString(),author.getText().toString(),
+                                        publication.getText().toString(), year.getText().toString(), status);
+                            }
                             if (shareRdBtn.isChecked()) {
                                 status = 1;
                                 updateBookInfo(pickBook_ID, userID, bookTitle.getText().toString(),author.getText().toString(),
                                         publication.getText().toString(), year.getText().toString(), status);
-//                                bookDatabaseHelper.UpdateBook(pickBook_ID, userID, bookTitle.getText().toString(),
-//                                        author.getText().toString(),
-//                                        publication.getText().toString(), year.getText().toString(), status);
-//                                Toast.makeText(UpdateBook.this, "Update book sucessful", Toast.LENGTH_SHORT).show();
-
                             }
-                            if (rentRdBtn.isChecked()) {
+                            if (give_AwayRdBtn.isChecked()) {
                                 status = 2;
                                 updateBookInfo(pickBook_ID, userID, bookTitle.getText().toString(),author.getText().toString(),
                                         publication.getText().toString(), year.getText().toString(), status);
-//                                bookDatabaseHelper.UpdateBook(pickBook_ID, userID, bookTitle.getText().toString(),
-//                                        author.getText().toString(),
-//                                        publication.getText().toString(), year.getText().toString(), status);
-//                                Toast.makeText(UpdateBook.this, "Update book successful", Toast.LENGTH_SHORT).show();
                             }
-                            if (give_AwayRdBtn.isChecked()) {
+                            if (unavailable_Btn.isChecked()) {
                                 status = 3;
                                 updateBookInfo(pickBook_ID, userID, bookTitle.getText().toString(),author.getText().toString(),
                                         publication.getText().toString(), year.getText().toString(), status);
-//                                bookDatabaseHelper.UpdateBook(pickBook_ID, userID, bookTitle.getText().toString(),
-//                                        author.getText().toString(),
-//                                        publication.getText().toString(), year.getText().toString(), status);
-//                                Toast.makeText(UpdateBook.this, "Update book sucessful", Toast.LENGTH_SHORT).show();
                             }
                         }else{
                             Toast.makeText(UpdateBook.this, "Please select a status", Toast.LENGTH_SHORT).show();
@@ -129,7 +114,7 @@ public class UpdateBook extends AppCompatActivity {
                         }
                     }
                 }
-            }
+
         });
 
     }

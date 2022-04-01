@@ -47,8 +47,8 @@ public class SignUpActivity2 extends AppCompatActivity {
         SharedPreferences sharedPrefer = PreferenceManager.getDefaultSharedPreferences(this);
 
         String fName = sharedPrefer.getString("signUp01_fName", "Non");
-        String email = sharedPrefer.getString("signUp01_email","0");
-        String passWord = sharedPrefer.getString("signUp01_passWord","0");
+        String email = sharedPrefer.getString("signUp01_email","none");
+        String passWord = sharedPrefer.getString("signUp01_passWord","none");
 
         btnCreateAcc.setOnClickListener(new View.OnClickListener() {
             int ID;
@@ -77,8 +77,7 @@ public class SignUpActivity2 extends AppCompatActivity {
                     address = addressTxt.getText().toString();
                     genre = genreTxt.getSelectedItem().toString();
 
-                    fullAddress = address + ", " + postalCode + ", " + province +
-                            ", " + postalCode + ", " + country;
+                    fullAddress = address + ", " + province + ", " + country;
                     /** Store the information of new user into database
                      * */
                     ID = bookDatabaseHelper.AddReader(fName, age, fullAddress, postalCode, email, passWord);

@@ -49,28 +49,10 @@ public class SignUpActivity1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Cursor cursor = bookDataBaseHelper.GetAllBookReader();
+
                 StringBuilder str = new StringBuilder();
 
-                /**if statement for check the account exiting or not*/
-                if(cursor.getCount()>0){
-                    while (cursor.moveToNext()){
-//                        str.append(" name " + cursor.getString(0)); //userID
-//                        str.append(" name " + cursor.getString(1)); //name
-//                        str.append(" age " + cursor.getString(2)); //age
-//                        str.append(" address " + cursor.getString(3)); //address
-//                        str.append(" email " + cursor.getString(4)); //email
-//                        str.append(" password " + cursor.getString(5)); //password
-                        /**store the data into ListArray */
-                        listBookUser.add(new BookUser(cursor.getString(0), cursor.getString(1), cursor.getString(4), cursor.getString(5),
-                                Integer.parseInt(cursor.getString(2)), cursor.getString(3)));
-                    }
-                    showTest.setText(str);
 
-                }else
-                {
-                    Toast.makeText(SignUpActivity1.this, "Database is empty", Toast.LENGTH_SHORT).show();
-                }
 
                 /**
                  * Check if user miss required information
@@ -92,8 +74,12 @@ public class SignUpActivity1 extends AppCompatActivity {
                     passWord = passWordTxt.getText().toString();
                     email = emailTxt.getText().toString();
 
-                    if(listBookUser.isEmpty()){
-
+                    Cursor cursor = bookDataBaseHelper.CheckExitingEmail(email);
+                    /**if statement for check the account exiting or not*/
+                    if(cursor.getCount()>0){
+                        Toast.makeText(SignUpActivity1.this, "The email is exiting, please enter a new one", Toast.LENGTH_SHORT).show();
+                    }else
+                    {
                         /**Create ShareRefrence Object*/
                         SharedPreferences.Editor editor = sharedPrefer.edit();
                         editor.putString("signUp01_fName", fName);
@@ -101,36 +87,37 @@ public class SignUpActivity1 extends AppCompatActivity {
                         editor.putString("signUp01_passWord", passWord);
                         editor.apply();
                         startActivity(new Intent(SignUpActivity1.this, SignUpActivity2.class));
-                    }else{
-                        /**Check if email is exiting*/
-                        int exitingEmail = 0;
-                        for(int i = 0; i<listBookUser.size();i++){
-                            if(listBookUser.get(i).getEmail().equalsIgnoreCase(email)){
-                                exitingEmail = 1;}
-                        }
-                        if(exitingEmail !=0){
-                            Toast.makeText(SignUpActivity1.this, "Email is exiting, please enter a new one!", Toast.LENGTH_SHORT).show();
-                        }else{
-                            /**Create ShareRefrence Object*/
-
-                            SharedPreferences.Editor editor = sharedPrefer.edit();
-                            editor.putString("signUp01_fName", fName);
-                            editor.putString("signUp01_email", email);
-                            editor.putString("signUp01_passWord", passWord);
-                            editor.apply();
-                            startActivity(new Intent(SignUpActivity1.this, SignUpActivity2.class));
-                        }
                     }
+//                    if(listBookUser.isEmpty()){
+//
+//                        /**Create ShareRefrence Object*/
+//                        SharedPreferences.Editor editor = sharedPrefer.edit();
+//                        editor.putString("signUp01_fName", fName);
+//                        editor.putString("signUp01_email", email);
+//                        editor.putString("signUp01_passWord", passWord);
+//                        editor.apply();
+//                        startActivity(new Intent(SignUpActivity1.this, SignUpActivity2.class));
+//                    }else{
+//                        /**Check if email is exiting*/
+//                        int exitingEmail = 0;
+//                        for(int i = 0; i<listBookUser.size();i++){
+//                            if(listBookUser.get(i).getEmail().equalsIgnoreCase(email)){
+//                                exitingEmail = 1;}
+//                        }
+//                        if(exitingEmail !=0){
+//                            Toast.makeText(SignUpActivity1.this, "Email is exiting, please enter a new one!", Toast.LENGTH_SHORT).show();
+//                        }else{
+//                            /**Create ShareRefrence Object*/
+//
+//                            SharedPreferences.Editor editor = sharedPrefer.edit();
+//                            editor.putString("signUp01_fName", fName);
+//                            editor.putString("signUp01_email", email);
+//                            editor.putString("signUp01_passWord", passWord);
+//                            editor.apply();
+//                            startActivity(new Intent(SignUpActivity1.this, SignUpActivity2.class));
+//                        }
+//                    }
                 }
-
-
-
-
-
-
-
-
-
             }
         });
     }

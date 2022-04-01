@@ -93,4 +93,5 @@
         <item>Give away</item>
         <item>Not avalaible</item>
     </string-array>
+    <string name="unavailable">Unavailable</string>
 </resources>
