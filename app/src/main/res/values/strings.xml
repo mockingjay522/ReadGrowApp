@@ -30,7 +30,7 @@
     <string name="totalCost">$ Total Cost</string>
     <string name="rentPrice">$ Rent Price (If)</string>
     <string name="rentHint">$ Cost per week</string>
-    <string name="link_Hint">Insert a link </string>
+    <string name="rentHint2">Insert a Link</string>
     <string-array name="signUp2_countries">
         <item>Canada</item>
         <item>United States</item>
@@ -83,6 +83,7 @@
     <string name="findBook_BTN_Search">Search</string>
     <string name="findBook_hint_postal_code">Enter Postal Code</string>
     <string name="readingTrickerTitle">Reading Tracker</string>
+    <string name="sortOptionBtn">Sort</string>
     <string-array name="bookOptions">
         <item>Please select an option</item>
         <item>Rent</item>

@@ -26,7 +26,7 @@ public class AddBookPage extends AppCompatActivity {
 
     BookDatabaseHelper bookDatabaseHelper;
     SharedPreferences  preferencesFromAddBook;
-    int status=-1; // the status here is : 0 is share, 1 is rent and 2 is gave away
+    int status=-1; // the status here is : 0 is rent, 1 is share and 2 is gave away and 3 is not available
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,15 +94,15 @@ public class AddBookPage extends AppCompatActivity {
             year.setError("Missing the book year");
         }
         // set the optopn
-        if (spinner.getSelectedItemPosition()==1)
+        if (spinner.getSelectedItemPosition()==0) // the user dose not chose an option
             status= -1;
-        if (spinner.getSelectedItemPosition()==1)
+        if (spinner.getSelectedItemPosition()==1)  // rent
                 status= 0;
-        if (spinner.getSelectedItemPosition()==2)
+        if (spinner.getSelectedItemPosition()==2)  // share
                 status= 1;
-        if (spinner.getSelectedItemPosition()==3)
+        if (spinner.getSelectedItemPosition()==3)// give away
                  status= 2;
-        if (spinner.getSelectedItemPosition()==4)
+        if (spinner.getSelectedItemPosition()==4) // not available
               status= 3;
         // check the status
         if (status==-1){

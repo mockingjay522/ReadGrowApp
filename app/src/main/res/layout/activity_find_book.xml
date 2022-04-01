@@ -8,51 +8,79 @@
 
     <TextView
         android:id="@+id/findBook_label"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:text="@string/findBook_label"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="46dp"
+        android:layout_marginEnd="15dp"
         android:autofillHints=""
-        android:textSize="18sp"
         android:ems="10"
         android:hint="@string/findBook_hint_postal_code"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textColorHint="#757575"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnSearch"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="29dp"
-        android:textSize="18sp"
+        android:layout_marginEnd="16dp"
         android:text="@string/findBook_BTN_Search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editTextTextPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/availBook_RecycleView"
-        android:layout_width="409dp"
-        android:layout_height="474dp"
-        android:layout_marginTop="19dp"
+        android:layout_width="394dp"
+        android:layout_height="336dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="9dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSortOption" />
+
+    <Spinner
+        android:id="@+id/searchBookSpinner"
+        android:layout_width="397dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="7dp"
+        android:background="#E1D6D6"
+        android:entries="@array/bookOptions"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/findBook_label" />
+
+    <Button
+        android:id="@+id/btnSortOption"
+        android:layout_width="95dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="300dp"
+        android:text="@string/sortOptionBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchBookSpinner" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
