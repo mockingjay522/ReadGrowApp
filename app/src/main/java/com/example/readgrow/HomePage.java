@@ -31,7 +31,6 @@ public class HomePage extends AppCompatActivity {
         userNameHoder.setText(shareFromLogin.getString("userName",""));
 
 
-
         addOrUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         txtPassword = findViewById(R.id.login_password);
         btnLogin = findViewById(R.id.login_button);
 
+
         btnLogin.setOnClickListener(this::ValidateUser);
 
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ValidateUser(View view) {
+
+
         String userID;
         String userName;
 
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 //-3 set shareFromLogin
                 shareFromLogin = PreferenceManager.getDefaultSharedPreferences(this);
                 SharedPreferences.Editor editor = shareFromLogin.edit();
-                editor.putString("userId",userID);
+                editor.putString("userID",userID);
                 editor.putString("userName",userName);
                 editor.commit();
                 // move to the HomePage

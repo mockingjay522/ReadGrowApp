@@ -562,6 +562,9 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     public Cursor GetShareBookByReaderId(int readerId){
         return  this.shareBookDB.rawQuery("Select * from share_book Where reader_id = ?",new String[]{String.valueOf(readerId)});
     }
+
+
+
     //</editor-fold>
 
 

@@ -2,6 +2,7 @@ package com.example.readgrow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -58,9 +59,7 @@ public class AddBookPage extends AppCompatActivity {
 
         /**Get userID from Login Activity*/
         SharedPreferences shareFormLogin = PreferenceManager.getDefaultSharedPreferences(this);
-        //shareFormLogin.getString("userID", "none");
-        //String test = shareFormLogin.getString("userID", "0");
-        int uid = Integer.parseInt(shareFormLogin.getString("userID", "0"));
+        int uid = Integer.parseInt(shareFormLogin.getString("userID", ""));
         preferencesFromAddBook = PreferenceManager.getDefaultSharedPreferences(this);
 
         //testID.setText(test);
@@ -99,6 +98,7 @@ public class AddBookPage extends AppCompatActivity {
                                 shareCost = Double.parseDouble(totalCost.getText().toString());
                                 editBookID.putString("shareCost",Double.toString(shareCost));
                                 editBookID.apply();
+                                ResetInputs();
 
                             }
 
@@ -112,12 +112,14 @@ public class AddBookPage extends AppCompatActivity {
                                 rentCost = Double.parseDouble(totalCost.getText().toString());
                                 editBookID.putString("rentCost",Double.toString(rentCost));
                                 editBookID.apply();
+                                ResetInputs();
                             }
                         }
                         if(btnGiveAway.isChecked()){
                             status = 3;
                             bookDatabaseHelper.AddBook(uid, bookName, authorName, _publication, _year, status);
                             Toast.makeText(AddBookPage.this, "Add book successful", Toast.LENGTH_SHORT).show();
+                            ResetInputs();
                         }
 
                     }else{
@@ -126,6 +128,10 @@ public class AddBookPage extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void ResetInputs(){
+    startActivity(new Intent(AddBookPage.this,AddBookPage.class));
     }
 
 }
