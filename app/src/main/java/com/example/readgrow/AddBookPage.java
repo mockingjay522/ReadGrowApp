@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class AddBookPage extends AppCompatActivity {
@@ -21,10 +22,11 @@ public class AddBookPage extends AppCompatActivity {
     EditText rentPrice;
     EditText linkBook;
     Button btnAddBook;
-    RadioButton shareRadio,rentRadio,giveRadio;
+    Spinner spinner;
+
     BookDatabaseHelper bookDatabaseHelper;
     SharedPreferences  preferencesFromAddBook;
-    int status=-1;
+    int status=-1; // the status here is : 0 is share, 1 is rent and 2 is gave away
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +47,8 @@ public class AddBookPage extends AppCompatActivity {
         rentPrice = findViewById(R.id.txtRentPrice);
         linkBook = findViewById(R.id.linkBook);
         btnAddBook = findViewById(R.id.btnAddNewBook);
+        spinner = findViewById(R.id.bookOptionsSpinner);
 
-        shareRadio = findViewById(R.id.rd_ShareBtn);
-        rentRadio = findViewById(R.id.rd_Rent);
-        giveRadio = findViewById(R.id.rd_GiveAway);
     }
 
     private void SubmitNewBook(View view) {
@@ -72,6 +72,7 @@ public class AddBookPage extends AppCompatActivity {
         bookDatabaseHelper.AddBook(userID,booktitle,authorName,publicationer,yearofbook,status,rentPriceVlaue,linkBookvlaue);
 
         Toast.makeText(this, "the book is added", Toast.LENGTH_SHORT).show();
+        ClearInputs();
 
     }
 
@@ -92,14 +93,18 @@ public class AddBookPage extends AppCompatActivity {
         if(TextUtils.isEmpty(year.getText().toString())){
             year.setError("Missing the book year");
         }
-
-        if (shareRadio.isChecked())
+        // set the optopn
+        if (spinner.getSelectedItemPosition()==1)
+            status= -1;
+        if (spinner.getSelectedItemPosition()==1)
                 status= 0;
-        if (rentRadio.isChecked())
+        if (spinner.getSelectedItemPosition()==2)
                 status= 1;
-        if (giveRadio.isChecked())
+        if (spinner.getSelectedItemPosition()==3)
                  status= 2;
-
+        if (spinner.getSelectedItemPosition()==4)
+              status= 3;
+        // check the status
         if (status==-1){
             Toast.makeText(this, "Please specify the book status: Rent,Share,Give away", Toast.LENGTH_SHORT).show();
             return false;
@@ -109,5 +114,14 @@ public class AddBookPage extends AppCompatActivity {
         return true;
     }
 
-
+    private void ClearInputs(){
+         bName.setText("");
+         author.setText("");
+         publication.setText("");
+         year.setText("");
+         rentPrice.setText("");
+         linkBook.setText("");
+         //--
+        bName.requestFocus();
+    }
 }

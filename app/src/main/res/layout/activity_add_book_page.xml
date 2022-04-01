@@ -13,7 +13,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/text_border"
         android:ems="10"
         android:hint="@string/bookName"
@@ -32,7 +32,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="14dp"
         android:layout_marginEnd="14dp"
-        android:layout_marginBottom="31dp"
+        android:layout_marginBottom="33dp"
         android:background="@drawable/text_border"
         android:ems="10"
         android:hint="@string/bookAuthor"
@@ -40,7 +40,7 @@
         android:inputType="textPersonName"
         android:padding="5dp"
         android:textColorHint="#757575"
-        app:layout_constraintBottom_toTopOf="@+id/txtUpdate_Year"
+        app:layout_constraintBottom_toTopOf="@+id/txtUpdate_Publication"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtUpdate_Title" />
@@ -48,11 +48,10 @@
     <EditText
         android:id="@+id/txtUpdate_Publication"
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="101dp"
         android:layout_marginEnd="29dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="26dp"
         android:background="@drawable/text_border"
         android:ems="10"
         android:hint="@string/publication"
@@ -60,17 +59,16 @@
         android:inputType="textPersonName"
         android:padding="5dp"
         android:textColorHint="#757575"
-        app:layout_constraintBottom_toBottomOf="@+id/txtRentPrice"
+        app:layout_constraintBottom_toTopOf="@+id/txtRentPrice"
         app:layout_constraintEnd_toStartOf="@+id/txtUpdate_Year"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtUpdate_Author" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUpdate_Author" />
 
     <EditText
         android:id="@+id/txtUpdate_Year"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="70dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="29dp"
         android:background="@drawable/text_border"
         android:ems="10"
         android:hint="@string/yearPublication"
@@ -78,10 +76,9 @@
         android:inputType="date"
         android:padding="5dp"
         android:textColorHint="#757575"
-        app:layout_constraintBottom_toTopOf="@+id/txtRentPrice"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtUpdate_Publication"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txtUpdate_Publication"
-        app:layout_constraintTop_toBottomOf="@+id/txtUpdate_Author" />
+        app:layout_constraintStart_toEndOf="@+id/txtUpdate_Publication" />
 
     <EditText
         android:id="@+id/txtRentPrice"
@@ -89,7 +86,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="11dp"
         android:background="@drawable/text_border"
         android:ems="10"
         android:hint="@string/rentPrice"
@@ -100,7 +97,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linkBook"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUpdate_Year" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUpdate_Publication" />
 
     <Button
         android:id="@+id/btnAddNewBook"
@@ -117,40 +114,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linkBook" />
 
-    <RadioButton
-        android:id="@+id/rd_ShareBtn"
-        android:layout_width="102dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="6dp"
-        android:gravity="center"
-        android:text="@string/share"
-        android:textStyle="bold"
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linkBook"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <RadioButton
-        android:id="@+id/rd_Rent"
-        android:layout_width="117dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="6dp"
-        android:gravity="center"
-        android:text="@string/rent"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/rd_ShareBtn"
-        app:layout_constraintTop_toBottomOf="@+id/linkBook"
-        tools:ignore="TouchTargetSizeCheck" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/linkBook"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="58dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="74dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/addBook"
@@ -161,16 +140,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRentPrice" />
 
-    <RadioButton
-        android:id="@+id/rd_GiveAway"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="6dp"
-        android:autoText="false"
-        android:text="@string/giveAway"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/rd_Rent"
+    <Spinner
+        android:id="@+id/bookOptionsSpinner"
+        android:layout_width="368dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="23dp"
+        android:entries="@array/bookOptions"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linkBook" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
