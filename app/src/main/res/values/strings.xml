@@ -11,6 +11,8 @@
     <string name="signUp1_username_email">Enter your email Address</string>
     <string name="signUp1_password_hint">Create Password</string>
     <string name="signUp1_button_text">Next</string>
+    <string name="Message">Message</string>
+    <string name="MessageHere">Write your message here.</string>
     <string name="signUp1_Account_text">Already have an account?</string>
     <string name="signUp1_signin_text"><u><b>Sign In.</b></u></string>
     <string name="signUp1_name_hint">Enter Your Full Name</string>

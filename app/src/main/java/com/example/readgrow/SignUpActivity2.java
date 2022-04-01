@@ -81,7 +81,7 @@ public class SignUpActivity2 extends AppCompatActivity {
                             ", " + postalCode + ", " + country;
                     /** Store the information of new user into database
                      * */
-                    ID = bookDatabaseHelper.AddReader(fName, age, fullAddress, email, passWord);
+                    ID = bookDatabaseHelper.AddReader(fName, age, fullAddress, postalCode, email, passWord);
                     interestID = bookDatabaseHelper.AddBookReaderInterest(ID, genre);
                     if(ID > 0 && interestID>0){
                         Toast.makeText(SignUpActivity2.this, Html.fromHtml("<big>data is inserted successfully</big>"),

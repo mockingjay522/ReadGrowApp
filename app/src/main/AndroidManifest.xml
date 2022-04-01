@@ -10,11 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReadGrow">
         <activity
+            android:name=".SendMessage"
+            android:exported="false" />
+        <activity
             android:name=".ReadingTracker"
             android:exported="false" />
         <activity
             android:name=".HomePage"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".UpdateBook0"
             android:exported="false" />

@@ -66,6 +66,7 @@ public class AddBookPage extends AppCompatActivity {
         String authorName = author.getText().toString();
         String publicationer = publication.getText().toString();
         String yearofbook = year.getText().toString();
+
         int rentPriceVlaue = Integer.parseInt(rentPrice.getText().toString());
         String linkBookvlaue = linkBook.getText().toString();
 

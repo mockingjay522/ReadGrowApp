@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -24,8 +25,10 @@ public class FindBookActivity extends AppCompatActivity{
     BookDatabaseHelper databaseHelper;
     Spinner spinner;
     Button sortBtn;
+    Button searchBtn;
     ListView resultListView;
     private Object ArrayList;
+    EditText txtLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +37,15 @@ public class FindBookActivity extends AppCompatActivity{
 
         instantiateControllers();
 
-        sortBtn.setOnClickListener(this::SortOption);
+        searchBtn.setOnClickListener(this::SortOption);
 
     }
 
     private void SortOption(View view) {
-        int sortOption = spinner.getSelectedItemPosition();
+//        int sortOption = spinner.getSelectedItemPosition();
         List<BookInfo> books = new  ArrayList<>();
-        Cursor getBooks =  databaseHelper.GetBookByStatus(sortOption);
+        String location = txtLocation.getText().toString().trim();
+        Cursor getBooks =  databaseHelper.GetBookByPostalCode(location);
 
         if(getBooks.getCount()>0)
             while(getBooks.moveToNext())
@@ -63,6 +67,8 @@ public class FindBookActivity extends AppCompatActivity{
         spinner = findViewById(R.id.searchBookSpinner);
         sortBtn = findViewById(R.id.btnSortOption);
         resultListView = findViewById(R.id.availBookListView);
+        txtLocation = findViewById(R.id.txtPostalCode);
+        searchBtn = findViewById(R.id.btnSearch);
 
     }
 

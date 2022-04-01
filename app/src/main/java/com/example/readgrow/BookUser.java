@@ -6,16 +6,25 @@ public class BookUser {
     private String password;
     private int age;
     private String address;
+    private String postalCode;
     private String userID;
 
+    public String getPostalCode() {
+        return postalCode;
+    }
 
-    public BookUser(String userID, String fName, String email, String password, int age, String address) {
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public BookUser(String userID, String fName, String email, String password, int age, String address, String postalCode) {
         this.userID = userID;
         this.fName = fName;
         this.email = email;
         this.password = password;
         this.age = age;
         this.address = address;
+        this.postalCode = postalCode;
     }
 
     public String getAddress() {

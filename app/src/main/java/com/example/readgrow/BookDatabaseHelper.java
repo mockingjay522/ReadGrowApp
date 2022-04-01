@@ -24,6 +24,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
                 " name Text," +
                 " age integer," +
                 " address Text," +
+                " postal_code Text," +
                 " email Text," +
                 " password Text);");
 
@@ -38,6 +39,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
                 "publisher Text," +
                 "publish_date Text," +
                 "book_status integer," +
+                "book_location Text," +
                 "book_rent_price integer," +
                 "book_link Text," +
                 " FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
@@ -117,11 +119,12 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
      * @param readerName
      *
      */
-    public int AddReader(String readerName, int age, String address, String email, String password){
+    public int AddReader(String readerName, int age, String address, String postalCode, String email, String password){
         ContentValues readerTableValues = new ContentValues();
         readerTableValues.put("name",readerName);
         readerTableValues.put("age",age);
         readerTableValues.put("address",address);
+        readerTableValues.put("address",postalCode);
         readerTableValues.put("email",email);
         readerTableValues.put("password",password);
 
@@ -490,6 +493,12 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         });
     }
 
+    public Cursor GetBookByPostalCode(String postalCode){
+        return  this.shareBookDB.rawQuery("Select * from book Where postal_code = ?",new String[]{
+                String.valueOf(postalCode)
+        });
+    }
+
     public Cursor GetBooksByReaderId(int readerId){
         return  this.shareBookDB.rawQuery("Select * from book Where reader_id = ?",new String[]{
                 String.valueOf(readerId)
@@ -569,12 +578,15 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         return  this.shareBookDB.rawQuery("Select * from share_book Where reader_id = ?",new String[]{String.valueOf(readerId)});
     }
 
+
     public Cursor GetBookByStatus(int option) {
         return  this.shareBookDB.rawQuery("Select * from book Where book_status = ?",new String[]{String.valueOf(option)});
 
     }
 
-
+    public Cursor GetOwnerPostalCode(int readerId) {
+        return  this.shareBookDB.rawQuery("Select postal_code from book_reader Where reader_id = ?",new String[]{String.valueOf(readerId)});
+    }
     //</editor-fold>
 
 
