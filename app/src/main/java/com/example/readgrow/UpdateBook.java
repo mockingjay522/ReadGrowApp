@@ -2,6 +2,7 @@ package com.example.readgrow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -116,11 +117,11 @@ public class UpdateBook extends AppCompatActivity {
                 }
 
         });
-
     }
     public void updateBookInfo(int bookID, int userID, String bTitle, String author, String publication, String year, int status){
         bookDatabaseHelper = new BookDatabaseHelper(this);
         bookDatabaseHelper.UpdateBook(bookID,userID,bTitle,author,publication,year,status);
         Toast.makeText(this, "Update book successful", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(UpdateBook.this, UpdateBook0.class));
     }
 }

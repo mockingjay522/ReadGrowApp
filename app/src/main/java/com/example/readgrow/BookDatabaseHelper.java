@@ -493,9 +493,15 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         });
     }
 
-    public Cursor GetBookByPostalCode(String postalCode){
-        return  this.shareBookDB.rawQuery("Select * from book Where postal_code = ?",new String[]{
-                String.valueOf(postalCode)
+    public Cursor GetBookByPostalCode(String postalCode, int reader_id){
+//        return  this.shareBookDB.rawQuery("Select * from book Where postal_code = ?",new String[]{
+//                String.valueOf(postalCode)
+        return  this.shareBookDB.rawQuery(
+                "select b.book_id, b.title, b.author, b.publisher, b.publish_date, b.book_status, b.reader_id \n" +
+                        "from book b inner join book_reader u on b.reader_id = u.reader_id \n" +
+                        "where b.book_status < 3  and u.postal_code like ? and b.reader_id != ?",new String[]{
+                String.valueOf(postalCode),
+                String.valueOf(reader_id)
         });
     }
 
