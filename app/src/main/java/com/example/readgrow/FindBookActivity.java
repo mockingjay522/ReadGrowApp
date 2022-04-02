@@ -50,13 +50,13 @@ public class FindBookActivity extends AppCompatActivity{
     private void SortOption(View view) {
 //        int sortOption = spinner.getSelectedItemPosition();
         List<BookInfo> books = new  ArrayList<>();
-        /***
+        /*
          * Get data from input and the ID from login => to implement the GetBookByPostalCode
          */
         String location = txtLocation.getText().toString().trim();
         int ID_login = Integer.parseInt(shareFromLogin.getString("userID", "0"));
         Cursor getBooks =  databaseHelper.GetBookByPostalCode(location, ID_login );
-        /**Extract data to put into ListView Adapter*/
+        /*Extract data to put into ListView Adapter*/
         if(getBooks.getCount()>0)
             while(getBooks.moveToNext())
                 books.add(new BookInfo(getBooks.getInt(0),
@@ -64,7 +64,8 @@ public class FindBookActivity extends AppCompatActivity{
                         ,getBooks.getString(2)
                         ,getBooks.getString(3)
                         ,getBooks.getString(4)
-                        ,getBooks.getInt(5)));
+                        ,getBooks.getInt(5)
+                        ,getBooks.getString(6)));
 
         ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,books);
 

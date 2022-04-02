@@ -2,6 +2,7 @@ package com.example.readgrow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -66,14 +67,22 @@ public class AddBookPage extends AppCompatActivity {
         String authorName = author.getText().toString();
         String publicationer = publication.getText().toString();
         String yearofbook = year.getText().toString();
+        int rentPriceVlaue;
 
-        int rentPriceVlaue = Integer.parseInt(rentPrice.getText().toString());
+        if (CheckOption() == 2 || CheckOption() == 3){
+            rentPriceVlaue = 0;
+        }
+        else{
+           rentPriceVlaue = Integer.parseInt(rentPrice.getText().toString());
+        }
+
         String linkBookvlaue = linkBook.getText().toString();
 
         bookDatabaseHelper.AddBook(userID,booktitle,authorName,publicationer,yearofbook,status,rentPriceVlaue,linkBookvlaue);
 
         Toast.makeText(this, "the book is added", Toast.LENGTH_SHORT).show();
         ClearInputs();
+        startActivity(new Intent(this, AddBook.class));
 
     }
 
@@ -87,32 +96,37 @@ public class AddBookPage extends AppCompatActivity {
         if(TextUtils.isEmpty(author.getText().toString())){
             author.setError("Missing the book author");
         }
-        if(TextUtils.isEmpty(rentPrice.getText().toString())) {
+        if(TextUtils.isEmpty(rentPrice.getText().toString()) && spinner.getSelectedItemPosition() == 1) {
             rentPrice.setError("Missing the book rent Price");
+            return false;
+        }
+        else if(TextUtils.isEmpty(rentPrice.getText().toString()) && spinner.getSelectedItemPosition() == 2){
+            rentPrice.setError("Missing the book Share Price");
             return false;
         }
         if(TextUtils.isEmpty(year.getText().toString())){
             year.setError("Missing the book year");
         }
+        if(CheckOption() == -1) {
+            Toast.makeText(this, "Please specify the book status: Rent,Share,Give away", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private int CheckOption(){
         // set the optopn
         if (spinner.getSelectedItemPosition()==0) // the user dose not chose an option
             status= -1;
         if (spinner.getSelectedItemPosition()==1)  // rent
-                status= 0;
+            status= 0;
         if (spinner.getSelectedItemPosition()==2)  // share
-                status= 1;
+            status= 1;
         if (spinner.getSelectedItemPosition()==3)// give away
-                 status= 2;
+            status= 2;
         if (spinner.getSelectedItemPosition()==4) // not available
-              status= 3;
-        // check the status
-        if (status==-1){
-            Toast.makeText(this, "Please specify the book status: Rent,Share,Give away", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-
-        return true;
+            status= 3;
+            return status;
     }
 
     private void ClearInputs(){

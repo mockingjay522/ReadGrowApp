@@ -387,7 +387,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         return numberOfRecords;
     }
 
-    public int UpdateBook(int book_id,int readerId,String title,String author,String publisher,String publishDate, int book_status){
+    public int UpdateBook(int book_id,int readerId,String title,String author,String publisher,String publishDate, int book_status, String rent_price){
         ContentValues bookTableValues = new ContentValues();
 
         bookTableValues.put("reader_id",readerId);
@@ -396,6 +396,8 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         bookTableValues.put("publisher",publisher);
         bookTableValues.put("publish_date",publishDate);
         bookTableValues.put("book_status",book_status);
+        bookTableValues.put("book_rent_price",rent_price);
+
 
         int numberOfRecords = this.shareBookDB.update("book",bookTableValues,"book_id=?", new String[]{
                 String.valueOf(book_id)});

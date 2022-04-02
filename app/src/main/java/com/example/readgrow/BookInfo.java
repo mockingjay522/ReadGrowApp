@@ -6,28 +6,38 @@ public class BookInfo {
     private String publication;
     private String year;
     private int status;
+    private String cost;
     //private String option;
+
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
 
     public BookInfo() {
     }
 
-    public BookInfo(int bookID, String bookName, String author, String publication, String year, int status) {
+    public BookInfo(int bookID, String bookName, String author, String publication, String year, int status, String cost) {
         this.bookID = bookID;
         this.bookName = bookName;
         this.author = author;
         this.publication = publication;
         this.year = year;
         this.status = status;
-        //this.option = option;
+        this.cost = cost;
     }
 
-    public BookInfo( String bookName, String author, String publication, String year, int status) {
+    public BookInfo( String bookName, String author, String publication, String year, int status, String cost) {
 
         this.bookName = bookName;
         this.author = author;
         this.publication = publication;
         this.year = year;
         this.status = status;
+        this.cost = cost;
     }
 
     public String getBookName() {
