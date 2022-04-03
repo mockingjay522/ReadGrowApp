@@ -28,6 +28,7 @@ public class AddBookPage extends AppCompatActivity {
     BookDatabaseHelper bookDatabaseHelper;
     SharedPreferences  preferencesFromAddBook;
     int status=-1; // the status here is : 0 is rent, 1 is share and 2 is gave away and 3 is not available
+                    // 4 is change owner when give away
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

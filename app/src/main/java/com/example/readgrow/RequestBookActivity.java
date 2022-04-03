@@ -26,6 +26,9 @@ public class RequestBookActivity extends AppCompatActivity {
     EditText requestMessage;
     Button btnRequest;
 
+    TextView test;
+    TextView testbookID;
+
     int bookStatus;
     int ID_bookOwner;
     int loginID;
@@ -56,6 +59,12 @@ public class RequestBookActivity extends AppCompatActivity {
         picked_BookID = preferFrom_FindBook.getInt("interest_bookID", 0);
         loginID = Integer.parseInt(preferFrom_FindBook.getString("userID", "0"));
 
+        test = findViewById(R.id.textView4);
+        testbookID = findViewById(R.id.textView5);
+
+        testbookID.setText(picked_BookID + " ");
+
+
         Cursor cursor = bookDatabaseHelper.GetBookById(picked_BookID);
         if(cursor.getCount()>0){
             while (cursor.moveToNext()){
@@ -75,6 +84,7 @@ public class RequestBookActivity extends AppCompatActivity {
                 }
             }
         }
+        test.setText(ID_bookOwner + " ");
         Cursor cursorOwner = bookDatabaseHelper.GetBookReaderById(ID_bookOwner);
         if(cursorOwner.getCount()>0){
             while (cursorOwner.moveToNext()){

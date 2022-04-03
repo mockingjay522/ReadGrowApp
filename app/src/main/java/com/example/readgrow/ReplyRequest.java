@@ -22,9 +22,11 @@ public class ReplyRequest extends AppCompatActivity{
     ArrayList <String > listBook_Title;
     ArrayList <Integer> listSender_ID ;
     ArrayList<Integer> listBook_ID ;
+    ArrayList<Integer> listBook_Status ;
+    ArrayList<Integer> listBook_Price ;
     ListView listRequestedBook;
 
-    SharedPreferences sharedPreferences;
+    SharedPreferences preferFrom_ReplyRequest;
 
     int loginID;
     @Override
@@ -40,8 +42,8 @@ public class ReplyRequest extends AppCompatActivity{
 
         databaseHelper = new BookDatabaseHelper(this);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        loginID = Integer.parseInt(sharedPreferences.getString("userID", "0"));
+        preferFrom_ReplyRequest = PreferenceManager.getDefaultSharedPreferences(this);
+        loginID = Integer.parseInt(preferFrom_ReplyRequest.getString("userID", "0"));
 
         Cursor cursor = databaseHelper.GetRequestedBook(loginID);
         /**0 is book_id, 1 is title, 2 is sender_id*/
@@ -57,12 +59,12 @@ public class ReplyRequest extends AppCompatActivity{
 
         listRequestedBook.setAdapter(adapter);
         /**Click on the list will put the SharedPreference to get specific book
-         *  So that user can answer the request*/
+         *  So that user can answer the request in the next Activity*/
         listRequestedBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int postion, long l) {
                 for(int i =0; i<listBook_ID.size(); i++){
-                    SharedPreferences.Editor editSender = sharedPreferences.edit();
+                    SharedPreferences.Editor editSender = preferFrom_ReplyRequest.edit();
                     editSender.putInt("requested_book_ID", listBook_ID.get(postion));
                     editSender.putInt("requested_Sender_ID", listSender_ID.get(postion));
                     editSender.apply();

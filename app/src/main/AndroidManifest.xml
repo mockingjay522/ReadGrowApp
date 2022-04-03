@@ -19,6 +19,9 @@
             android:name=".ReadingTracker"
             android:exported="false" />
         <activity
+            android:name=".ReplyRequest"
+            android:exported="false" />
+        <activity
             android:name=".HomePage"
             android:exported="true" />
         <activity

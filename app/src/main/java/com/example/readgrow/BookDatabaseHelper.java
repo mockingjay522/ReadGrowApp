@@ -81,10 +81,10 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE rent_book (rent_id integer primary key," +
                 "book_id integer," +
                 "reader_id integer," +
-                "price real," +
+                "price integer," +
                 "date Text," +
-              "address text," +
-               "postalCode text," +
+              //"address text," +
+               //"postalCode text," +
                "FOREIGN KEY(book_id) REFERENCES book(book_id)," +
                 "FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
 
@@ -234,18 +234,17 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
      * @param readerId
      * @param price
      * @param date
-     * @param address
-     * @param postalCode
+
      */
-    public int AddRentBook(int bookId,int readerId, double price, String date,String address, String postalCode){
+    public int AddRentBook(int bookId,int readerId, double price, String date){
 
         ContentValues rentBookTableValues = new ContentValues();
         rentBookTableValues.put("book_id",bookId);
         rentBookTableValues.put("reader_id",readerId);
         rentBookTableValues.put("price",price);
         rentBookTableValues.put("date",date);
-        rentBookTableValues.put("address",address);
-        rentBookTableValues.put("postalCode",postalCode);
+        //rentBookTableValues.put("address",address);
+        //rentBookTableValues.put("postalCode",postalCode);
 
         long recordId =this.shareBookDB.insert("rent_book",null,rentBookTableValues);
         Log.i("addRecordRentBook", String.valueOf(recordId));
@@ -617,7 +616,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor GetRequestedBook(int readerId) {
-        return  this.shareBookDB.rawQuery("Select b.book_id, b.title, r.sender_id " +
+        return  this.shareBookDB.rawQuery("Select b.book_id, b.title, r.sender_id, b.book_status, b.book_rent_price " +
                         "from book b inner join requested_book r " +
                         "where b.book_id = r.book_id and r.receiver_id = ?",
                 new String[]{String.valueOf(readerId)});
@@ -625,11 +624,9 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor GetBookByPostalCode(String postalCode, int userID){
         return  this.shareBookDB.rawQuery(
-                "select distinct b.book_id, b.title, b.author, b.publisher, b.publish_date, b.book_status, b.reader_id\n" +
-                        " from book b inner join requested_book r\n" +
-                        " inner join book_reader u on b.reader_id = u.reader_id\n" +
-                        " where b.book_status < 3  and u.postal_code like " + "\""+  postalCode + "\"" +
-                        " and b.reader_id != " + userID +
+                "select distinct b.book_id, b.title, b.book_status, b.reader_id" +
+                        " from book b join book_reader u on b.reader_id = u.reader_id" +
+                        " where u.postal_code like ? and b.reader_id != ? and b.book_status< 3" +
                         " and b.book_id not in (select book_id from requested_book)",new String[]{
                         String.valueOf(postalCode),
                         String.valueOf(userID)
@@ -652,6 +649,15 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     public int Update_BookStatus_When_Accept(int book_id){
         ContentValues bookTableValues = new ContentValues();
         bookTableValues.put("book_status",3);
+        int numberOfRecords = this.shareBookDB.update("book",bookTableValues,"book_id=?", new String[]{
+                String.valueOf(book_id)});
+        Log.i("updateRecordBook", String.valueOf(numberOfRecords));
+        return numberOfRecords;
+    }
+    public int Update_BookStatus_When_GiveAway(int book_id){
+        ContentValues bookTableValues = new ContentValues();
+
+        bookTableValues.put("book_status",4);
         int numberOfRecords = this.shareBookDB.update("book",bookTableValues,"book_id=?", new String[]{
                 String.valueOf(book_id)});
         Log.i("updateRecordBook", String.valueOf(numberOfRecords));
