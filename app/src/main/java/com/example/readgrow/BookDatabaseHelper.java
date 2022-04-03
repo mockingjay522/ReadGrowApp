@@ -623,15 +623,16 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(readerId)});
     }
 
-    public Cursor GetBookByPostalCode(String postalCode, int reader_id){
+    public Cursor GetBookByPostalCode(String postalCode, int userID){
         return  this.shareBookDB.rawQuery(
-                "select b.book_id, b.title, b.author, b.publisher, b.publish_date, b.book_status, b.reader_id \n" +
-                        "from book b inner join book_reader u on b.reader_id = u.reader_id \n" +
-                        "inner join requested_book r " +
-                        "where b.book_status < 3  and u.postal_code like ? and b.reader_id != ?" +
-                        "and b.book_id != r.book_id",new String[]{
+                "select distinct b.book_id, b.title, b.author, b.publisher, b.publish_date, b.book_status, b.reader_id\n" +
+                        " from book b inner join requested_book r\n" +
+                        " inner join book_reader u on b.reader_id = u.reader_id\n" +
+                        " where b.book_status < 3  and u.postal_code like " + "\""+  postalCode + "\"" +
+                        " and b.reader_id != " + userID +
+                        " and b.book_id not in (select book_id from requested_book)",new String[]{
                         String.valueOf(postalCode),
-                        String.valueOf(reader_id)
+                        String.valueOf(userID)
                 });
     }
     public Cursor GetReaderMessageByRecieverAndBookID(int receiverId,int bookId ){
