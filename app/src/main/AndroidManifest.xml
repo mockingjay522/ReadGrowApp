@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReadGrow">
         <activity
+            android:name=".viewMessgae"
+            android:exported="false" />
+        <activity
             android:name=".SendMessage"
             android:exported="false" />
         <activity

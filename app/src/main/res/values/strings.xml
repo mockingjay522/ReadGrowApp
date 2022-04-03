@@ -33,6 +33,8 @@
     <string name="rentPrice">$ Rent Price (If)</string>
     <string name="rentHint">$ Cost per week</string>
     <string name="rentHint2">Insert a Link</string>
+    <string name="messageDesc">View Messages</string>
+    <string name="signOutDesc">Sign Out</string>
     <string-array name="signUp2_countries">
         <item>Canada</item>
         <item>United States</item>

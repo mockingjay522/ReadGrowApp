@@ -83,11 +83,11 @@ public class SignUpActivity2 extends AppCompatActivity {
                     ID = bookDatabaseHelper.AddReader(fName, age, fullAddress, postalCode, email, passWord);
                     interestID = bookDatabaseHelper.AddBookReaderInterest(ID, genre);
                     if(ID > 0 && interestID>0){
-                        Toast.makeText(SignUpActivity2.this, Html.fromHtml("<big>data is inserted successfully</big>"),
+                        Toast.makeText(SignUpActivity2.this, Html.fromHtml("<big>User is created successfully</big>"),
                                 Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignUpActivity2.this, MainActivity.class));
                     }else{
-                        Toast.makeText(SignUpActivity2.this, "Create account not successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity2.this, "User account not created", Toast.LENGTH_SHORT).show();
                     }
                 }
 
