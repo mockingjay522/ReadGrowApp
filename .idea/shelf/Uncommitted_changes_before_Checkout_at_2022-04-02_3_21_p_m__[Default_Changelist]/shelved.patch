@@ -1,0 +1,808 @@
+Index: app/src/main/java/com/example/readgrow/BookDatabaseHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.readgrow;\r\n\r\nimport android.content.ContentValues;\r\nimport android.content.Context;\r\nimport android.database.Cursor;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.database.sqlite.SQLiteOpenHelper;\r\nimport android.util.Log;\r\n\r\npublic class BookDatabaseHelper extends SQLiteOpenHelper {\r\n    SQLiteDatabase shareBookDB;\r\n    public BookDatabaseHelper( Context context) {\r\n        super(context, \"shareBook.db\", null, 2);\r\n        this.shareBookDB = this.getWritableDatabase();\r\n    }\r\n\r\n    @Override\r\n    public void onCreate(SQLiteDatabase db) {\r\n\r\n       db.execSQL(\"CREATE TABLE admin (admin_id integer primary key,\" +\r\n                \"name Text);\");\r\n\r\n        db.execSQL(\"CREATE TABLE book_reader (reader_id integer primary key,\" +\r\n                \" name Text,\" +\r\n                \" age integer,\" +\r\n                \" address Text,\" +\r\n                \" postal_code Text,\" +\r\n                \" email Text,\" +\r\n                \" password Text);\");\r\n\r\n        db.execSQL(\"CREATE TABLE book_reader_interest (reader_id integer, interest Text,\" +\r\n                \" PRIMARY KEY (reader_id, interest),\" +\r\n                \" FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));\");\r\n\r\n        db.execSQL(\"CREATE TABLE book (book_id integer primary key,\" +\r\n                \"reader_id integer,\" +\r\n                \"title Text,\" +\r\n                \"author Text,\" +\r\n                \"publisher Text,\" +\r\n                \"publish_date Text,\" +\r\n                \"book_status integer,\" +\r\n                //\"book_location Text,\" +\r\n                \"book_rent_price integer,\" +\r\n                \"book_link Text,\" +\r\n                \" FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));\");\r\n\r\n        db.execSQL(\"CREATE TABLE reader_message (message_id integer primary key,\" +\r\n                \"sender_id integer,\" +\r\n                \"receiver_id integer,\" +\r\n                \"message_title text,\" +\r\n                \"message_content text,\" +\r\n                \"date text,\" +\r\n                \"FOREIGN KEY(sender_id,receiver_id) REFERENCES book_reader(reader_id,reader_id));\");\r\n\r\n\r\n        db.execSQL(\"CREATE TABLE admin_message (message_id integer primary key,\" +\r\n                \"admin_id integer,\" +\r\n                \"reader_id integer,\" +\r\n                \"message_title text,\" +\r\n                \"message_content text,\" +\r\n                \" date text,\" +\r\n                \" FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id),\" +\r\n                \" FOREIGN KEY(admin_id) REFERENCES admin(admin_id));\");\r\n\r\n\r\n        db.execSQL(\"CREATE TABLE share_book (share_id integer primary key,\" +\r\n                \"book_id integer,\" +\r\n                \"reader_id integer, \" +\r\n                \"date Text,\" +\r\n                \"FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));\");\r\n\r\n        db.execSQL(\"CREATE TABLE give_book (give_id integer primary key,\" +\r\n                \"book_id integer,\" +\r\n                \"reader_id integer, \" +\r\n                \"date Text,\" +\r\n                \"FOREIGN KEY(book_id) REFERENCES book(book_id),\" +\r\n                \"FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));\");\r\n\r\n        db.execSQL(\"CREATE TABLE rent_book (rent_id integer primary key,\" +\r\n                \"book_id integer,\" +\r\n                \"reader_id integer,\" +\r\n                \"price real,\" +\r\n                \"date Text,\" +\r\n              \"address text,\" +\r\n               \"postalCode text,\" +\r\n               \"FOREIGN KEY(book_id) REFERENCES book(book_id),\" +\r\n                \"FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));\");\r\n\r\n    }\r\n\r\n    @Override\r\n    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {\r\n        this.shareBookDB.execSQL(\"DROP TABLE IF EXISTS admin\");\r\n        this.shareBookDB.execSQL(\"DROP TABLE IF EXISTS book_reader\");\r\n        this.shareBookDB.execSQL(\"DROP TABLE IF EXISTS book\");\r\n        this.shareBookDB.execSQL(\"DROP TABLE IF EXISTS book_reader_interest\");\r\n        this.shareBookDB.execSQL(\"DROP TABLE IF EXISTS share_book\");\r\n        this.shareBookDB.execSQL(\"DROP TABLE IF EXISTS give_book\");\r\n        this.shareBookDB.execSQL(\"DROP TABLE IF EXISTS rent_book\");\r\n        this.shareBookDB.execSQL(\"DROP TABLE IF EXISTS reader_message\");\r\n        this.shareBookDB.execSQL(\"DROP TABLE IF EXISTS admin_message\");\r\n          onCreate(db);\r\n\r\n    }\r\n\r\n    //<editor-fold desc=\"This region includes all addition methods \">\r\n\r\n    public int AddAdmin(String adminName){\r\n        ContentValues adminTableValues = new ContentValues();\r\n        adminTableValues.put(\"name\",adminName);\r\n        long recordId = this.shareBookDB.insert(\"admin\",null,adminTableValues);\r\n        Log.i(\"addRecordAdmin\", String.valueOf(recordId));\r\n\r\n        return (int)recordId;\r\n    }\r\n\r\n    /***\r\n     * this method is used to add a new book reader\r\n     * @param readerName\r\n     *\r\n     */\r\n    public int AddReader(String readerName, int age, String address, String postalCode, String email, String password){\r\n        ContentValues readerTableValues = new ContentValues();\r\n        readerTableValues.put(\"name\",readerName);\r\n        readerTableValues.put(\"age\",age);\r\n        readerTableValues.put(\"address\",address);\r\n        readerTableValues.put(\"postal_code\",postalCode);\r\n        readerTableValues.put(\"email\",email);\r\n        readerTableValues.put(\"password\",password);\r\n\r\n        long recordId = this.shareBookDB.insert(\"book_reader\",null,readerTableValues);\r\n        Log.i(\"addRecordReader\", String.valueOf(recordId));\r\n        return (int)recordId;\r\n\r\n    }\r\n\r\n    /***\r\n     *\r\n     * @param readerId\r\n     * @param title\r\n     * @param author\r\n     * @param publisher\r\n     * @param publishDate\r\n     * @param book_status\r\n     * @param price\r\n     * @param link\r\n     * @return\r\n     */\r\n    public int AddBook(int readerId,String title,String author, String publisher,String publishDate, int book_status,int price, String link){\r\n        ContentValues bookTableValues = new ContentValues();\r\n        bookTableValues.put(\"reader_id\",readerId);\r\n        bookTableValues.put(\"title\",title);\r\n        bookTableValues.put(\"author\",author);\r\n        bookTableValues.put(\"publisher\",publisher);\r\n        bookTableValues.put(\"publish_date\",publishDate);\r\n        bookTableValues.put(\"book_status\",book_status);\r\n        bookTableValues.put(\"book_rent_price\",price);\r\n        bookTableValues.put(\"book_link\",link);\r\n\r\n        long recordId = this.shareBookDB.insert(\"book\",null,bookTableValues);\r\n        Log.i(\"addRecordBook\", String.valueOf(recordId));\r\n\r\n        return (int)recordId;\r\n\r\n    }\r\n\r\n    /***\r\n     * add a new book reader interest\r\n     * @param readerId\r\n     * @param interest\r\n     */\r\n    public int AddBookReaderInterest(int readerId, String interest ){\r\n        ContentValues interestTableValues = new ContentValues();\r\n        interestTableValues.put(\"reader_id\",readerId);\r\n        interestTableValues.put(\"interest\",interest);\r\n\r\n        long recordId = this.shareBookDB.insert(\"book_reader_interest\",null,interestTableValues);\r\n        Log.i(\"RecordInterest\", String.valueOf(recordId));\r\n\r\n        return (int)recordId;\r\n\r\n    }\r\n\r\n    /***\r\n     * add a new a gaven book\r\n     * @param bookId\r\n     * @param readerId\r\n     * @param date\r\n     */\r\n    public int AddGiveBook(int bookId, int readerId,String date ){\r\n        ContentValues giveBookTableValues = new ContentValues();\r\n        giveBookTableValues.put(\"book_id\",bookId);\r\n        giveBookTableValues.put(\"reader_id\",readerId);\r\n        giveBookTableValues.put(\"date\",date);\r\n\r\n        long recordId = this.shareBookDB.insert(\"give_book\",null,giveBookTableValues);\r\n        Log.i(\"addRecordGiveBook\", String.valueOf(recordId));\r\n\r\n        return (int)recordId;\r\n    }\r\n\r\n    /***\r\n     * add a new share book\r\n     * @param bookId\r\n     * @param readerId\r\n     * @param date\r\n     */\r\n    public int AddShareBook(int bookId, int readerId,String date){\r\n        ContentValues shareBookTableValues = new ContentValues();\r\n        shareBookTableValues.put(\"book_id\",bookId);\r\n        shareBookTableValues.put(\"reader_id\",readerId);\r\n        shareBookTableValues.put(\"date\",date);\r\n\r\n        long recordId = this.shareBookDB.insert(\"share_book\",null,shareBookTableValues);\r\n        Log.i(\"addRecordShareBook\", String.valueOf(recordId));\r\n\r\n        return (int)recordId;\r\n    }\r\n\r\n    /***\r\n     * add a new rent book record\r\n     * @param bookId\r\n     * @param readerId\r\n     * @param price\r\n     * @param date\r\n     * @param address\r\n     * @param postalCode\r\n     */\r\n    public int AddRentBook(int bookId,int readerId, double price, String date,String address, String postalCode){\r\n\r\n        ContentValues rentBookTableValues = new ContentValues();\r\n        rentBookTableValues.put(\"book_id\",bookId);\r\n        rentBookTableValues.put(\"reader_id\",readerId);\r\n        rentBookTableValues.put(\"price\",price);\r\n        rentBookTableValues.put(\"date\",date);\r\n        rentBookTableValues.put(\"address\",address);\r\n        rentBookTableValues.put(\"postalCode\",postalCode);\r\n\r\n        long recordId =this.shareBookDB.insert(\"rent_book\",null,rentBookTableValues);\r\n        Log.i(\"addRecordRentBook\", String.valueOf(recordId));\r\n\r\n        return (int)recordId;\r\n    }\r\n\r\n    /***\r\n     * add a new reader message\r\n     * @param senderId\r\n     * @param receiverId\r\n     * @param messageTitle\r\n     * @param messageContent\r\n     * @param date\r\n     */\r\n    public int AddReaderMessage(int senderId,int receiverId, String messageTitle,String messageContent,String date){\r\n        ContentValues readerMessageTableValues = new ContentValues();\r\n        readerMessageTableValues.put(\"sender_id\",senderId);\r\n        readerMessageTableValues.put(\"receiver_id\",receiverId);\r\n        readerMessageTableValues.put(\"message_title\",messageTitle);\r\n        readerMessageTableValues.put(\"message_content\",messageContent);\r\n        readerMessageTableValues.put(\"date\",date);\r\n\r\n        long recordId =this.shareBookDB.insert(\"reader_message\",null,readerMessageTableValues);\r\n        Log.i(\"addRecordReaderMessage\", String.valueOf(recordId));\r\n\r\n        return (int)recordId;\r\n\r\n\r\n    }\r\n\r\n    /***\r\n     * add a new admin message to a reader\r\n     * @param adminId\r\n     * @param readerId\r\n     * @param messageTitle\r\n     * @param message_content\r\n     * @param date\r\n     */\r\n    public int AddAdminMessage(int adminId,int readerId, String messageTitle, String message_content,String date){\r\n        ContentValues adminMessageTableValues = new ContentValues();\r\n        adminMessageTableValues.put(\"admin_id\",adminId);\r\n        adminMessageTableValues.put(\"reader_id\",readerId);\r\n        adminMessageTableValues.put(\"message_title\",messageTitle);\r\n        adminMessageTableValues.put(\"message_content\",message_content);\r\n        adminMessageTableValues.put(\"date\",date);\r\n\r\n        long recordId =this.shareBookDB.insert(\"admin_message\",null,adminMessageTableValues);\r\n        Log.i(\"addRecordAdminMessage\", String.valueOf(recordId));\r\n\r\n        return (int)recordId;\r\n\r\n    }\r\n\r\n    //</editor-fold>\r\n\r\n    //<editor-fold desc=\"This region includes all deletion methods \">\r\n    public int DeleteAdminByID(int admin_id){\r\n        String[] whereValue = {String.valueOf(admin_id)};\r\n        int deletionResult = this.shareBookDB.delete(\"admin\",\"admin_id=?\",whereValue);\r\n        Log.i(\"deletionAdmin\",String.valueOf(deletionResult));\r\n\r\n        return deletionResult;\r\n\r\n    }\r\n\r\n    public int DeleteReaderMessageByID(int message_id){\r\n        String[] whereValue = {String.valueOf(message_id)};\r\n        int deletionResult = this.shareBookDB.delete(\"reader_message\",\"message_id=?\",whereValue);\r\n        Log.i(\"deletionReaderMessage\",String.valueOf(deletionResult));\r\n\r\n\r\n        return deletionResult;\r\n\r\n    }\r\n\r\n    public int DeleteBookByID(int book_id){\r\n        String[] whereValue = {String.valueOf(book_id)};\r\n        int deletionResult = this.shareBookDB.delete(\"book\",\"book_id=?\",whereValue);\r\n        Log.i(\"deletionBook\",String.valueOf(deletionResult));\r\n\r\n        return deletionResult;\r\n\r\n    }\r\n\r\n    public int DeleteAdminMessageByID(int message_id){\r\n        String[] whereValue = {String.valueOf(message_id)};\r\n        int deletionResult = this.shareBookDB.delete(\"admin_message\",\"message_id=?\",whereValue);\r\n        Log.i(\"deletionAdminMessage\",String.valueOf(deletionResult));\r\n\r\n        return deletionResult;\r\n\r\n    }\r\n\r\n    public int DeleteBookReaderById(int reader_id){\r\n        String[] whereValue = {String.valueOf(reader_id)};\r\n        int deletionResult = this.shareBookDB.delete(\"book_reader\",\"reader_id=?\",whereValue);\r\n        Log.i(\"deletionBookReader\",String.valueOf(deletionResult));\r\n\r\n        return deletionResult;\r\n\r\n    }\r\n\r\n    public int DeleteBookReaderInterestById(int reader_id,String interest){\r\n        String[] whereValue = {String.valueOf(reader_id),interest};\r\n        int deletionResult = this.shareBookDB.delete(\"book_reader_interest\",\"reader_id=? and interest=?\",whereValue);\r\n        Log.i(\"deletionInterest\",String.valueOf(deletionResult));\r\n\r\n        return deletionResult;\r\n\r\n    }\r\n\r\n    public int DeleteGiveBookById(int give_id){\r\n        String[] whereValue = {String.valueOf(give_id)};\r\n        int deletionResult = this.shareBookDB.delete(\"give_book\",\"give_id=?\",whereValue);\r\n        Log.i(\"deletionGiveBook\",String.valueOf(deletionResult));\r\n\r\n        return deletionResult;\r\n\r\n    }\r\n\r\n    public int DeleteRentBookById(int rent_id){\r\n        String[] whereValue = {String.valueOf(rent_id)};\r\n        int deletionResult = this.shareBookDB.delete(\"rent_book\",\"rent_id=?\",whereValue);\r\n        Log.i(\"deletionRentBook\",String.valueOf(deletionResult));\r\n\r\n        return deletionResult;\r\n\r\n    }\r\n\r\n    public int DeleteShareBookById(int share_id){\r\n        String[] whereValue = {String.valueOf(share_id)};\r\n        int deletionResult = this.shareBookDB.delete(\"share_book\",\"share_id=?\",whereValue);\r\n        Log.i(\"deletionShareBook\",String.valueOf(deletionResult));\r\n\r\n        return deletionResult;\r\n\r\n    }\r\n    //</editor-fold>\r\n\r\n    //<editor-fold desc=\"This region includes all update methods \">\r\n\r\n    public int UpdateAdmin(int admin_id,String adminName){\r\n        ContentValues adminTableValues = new ContentValues();\r\n        adminTableValues.put(\"name\",adminName);\r\n        int numberOfRecords = this.shareBookDB.update(\"admin\",adminTableValues,\"admin_id=?\", new String[]{\r\n                String.valueOf(admin_id)});\r\n        Log.i(\"updateRecordAdmin\", String.valueOf(numberOfRecords));\r\n\r\n        return numberOfRecords;\r\n    }\r\n\r\n    public int UpdateBook(int book_id,int readerId,String title,String author,String publisher,String publishDate, int book_status){\r\n        ContentValues bookTableValues = new ContentValues();\r\n\r\n        bookTableValues.put(\"reader_id\",readerId);\r\n        bookTableValues.put(\"title\",title);\r\n        bookTableValues.put(\"author\",author);\r\n        bookTableValues.put(\"publisher\",publisher);\r\n        bookTableValues.put(\"publish_date\",publishDate);\r\n        bookTableValues.put(\"book_status\",book_status);\r\n\r\n        int numberOfRecords = this.shareBookDB.update(\"book\",bookTableValues,\"book_id=?\", new String[]{\r\n                String.valueOf(book_id)});\r\n        Log.i(\"updateRecordBook\", String.valueOf(numberOfRecords));\r\n\r\n        return numberOfRecords;\r\n    }\r\n\r\n    public int UpdateBookReader(int reader_id,String readerName, int age, String address, String email, String password){\r\n        ContentValues readerTableValues = new ContentValues();\r\n\r\n        readerTableValues.put(\"name\",readerName);\r\n        readerTableValues.put(\"age\",age);\r\n        readerTableValues.put(\"address\",address);\r\n        readerTableValues.put(\"email\",email);\r\n        readerTableValues.put(\"password\",password);\r\n\r\n        int numberOfRecords = this.shareBookDB.update(\"book_reader\",readerTableValues,\"reader_id=?\", new String[]{\r\n                String.valueOf(reader_id)});\r\n        Log.i(\"updateBookReader\", String.valueOf(numberOfRecords));\r\n\r\n        return numberOfRecords;\r\n    }\r\n\r\n\r\n    //</editor-fold>\r\n\r\n    //<editor-fold desc=\"This region includes display methods \">\r\n\r\n    // get all a table's records\r\n    public Cursor GetAllAdmins(){\r\n\r\n        return  this.shareBookDB.rawQuery(\"Select * from admin\",null);\r\n    }\r\n\r\n    public Cursor GetAllAdminMessage(){\r\n        return  this.shareBookDB.rawQuery(\"Select * from admin_message\",null);\r\n    }\r\n\r\n    public Cursor GetAllBooks(){\r\n        return  this.shareBookDB.rawQuery(\"Select * from book\",null);\r\n    }\r\n\r\n    public Cursor GetAllBookReader(){\r\n        //return this.shareBookDB.rawQuery(\"Select * from book_reader\",null);\r\n        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();\r\n        String query = \"Select * from book_reader\";\r\n        Cursor c = sqLiteDatabase.rawQuery(query,null);\r\n        return c;\r\n    }\r\n\r\n    public Cursor GetAllBookReaderInterest(){\r\n        return  this.shareBookDB.rawQuery(\"Select * from book_reader_interest\",null);\r\n    }\r\n\r\n    public Cursor GetAllGiveBook(){\r\n        return  this.shareBookDB.rawQuery(\"Select * from give_book\",null);\r\n    }\r\n\r\n    public Cursor GetAllReaderMessage(){\r\n        return  this.shareBookDB.rawQuery(\"Select * from reader_message\",null);\r\n    }\r\n\r\n    public Cursor GetAllRentBook(){\r\n        return  this.shareBookDB.rawQuery(\"Select * from rent_book\",null);\r\n    }\r\n\r\n    public Cursor GetAllShareBook(){\r\n        return  this.shareBookDB.rawQuery(\"Select * from share_book\",null);\r\n    }\r\n\r\n    //---- get a record by IDs\r\n    public Cursor GetAdminById(int adminId){\r\n        return  this.shareBookDB.rawQuery(\"Select * from admin Where admin_id = ?\",new String[]{\r\n                String.valueOf(adminId)\r\n        });\r\n\r\n    }\r\n\r\n    public Cursor GetAdminMessageByAdminId(int adminId) {\r\n        return this.shareBookDB.rawQuery(\"Select * from admin_message Where admin_id = ?\", new String[]{\r\n                String.valueOf(adminId)\r\n        });\r\n    }\r\n\r\n    public Cursor GetAdminMessageByReaderId(int readerId){\r\n        return  this.shareBookDB.rawQuery(\"Select * from admin_message Where reader_id = ?\",new String[]{\r\n                String.valueOf(readerId)\r\n        });\r\n    }\r\n\r\n    public Cursor GetBookById(int bookId){\r\n        return  this.shareBookDB.rawQuery(\"Select * from book Where book_id = ?\",new String[]{\r\n                String.valueOf(bookId)\r\n        });\r\n    }\r\n\r\n    public Cursor GetBookByPostalCode(String postalCode, int reader_id){\r\n//        return  this.shareBookDB.rawQuery(\"Select * from book Where postal_code = ?\",new String[]{\r\n//                String.valueOf(postalCode)\r\n        return  this.shareBookDB.rawQuery(\r\n                \"select b.book_id, b.title, b.author, b.publisher, b.publish_date, b.book_status, b.reader_id \\n\" +\r\n                        \"from book b inner join book_reader u on b.reader_id = u.reader_id \\n\" +\r\n                        \"where b.book_status < 3  and u.postal_code like ? and b.reader_id != ?\",new String[]{\r\n                String.valueOf(postalCode),\r\n                String.valueOf(reader_id)\r\n        });\r\n    }\r\n\r\n    public Cursor GetBooksByReaderId(int readerId){\r\n        return  this.shareBookDB.rawQuery(\"Select * from book Where reader_id = ?\",new String[]{\r\n                String.valueOf(readerId)\r\n        });\r\n    }\r\n\r\n    public Cursor GetBookReaderById(int readerId){\r\n        return  this.shareBookDB.rawQuery(\"Select * from book_reader Where reader_id = ?\",new String[]{\r\n                String.valueOf(readerId)\r\n        });\r\n    }\r\n\r\n    /***\r\n     * it is used to validate the user\r\n     * @param password\r\n     * @param email\r\n     * @return we need to get the user id to pass it into SharePrefrence\r\n     */\r\n    public Cursor GetBookReaderByPassAndEmail(String password,String email){\r\n        return  this.shareBookDB.rawQuery(\"Select * from book_reader Where password = ? and email=? \",new String[]{\r\n                String.valueOf(password),\r\n                String.valueOf(email)\r\n\r\n        });\r\n    }\r\n    /**\r\n     * Check Email use to register is exiting or not\r\n     * **/\r\n    public Cursor CheckExitingEmail(String email){\r\n        return  this.shareBookDB.rawQuery(\"Select email from book_reader Where email like ? \",new String[]{\r\n                String.valueOf(email)\r\n        });\r\n    }\r\n\r\n    public Cursor GetBookReaderInterestByReaderId(int readerId){\r\n        return  this.shareBookDB.rawQuery(\"Select * from book_reader_interest Where reader_id = ?\",new String[]{\r\n                String.valueOf(readerId)\r\n        });\r\n    }\r\n\r\n    public Cursor GetBookReaderInterestByInterest(String interest){\r\n        return  this.shareBookDB.rawQuery(\"Select * from book_reader_interest Where interest = ?\",new String[]{interest});\r\n    }\r\n\r\n    public Cursor GetGiveBookByBookId(int bookId){\r\n        return  this.shareBookDB.rawQuery(\"Select * from give_book Where book_id = ?\",new String[]{String.valueOf(bookId)});\r\n    }\r\n\r\n    public Cursor GetGiveBookByReaderId(int readerId){\r\n        return  this.shareBookDB.rawQuery(\"Select * from give_book Where reader_id = ?\",new String[]{String.valueOf(readerId)});\r\n    }\r\n\r\n    public Cursor GetReaderMessageBySenderAndReceiverID(int senderId,int receiverId ){\r\n        return  this.shareBookDB.rawQuery(\"Select * from reader_message Where sender_id = ? and receiver_id=?\",new String[]{\r\n                String.valueOf(senderId),\r\n                String.valueOf(receiverId),\r\n        });\r\n    }\r\n\r\n    public Cursor GetReaderMessageBySenderID(int senderId ){\r\n        return  this.shareBookDB.rawQuery(\"Select * from reader_message Where sender_id = ?\",new String[]{\r\n                String.valueOf(senderId)\r\n        });\r\n    }\r\n\r\n    public Cursor GetReaderMessageByReceiverID(int receiverId ){\r\n        return  this.shareBookDB.rawQuery(\"Select * from reader_message Where receiver_id = ?\",new String[]{\r\n                String.valueOf(receiverId)\r\n        });\r\n    }\r\n\r\n    public Cursor GetRentBookByBookId(int bookId){\r\n        return  this.shareBookDB.rawQuery(\"Select * from rent_book Where book_id = ?\",new String[]{String.valueOf(bookId)});\r\n    }\r\n\r\n    public Cursor GetRentBookByReaderId(int readerId){\r\n        return  this.shareBookDB.rawQuery(\"Select * from rent_book Where reader_id = ?\",new String[]{String.valueOf(readerId)});\r\n    }\r\n\r\n    public Cursor GetShareBookByBookId(int bookId){\r\n        return  this.shareBookDB.rawQuery(\"Select * from share_book Where book_id = ?\",new String[]{String.valueOf(bookId)});\r\n    }\r\n\r\n    public Cursor GetShareBookByReaderId(int readerId){\r\n        return  this.shareBookDB.rawQuery(\"Select * from share_book Where reader_id = ?\",new String[]{String.valueOf(readerId)});\r\n    }\r\n\r\n\r\n    public Cursor GetBookByStatus(int option) {\r\n        return  this.shareBookDB.rawQuery(\"Select * from book Where book_status = ?\",new String[]{String.valueOf(option)});\r\n\r\n    }\r\n\r\n    public Cursor GetOwnerPostalCode(int readerId) {\r\n        return  this.shareBookDB.rawQuery(\"Select postal_code from book_reader Where reader_id = ?\",new String[]{String.valueOf(readerId)});\r\n    }\r\n    //</editor-fold>\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/readgrow/BookDatabaseHelper.java b/app/src/main/java/com/example/readgrow/BookDatabaseHelper.java
+--- a/app/src/main/java/com/example/readgrow/BookDatabaseHelper.java	(revision c139ba6af6938e3ac02b8765c46c9735857ca1a0)
++++ b/app/src/main/java/com/example/readgrow/BookDatabaseHelper.java	(date 1648888185803)
+@@ -49,7 +49,9 @@
+                 "receiver_id integer," +
+                 "message_title text," +
+                 "message_content text," +
+-                "date text," +
++     //           "date text," +
++                "book_id integer," +
++                "FOREIGN KEY(book_id) REFERENCES book(book_id)," +
+                 "FOREIGN KEY(sender_id,receiver_id) REFERENCES book_reader(reader_id,reader_id));");
+ 
+ 
+@@ -86,6 +88,14 @@
+                "FOREIGN KEY(book_id) REFERENCES book(book_id)," +
+                 "FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
+ 
++        /**requested_book table used to manage the books are request of the owner*/
++        db.execSQL("CREATE TABLE requested_book (request_id integer primary key," +
++                "book_id integer," +
++                "sender_id integer," +
++                "receiver_id integer," +
++                "FOREIGN KEY(book_id) REFERENCES book(book_id),"+
++                "FOREIGN KEY(sender_id,receiver_id) REFERENCES book_reader(reader_id,reader_id));");
++
+     }
+ 
+     @Override
+@@ -99,6 +109,7 @@
+         this.shareBookDB.execSQL("DROP TABLE IF EXISTS rent_book");
+         this.shareBookDB.execSQL("DROP TABLE IF EXISTS reader_message");
+         this.shareBookDB.execSQL("DROP TABLE IF EXISTS admin_message");
++        this.shareBookDB.execSQL("DROP TABLE IF EXISTS requested_book");
+           onCreate(db);
+ 
+     }
+@@ -248,15 +259,15 @@
+      * @param receiverId
+      * @param messageTitle
+      * @param messageContent
+-     * @param date
++     * @param bookID
+      */
+-    public int AddReaderMessage(int senderId,int receiverId, String messageTitle,String messageContent,String date){
++    public int AddReaderMessage(int senderId,int receiverId, String messageTitle,String messageContent,int bookID){
+         ContentValues readerMessageTableValues = new ContentValues();
+         readerMessageTableValues.put("sender_id",senderId);
+         readerMessageTableValues.put("receiver_id",receiverId);
+         readerMessageTableValues.put("message_title",messageTitle);
+         readerMessageTableValues.put("message_content",messageContent);
+-        readerMessageTableValues.put("date",date);
++        readerMessageTableValues.put("book_id",bookID);
+ 
+         long recordId =this.shareBookDB.insert("reader_message",null,readerMessageTableValues);
+         Log.i("addRecordReaderMessage", String.valueOf(recordId));
+@@ -265,6 +276,19 @@
+ 
+ 
+     }
++    /**
++     * add a requested book
++     * */
++    public int AddRequested_Book(int bookID, int senderID,int receiverId){
++        ContentValues requested_BookTableValues = new ContentValues();
++        requested_BookTableValues.put("book_id",bookID);
++        requested_BookTableValues.put("sender_id",senderID);
++        requested_BookTableValues.put("receiver_id",receiverId);
++
++        long recordId =this.shareBookDB.insert("requested_book",null,requested_BookTableValues);
++        Log.i("addRequestedBook", String.valueOf(recordId));
++        return (int)recordId;
++    }
+ 
+     /***
+      * add a new admin message to a reader
+@@ -601,6 +625,14 @@
+     public Cursor GetOwnerPostalCode(int readerId) {
+         return  this.shareBookDB.rawQuery("Select postal_code from book_reader Where reader_id = ?",new String[]{String.valueOf(readerId)});
+     }
++
++    public Cursor GetRequestedBook(int readerId) {
++        return  this.shareBookDB.rawQuery("Select b.book_id, b.title, r.sender_id " +
++                        "from book b inner join requested_book r " +
++                        "where b.book_id = r.book_id and r.receiver_id = ?",
++                new String[]{String.valueOf(readerId)});
++    }
++
+     //</editor-fold>
+ 
+ 
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">ReadGrow</string>\r\n    <string name=\"app_logo_description\">Logo of the Application</string>\r\n    <string name=\"login_username_hint\">Email</string>\r\n    <string name=\"login_password_hint\">Password</string>\r\n    <string name=\"login_showPassword\"><u>Show Password</u></string>\r\n    <string name=\"login_button_text\">Log In</string>\r\n    <string name='login_signup_text'><u><b>Sign Up.</b></u></string>\r\n    <string name=\"login_noAccount_text\">Dont have an account?</string>\r\n    <string name=\"signUp1_username_hint\">Create a Username</string>\r\n    <string name=\"signUp1_username_email\">Enter your email Address</string>\r\n    <string name=\"signUp1_password_hint\">Create Password</string>\r\n    <string name=\"signUp1_button_text\">Next</string>\r\n    <string name=\"Message\">Message</string>\r\n    <string name=\"MessageHere\">Write your message here.</string>\r\n    <string name=\"signUp1_Account_text\">Already have an account?</string>\r\n    <string name=\"signUp1_signin_text\"><u><b>Sign In.</b></u></string>\r\n    <string name=\"signUp1_name_hint\">Enter Your Full Name</string>\r\n    <string name=\"signUp2_country_hint\">Select Country</string>\r\n    <string name=\"addBook\">Add Book</string>\r\n    <string name=\"updateBook\">Update Book</string>\r\n    <string name=\"bookName\">Name of Book</string>\r\n    <string name=\"bookAuthor\">Author</string>\r\n    <string name=\"publication\">Publication</string>\r\n    <string name=\"yearPublication\">Year</string>\r\n    <string name=\"share\">Share</string>\r\n    <string name=\"giveaway\">Give Away</string>\r\n    <string name=\"rent\">Rent</string>\r\n    <string name=\"btnAdd\">Add</string>\r\n    <string name=\"btnUpdate\">Update</string>\r\n    <string name=\"giveAway\">Give Away</string>\r\n    <string name=\"totalCost\">$ Total Cost</string>\r\n    <string name=\"rentPrice\">$ Rent Price (If)</string>\r\n    <string name=\"rentHint\">$ Cost per week</string>\r\n    <string name=\"rentHint2\">Insert a Link</string>\r\n    <string-array name=\"signUp2_countries\">\r\n        <item>Canada</item>\r\n        <item>United States</item>\r\n    </string-array>\r\n    <string-array name=\"status\">\r\n        <item>Status</item>\r\n        <item>Available</item>\r\n        <item>Unavailable</item>\r\n    </string-array>\r\n    <string-array name=\"signUp2_province\">\r\n        <item>Ontario</item>\r\n        <item>Qubec</item>\r\n        <item>Nova Scotia</item>\r\n        <item>New Brunswick</item>\r\n        <item>Manitoba</item>\r\n        <item>British Columbia</item>\r\n        <item>Alberta</item>\r\n        <item>Saskatchewan</item>\r\n        <item>Prince Edward Island</item>\r\n        <item>Newfoundland and Labrador</item>\r\n    </string-array>\r\n    <string name=\"signUp2_province_hint\">Select Province</string>\r\n    <string name=\"signUp2_postalCode_hint\">Enter Postal Code</string>\r\n    <string name=\"signUp2_address_hint\">Enter Full Address</string>\r\n    <string name=\"SignUp2_button_text\">Create Account</string>\r\n    <string name=\"signUp2_age_hint\">Enter Age</string>\r\n    <string name=\"signUp2_genre_hint\">Select Genre</string>\r\n    <string-array name=\"signUp2_genre\">\r\n        <item>Fiction</item>\r\n        <item>Non-Fiction</item>\r\n    </string-array>\r\n    <string name=\"findBook_label\">Showing books near <u>(location)</u></string>\r\n    <string name=\"requestBook_bookname_label\">Book Name</string>\r\n    <string name=\"requestBook_authorname_label\">Author Name</string>\r\n    <string name=\"requestBook_publication_label\">Publication</string>\r\n    <string name=\"requestBook_year_label\">Year</string>\r\n    <string name=\"requestBook_bookOwnerName_label\">Book Owner Name</string>\r\n    <string name=\"requestBook_email_label\">Email</string>\r\n    <string name=\"requestBook_location_label\">Pickup Location</string>\r\n    <string name=\"requestBook_cost_display\">The total cost is <u>$(cost)</u></string>\r\n    <string name=\"requestBook_message\">Type message</string>\r\n    <string name=\"requestBook_send_button\">Send</string>\r\n    <string name=\"findBook_postalCode\">Postal Code</string>\r\n    <string name=\"updateBook0_title\">MY BOOKS</string>\r\n    <string name=\"homepage_addUpdateBook\">Add/Update a Book</string>\r\n    <string name=\"homepage_findBook\">Find a book</string>\r\n    <string name=\"homepage_readingTracker\">Reading Tracker</string>\r\n    <string name=\"homepage_text\">Hi User,</string>\r\n    <string name=\"homepage_text2\">What would you like to do today?</string>\r\n    <string name=\"findBook_BTN_Search\">Search</string>\r\n    <string name=\"findBook_hint_postal_code\">Enter Postal Code</string>\r\n    <string name=\"readingTrickerTitle\">Reading Tracker</string>\r\n    <string name=\"sortOptionBtn\">Sort</string>\r\n    <string-array name=\"bookOptions\">\r\n        <item>Please select an option</item>\r\n        <item>Rent</item>\r\n        <item>Share</item>\r\n        <item>Give away</item>\r\n        <item>Not avalaible</item>\r\n    </string-array>\r\n    <string name=\"unavailable\">Unavailable</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision c139ba6af6938e3ac02b8765c46c9735857ca1a0)
++++ b/app/src/main/res/values/strings.xml	(date 1648885807663)
+@@ -94,4 +94,6 @@
+         <item>Not avalaible</item>
+     </string-array>
+     <string name="unavailable">Unavailable</string>
++    <string name="reply_Request">Reply Request</string>
++    <string name="listRequestedBook">List Requested Books</string>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/java/com/example/readgrow/AddBook.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.readgrow;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\n\r\npublic class AddBook extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_add_book);\r\n\r\n\r\n        Button btnAdd = findViewById(R.id.btnAddBook);\r\n        Button btnUpdate = findViewById(R.id.btnUpdateBook);\r\n        //d\r\n        btnAdd.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                startActivity(new Intent(AddBook.this, AddBookPage.class));\r\n            }\r\n        });\r\n\r\n        btnUpdate.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                startActivity(new Intent(AddBook.this, UpdateBook0.class));\r\n            }\r\n        });\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/readgrow/AddBook.java b/app/src/main/java/com/example/readgrow/AddBook.java
+--- a/app/src/main/java/com/example/readgrow/AddBook.java	(revision c139ba6af6938e3ac02b8765c46c9735857ca1a0)
++++ b/app/src/main/java/com/example/readgrow/AddBook.java	(date 1648889191931)
+@@ -17,6 +17,7 @@
+ 
+         Button btnAdd = findViewById(R.id.btnAddBook);
+         Button btnUpdate = findViewById(R.id.btnUpdateBook);
++        Button btnReply = findViewById(R.id.btnReplyRequest);
+         //d
+         btnAdd.setOnClickListener(new View.OnClickListener() {
+             @Override
+@@ -31,5 +32,11 @@
+                 startActivity(new Intent(AddBook.this, UpdateBook0.class));
+             }
+         });
++        btnReply.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                startActivity(new Intent(AddBook.this, ReplyRequest.class));
++            }
++        });
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.example.readgrow\">\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.ReadGrow\">\r\n        <activity\r\n            android:name=\".SendMessage\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".ReadingTracker\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".HomePage\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".UpdateBook0\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".RequestBookActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".FindBookActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".UpdateBook\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".AddBookPage\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".MainActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity\r\n            android:name=\".SignUpActivity2\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".AddBook\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".SignUpActivity1\"\r\n            android:exported=\"false\" />\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision c139ba6af6938e3ac02b8765c46c9735857ca1a0)
++++ b/app/src/main/AndroidManifest.xml	(date 1648885480908)
+@@ -10,6 +10,9 @@
+         android:supportsRtl="true"
+         android:theme="@style/Theme.ReadGrow">
+         <activity
++            android:name=".ReplyRequest"
++            android:exported="false" />
++        <activity
+             android:name=".SendMessage"
+             android:exported="false" />
+         <activity
+Index: app/src/main/java/com/example/readgrow/ReplyRequest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/readgrow/ReplyRequest.java b/app/src/main/java/com/example/readgrow/ReplyRequest.java
+new file mode 100644
+--- /dev/null	(date 1648890122355)
++++ b/app/src/main/java/com/example/readgrow/ReplyRequest.java	(date 1648890122355)
+@@ -0,0 +1,59 @@
++package com.example.readgrow;
++
++import androidx.appcompat.app.AppCompatActivity;
++import androidx.recyclerview.widget.LinearLayoutManager;
++import androidx.recyclerview.widget.RecyclerView;
++
++import android.content.SharedPreferences;
++import android.database.Cursor;
++import android.os.Bundle;
++import android.preference.PreferenceManager;
++import android.view.View;
++import android.widget.ArrayAdapter;
++import android.widget.ListView;
++import android.widget.SimpleAdapter;
++
++import java.util.ArrayList;
++
++public class ReplyRequest extends AppCompatActivity{
++    BookDatabaseHelper databaseHelper;
++    ArrayList <String > listBook_Title;
++    ArrayList <Integer> listSender_ID ;
++    ArrayList<Integer> listBook_ID ;
++    ListView listRequestedBook;
++
++    SharedPreferences sharedPreferences;
++
++    int loginID;
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_reply_request);
++
++        listBook_Title = new ArrayList<>();
++        listSender_ID = new ArrayList<>();
++        listBook_ID = new ArrayList<>();
++
++        listRequestedBook = findViewById(R.id.list_Requested_Book);
++
++        databaseHelper = new BookDatabaseHelper(this);
++
++        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
++        loginID = Integer.parseInt(sharedPreferences.getString("userID", "0"));
++        Cursor cursor = databaseHelper.GetRequestedBook(loginID);
++        /**0 is book_id, 1 is title, 2 is sender_id*/
++        if(cursor.getCount()>0){
++            while (cursor.moveToNext()){
++                listBook_ID.add(cursor.getInt(0));
++                listBook_Title.add(cursor.getString(1));
++                listSender_ID.add(cursor.getInt(2));
++            }
++        }
++        //SimpleAdapter adapter = new SimpleAdapter(this)
++        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,listBook_Title);
++
++        listRequestedBook.setAdapter(adapter);
++
++    }
++
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_add_book.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".AddBook\">\r\n\r\n\r\n    <Button\r\n        android:id=\"@+id/btnAddBook\"\r\n        android:layout_width=\"179dp\"\r\n        android:layout_height=\"163dp\"\r\n        android:layout_marginStart=\"116dp\"\r\n        android:layout_marginTop=\"110dp\"\r\n        android:layout_marginEnd=\"116dp\"\r\n        android:background=\"@drawable/rounded_button\"\r\n        android:text=\"@string/addBook\"\r\n        android:textSize=\"16sp\"\r\n        android:textStyle=\"bold\"\r\n        app:backgroundTint=\"@color/btnColor\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btnUpdateBook\"\r\n        android:layout_width=\"179dp\"\r\n        android:layout_height=\"163dp\"\r\n        android:layout_marginStart=\"116dp\"\r\n        android:layout_marginTop=\"75dp\"\r\n        android:layout_marginEnd=\"116dp\"\r\n        android:background=\"@drawable/rounded_button\"\r\n        android:text=\"@string/updateBook\"\r\n        android:textSize=\"16sp\"\r\n        android:textStyle=\"bold\"\r\n        app:backgroundTint=\"@color/btnColor\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/btnAddBook\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_add_book.xml b/app/src/main/res/layout/activity_add_book.xml
+--- a/app/src/main/res/layout/activity_add_book.xml	(revision c139ba6af6938e3ac02b8765c46c9735857ca1a0)
++++ b/app/src/main/res/layout/activity_add_book.xml	(date 1648885523734)
+@@ -7,35 +7,45 @@
+     tools:context=".AddBook">
+ 
+ 
++    <Button
++        android:id="@+id/btnUpdateBook"
++        android:layout_width="179dp"
++        android:layout_height="163dp"
++        android:layout_marginEnd="16dp"
++        android:layout_marginBottom="156dp"
++        android:background="@drawable/rounded_button"
++        android:text="@string/updateBook"
++        android:textSize="16sp"
++        android:textStyle="bold"
++        app:backgroundTint="@color/btnColor"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent" />
++
+     <Button
+         android:id="@+id/btnAddBook"
+         android:layout_width="179dp"
+         android:layout_height="163dp"
+         android:layout_marginStart="116dp"
+-        android:layout_marginTop="110dp"
+-        android:layout_marginEnd="116dp"
++        android:layout_marginTop="95dp"
+         android:background="@drawable/rounded_button"
+         android:text="@string/addBook"
+         android:textSize="16sp"
+         android:textStyle="bold"
+         app:backgroundTint="@color/btnColor"
+-        app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <Button
+-        android:id="@+id/btnUpdateBook"
++        android:id="@+id/btnReplyRequest"
+         android:layout_width="179dp"
+         android:layout_height="163dp"
+-        android:layout_marginStart="116dp"
+-        android:layout_marginTop="75dp"
+-        android:layout_marginEnd="116dp"
++        android:layout_marginStart="16dp"
++        android:layout_marginBottom="156dp"
+         android:background="@drawable/rounded_button"
+-        android:text="@string/updateBook"
++        android:text="@string/reply_Request"
+         android:textSize="16sp"
+         android:textStyle="bold"
+         app:backgroundTint="@color/btnColor"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/btnAddBook" />
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintStart_toStartOf="parent" />
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_update_book0.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".UpdateBook0\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/updateBook0_title\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"160dp\"\r\n        android:layout_marginTop=\"76dp\"\r\n        android:text=\"@string/updateBook0_title\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <ListView\r\n        android:id=\"@+id/MyBooks_listview\"\r\n        android:layout_width=\"456dp\"\r\n        android:layout_height=\"469dp\"\r\n        android:layout_marginStart=\"28dp\"\r\n        android:layout_marginTop=\"28dp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/updateBook0_title\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_update_book0.xml b/app/src/main/res/layout/activity_update_book0.xml
+--- a/app/src/main/res/layout/activity_update_book0.xml	(revision c139ba6af6938e3ac02b8765c46c9735857ca1a0)
++++ b/app/src/main/res/layout/activity_update_book0.xml	(date 1648876265506)
+@@ -20,8 +20,8 @@
+ 
+     <ListView
+         android:id="@+id/MyBooks_listview"
+-        android:layout_width="456dp"
+-        android:layout_height="469dp"
++        android:layout_width="367dp"
++        android:layout_height="473dp"
+         android:layout_marginStart="28dp"
+         android:layout_marginTop="28dp"
+         app:layout_constraintStart_toStartOf="parent"
+Index: app/src/main/res/layout/activity_reply_request.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_reply_request.xml b/app/src/main/res/layout/activity_reply_request.xml
+new file mode 100644
+--- /dev/null	(date 1648888185789)
++++ b/app/src/main/res/layout/activity_reply_request.xml	(date 1648888185789)
+@@ -0,0 +1,33 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".ReplyRequest">
++
++    <TextView
++        android:id="@+id/textView2"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="72dp"
++        android:text="@string/listRequestedBook"
++
++        android:textAlignment="center"
++        android:textColor="#3F51B5"
++        android:textSize="24sp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.0"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
++
++    <ListView
++        android:id="@+id/list_Requested_Book"
++        android:layout_width="379dp"
++        android:layout_height="444dp"
++        android:layout_marginStart="16dp"
++        android:layout_marginBottom="33dp"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintStart_toStartOf="parent" />
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/readgrow/RecycleViewAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.readgrow;\r\n\r\nimport android.content.Context;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\npublic class RecycleViewAdapter extends RecyclerView.Adapter {\r\n    private LayoutInflater inflater;\r\n    private String [] testTitle;\r\n    private String [] testStatus;\r\n    public static ItemClickListener clickListener;\r\n\r\n\r\n    public RecycleViewAdapter(Context context, String [] _testTitle, String [] _testStatus){\r\n        inflater = LayoutInflater.from(context);\r\n        testTitle = _testTitle;\r\n        testStatus = _testStatus;\r\n    }\r\n\r\n    @NonNull\r\n    @Override\r\n    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {\r\n        //This is where you inflate the layout (Giving a long to our rows)\r\n        //LayoutInflater inflater = LayoutInflater.from(context);\r\n        View view = inflater.inflate(R.layout.recycleview_item, parent, false);\r\n        //Initialize inner class\r\n        MyViewHolder myViewHolder = new MyViewHolder(view);\r\n        return myViewHolder;\r\n    }\r\n\r\n    @Override\r\n    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {\r\n        //assign values to the views we created in the recyclyer_view_row layout file\r\n        //based on the position of the recycler view\r\n        //hold the text, img... want to display\r\n       ((MyViewHolder) holder).bookTitle.setText(testTitle[position]);\r\n        ((MyViewHolder) holder).bookStatus.setText(testStatus[position]);\r\n    }\r\n\r\n    @Override\r\n    public int getItemCount() {\r\n        //the recycler view just wants to know the number of items you want display\r\n        //Should be the length of the array want to display\r\n        return testTitle.length;\r\n    }\r\n    void setClickListener (ItemClickListener itemClickListener){\r\n        this.clickListener = itemClickListener;\r\n    }\r\n\r\n    //Integer getItem (int id){return testRecycle[id]}\r\n    //Inner class\r\n    public static class MyViewHolder extends RecyclerView.ViewHolder\r\n        implements View.OnClickListener{\r\n        //grabbing the views from our recycler_view_row layout file\r\n        //kinda like in the onCreate method\r\n        TextView bookTitle, bookStatus;\r\n\r\n\r\n        public MyViewHolder(@NonNull View itemView) {\r\n            super(itemView);\r\n            bookTitle = itemView.findViewById(R.id.recycleview_title);\r\n            bookStatus = itemView.findViewById(R.id.recycleview_stutus);\r\n            bookStatus.setOnClickListener(this);\r\n\r\n        }\r\n\r\n\r\n        @Override\r\n        public void onClick(View view) {\r\n            if(clickListener!=null){\r\n                clickListener.onItemClick(view, getAdapterPosition());\r\n            }\r\n        }\r\n    }\r\n    //inner Interface\r\n    public  interface ItemClickListener{\r\n        void onItemClick(View view, int position);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/readgrow/RecycleViewAdapter.java b/app/src/main/java/com/example/readgrow/RecycleViewAdapter.java
+--- a/app/src/main/java/com/example/readgrow/RecycleViewAdapter.java	(revision c139ba6af6938e3ac02b8765c46c9735857ca1a0)
++++ b/app/src/main/java/com/example/readgrow/RecycleViewAdapter.java	(date 1648886880776)
+@@ -9,14 +9,16 @@
+ import androidx.annotation.NonNull;
+ import androidx.recyclerview.widget.RecyclerView;
+ 
++import java.util.ArrayList;
++
+ public class RecycleViewAdapter extends RecyclerView.Adapter {
+     private LayoutInflater inflater;
+-    private String [] testTitle;
+-    private String [] testStatus;
++    private ArrayList <String> testTitle;
++    private ArrayList <String>  testStatus;
+     public static ItemClickListener clickListener;
+ 
+ 
+-    public RecycleViewAdapter(Context context, String [] _testTitle, String [] _testStatus){
++    public RecycleViewAdapter(Context context, ArrayList <String> _testTitle, ArrayList <String> _testStatus){
+         inflater = LayoutInflater.from(context);
+         testTitle = _testTitle;
+         testStatus = _testStatus;
+@@ -38,15 +40,15 @@
+         //assign values to the views we created in the recyclyer_view_row layout file
+         //based on the position of the recycler view
+         //hold the text, img... want to display
+-       ((MyViewHolder) holder).bookTitle.setText(testTitle[position]);
+-        ((MyViewHolder) holder).bookStatus.setText(testStatus[position]);
++       ((MyViewHolder) holder).bookTitle.setText(testTitle.get(position));
++        ((MyViewHolder) holder).bookStatus.setText(testStatus.get(position));
+     }
+ 
+     @Override
+     public int getItemCount() {
+         //the recycler view just wants to know the number of items you want display
+         //Should be the length of the array want to display
+-        return testTitle.length;
++        return testTitle.size();
+     }
+     void setClickListener (ItemClickListener itemClickListener){
+         this.clickListener = itemClickListener;
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DesignSurface\">\r\n    <option name=\"filePathToZoomLevelMap\">\r\n      <map>\r\n        <entry key=\"..\\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_add_book_page.xml\" value=\"0.17552083333333332\" />\r\n        <entry key=\"..\\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_main.xml\" value=\"0.17552083333333332\" />\r\n        <entry key=\"..\\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_request_book.xml\" value=\"0.17552083333333332\" />\r\n        <entry key=\"..\\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_send_message.xml\" value=\"0.17552083333333332\" />\r\n        <entry key=\"..\\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_update_book.xml\" value=\"0.17552083333333332\" />\r\n        <entry key=\"..\\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/listview_layout.xml\" value=\"0.17552083333333332\" />\r\n        <entry key=\"..\\:/Users/Mallika/AndroidStudioProjects/ReadGrow/app/src/main/res/layout/activity_main.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/Mallika/AndroidStudioProjects/ReadGrow/app/src/main/res/layout/activity_sign_up1.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/Mallika/AndroidStudioProjects/ReadGrow/app/src/main/res/layout/activity_sign_up2.xml\" value=\"0.176\" />\r\n        <entry key=\"..\\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/drawable/radio_button.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/drawable/radio_button2.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/drawable/radio_button_selector.xml\" value=\"0.156\" />\r\n        <entry key=\"..\\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/drawable/radio_selected.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/drawable/radion_buttom_addbook_page.xml\" value=\"0.3275\" />\r\n        <entry key=\"..\\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/drawable/rounded_button.xml\" value=\"0.173\" />\r\n        <entry key=\"..\\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/drawable/text_border.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_add_book.xml\" value=\"0.22\" />\r\n        <entry key=\"..\\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_add_book_page.xml\" value=\"0.33\" />\r\n        <entry key=\"..\\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_sign_up1.xml\" value=\"0.18802083333333333\" />\r\n        <entry key=\"..\\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_sign_up2.xml\" value=\"0.18802083333333333\" />\r\n        <entry key=\"..\\:/Users/Rafael/Desktop/Projects/ReadGrowApp/ReadGrowApp/app/src/main/res/layout/activity_update_book.xml\" value=\"0.25\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"Android Studio default JDK\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision c139ba6af6938e3ac02b8765c46c9735857ca1a0)
++++ b/.idea/misc.xml	(date 1648888824437)
+@@ -3,11 +3,15 @@
+   <component name="DesignSurface">
+     <option name="filePathToZoomLevelMap">
+       <map>
++        <entry key="..\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_add_book.xml" value="0.17552083333333332" />
+         <entry key="..\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_add_book_page.xml" value="0.17552083333333332" />
+         <entry key="..\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_main.xml" value="0.17552083333333332" />
++        <entry key="..\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_reply_request.xml" value="0.17552083333333332" />
+         <entry key="..\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_request_book.xml" value="0.17552083333333332" />
+         <entry key="..\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_send_message.xml" value="0.17552083333333332" />
+         <entry key="..\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_update_book.xml" value="0.17552083333333332" />
++        <entry key="..\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/activity_update_book0.xml" value="0.17552083333333332" />
++        <entry key="..\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/list_requestbook_layout.xml" value="0.17552083333333332" />
+         <entry key="..\:/DOUGLAS_COLLEGE/WINTER_2022/SOFTWARE_ENGINEERING/PROJECT/ReadGrowApp-VerSion04/app/src/main/res/layout/listview_layout.xml" value="0.17552083333333332" />
+         <entry key="..\:/Users/Mallika/AndroidStudioProjects/ReadGrow/app/src/main/res/layout/activity_main.xml" value="0.264" />
+         <entry key="..\:/Users/Mallika/AndroidStudioProjects/ReadGrow/app/src/main/res/layout/activity_sign_up1.xml" value="0.264" />
+Index: app/src/main/res/layout/list_requestbook_layout.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/list_requestbook_layout.xml b/app/src/main/res/layout/list_requestbook_layout.xml
+new file mode 100644
+--- /dev/null	(date 1648888932446)
++++ b/app/src/main/res/layout/list_requestbook_layout.xml	(date 1648888932446)
+@@ -0,0 +1,16 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent">
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="60dp"
++        android:background="@color/btnColor"
++        android:textSize="18sp"
++        android:textAlignment="center"
++        android:textColor="@color/white"
++        android:layout_marginStart="30dp"
++        android:layout_marginEnd="30dp">
++    </TextView>
++
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_request_book.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".RequestBookActivity\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_label_bookname\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"92dp\"\r\n        android:layout_marginTop=\"100dp\"\r\n        android:text=\"@string/requestBook_bookname_label\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_bookname\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"200dp\"\r\n        android:layout_marginTop=\"100dp\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_label_authorname\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"76dp\"\r\n        android:layout_marginTop=\"130dp\"\r\n        android:text=\"@string/requestBook_authorname_label\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_authorname\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"200dp\"\r\n        android:layout_marginTop=\"130dp\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_label_publication\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"96dp\"\r\n        android:layout_marginTop=\"160dp\"\r\n        android:text=\"@string/requestBook_publication_label\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_publication\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"200dp\"\r\n        android:layout_marginTop=\"160dp\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_label_year\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"148dp\"\r\n        android:layout_marginTop=\"190dp\"\r\n        android:text=\"@string/requestBook_year_label\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_year\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"200dp\"\r\n        android:layout_marginTop=\"190dp\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_label_bookOwnername\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"36dp\"\r\n        android:layout_marginTop=\"220dp\"\r\n        android:text=\"@string/requestBook_bookOwnerName_label\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_bookOwnername\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"200dp\"\r\n        android:layout_marginTop=\"220dp\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_label_email\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"140dp\"\r\n        android:layout_marginTop=\"250dp\"\r\n        android:text=\"@string/requestBook_email_label\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_email\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"200dp\"\r\n        android:layout_marginTop=\"250dp\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_label_location\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"56dp\"\r\n        android:layout_marginTop=\"280dp\"\r\n        android:text=\"@string/requestBook_location_label\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_location\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"200dp\"\r\n        android:layout_marginTop=\"280dp\"\r\n        android:textColor=\"#1976D2\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/requestBook_totalCost\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"104dp\"\r\n        android:layout_marginTop=\"340dp\"\r\n        android:text=\"@string/requestBook_cost_display\"\r\n        android:textColor=\"#5A6168\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/requestBook_message\"\r\n        android:layout_width=\"257dp\"\r\n        android:layout_height=\"145dp\"\r\n        android:layout_marginStart=\"76dp\"\r\n        android:layout_marginTop=\"28dp\"\r\n        android:autofillHints=\"\"\r\n        android:background=\"@drawable/text_area_border\"\r\n        android:ems=\"10\"\r\n        android:minLines=\"3\"\r\n        android:scrollbarAlwaysDrawVerticalTrack=\"true\"\r\n        android:scrollbars=\"vertical\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"@string/requestBook_message\"\r\n        android:inputType=\"textPersonName\"\r\n        android:minHeight=\"48dp\"\r\n        android:textColorHint=\"#5A6168\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/requestBook_totalCost\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/requestBook_Button\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"160dp\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:backgroundTint=\"@color/btnColor\"\r\n        android:text=\"@string/requestBook_send_button\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/requestBook_message\"\r\n        tools:ignore=\"TouchTargetSizeCheck\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_request_book.xml b/app/src/main/res/layout/activity_request_book.xml
+--- a/app/src/main/res/layout/activity_request_book.xml	(revision c139ba6af6938e3ac02b8765c46c9735857ca1a0)
++++ b/app/src/main/res/layout/activity_request_book.xml	(date 1648874948298)
+@@ -7,150 +7,150 @@
+     tools:context=".RequestBookActivity">
+ 
+     <TextView
+-        android:id="@+id/requestBook_label_bookname"
++        android:id="@+id/requestBook_bookname"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="92dp"
++        android:layout_marginStart="180dp"
+         android:layout_marginTop="100dp"
+-        android:text="@string/requestBook_bookname_label"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+-        android:id="@+id/requestBook_bookname"
++        android:id="@+id/requestBook_authorname"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="200dp"
+-        android:layout_marginTop="100dp"
++        android:layout_marginStart="180dp"
++        android:layout_marginTop="130dp"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+-        android:id="@+id/requestBook_label_authorname"
++        android:id="@+id/requestBook_publication"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="76dp"
+-        android:layout_marginTop="130dp"
+-        android:text="@string/requestBook_authorname_label"
++        android:layout_marginStart="180dp"
++        android:layout_marginTop="160dp"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+-        android:id="@+id/requestBook_authorname"
++        android:id="@+id/requestBook_year"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="200dp"
+-        android:layout_marginTop="130dp"
++        android:layout_marginStart="180dp"
++        android:layout_marginTop="190dp"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+-        android:id="@+id/requestBook_label_publication"
++        android:id="@+id/requestBook_label_bookOwnername"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="96dp"
+-        android:layout_marginTop="160dp"
+-        android:text="@string/requestBook_publication_label"
++        android:layout_marginStart="8dp"
++        android:layout_marginTop="220dp"
++        android:text="@string/requestBook_bookOwnerName_label"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+-        android:id="@+id/requestBook_publication"
++        android:id="@+id/requestBook_label_year"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="200dp"
+-        android:layout_marginTop="160dp"
++        android:layout_marginStart="120dp"
++        android:layout_marginTop="188dp"
++        android:text="@string/requestBook_year_label"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+-        android:id="@+id/requestBook_label_year"
++        android:id="@+id/requestBook_label_bookname"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="148dp"
+-        android:layout_marginTop="190dp"
+-        android:text="@string/requestBook_year_label"
++        android:layout_marginStart="64dp"
++        android:layout_marginTop="100dp"
++        android:text="@string/requestBook_bookname_label"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+-        android:id="@+id/requestBook_year"
++        android:id="@+id/requestBook_label_authorname"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="200dp"
+-        android:layout_marginTop="190dp"
++        android:layout_marginStart="48dp"
++        android:layout_marginTop="128dp"
++        android:text="@string/requestBook_authorname_label"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+-        android:id="@+id/requestBook_label_bookOwnername"
++        android:id="@+id/requestBook_label_publication"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="36dp"
+-        android:layout_marginTop="220dp"
+-        android:text="@string/requestBook_bookOwnerName_label"
++        android:layout_marginStart="68dp"
++        android:layout_marginTop="160dp"
++        android:text="@string/requestBook_publication_label"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+-        android:id="@+id/requestBook_bookOwnername"
++        android:id="@+id/requestBook_label_email"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="200dp"
+-        android:layout_marginTop="220dp"
++        android:layout_marginStart="112dp"
++        android:layout_marginTop="248dp"
++        android:text="@string/requestBook_email_label"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+-        android:id="@+id/requestBook_label_email"
++        android:id="@+id/requestBook_label_location"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="140dp"
+-        android:layout_marginTop="250dp"
+-        android:text="@string/requestBook_email_label"
++        android:layout_marginStart="28dp"
++        android:layout_marginTop="280dp"
++        android:text="@string/requestBook_location_label"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+-        android:id="@+id/requestBook_email"
++        android:id="@+id/requestBook_bookOwnername"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="200dp"
+-        android:layout_marginTop="250dp"
++        android:layout_marginStart="180dp"
++        android:layout_marginTop="220dp"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+-        android:id="@+id/requestBook_label_location"
++        android:id="@+id/requestBook_email"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="56dp"
+-        android:layout_marginTop="280dp"
+-        android:text="@string/requestBook_location_label"
++        android:layout_marginStart="180dp"
++        android:layout_marginTop="250dp"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+         app:layout_constraintStart_toStartOf="parent"
+@@ -158,9 +158,9 @@
+ 
+     <TextView
+         android:id="@+id/requestBook_location"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_marginStart="200dp"
++        android:layout_width="0dp"
++        android:layout_height="17dp"
++        android:layout_marginStart="180dp"
+         android:layout_marginTop="280dp"
+         android:textColor="#1976D2"
+         android:textSize="18sp"
+Index: app/src/main/java/com/example/readgrow/RequestBookActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.readgrow;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.SharedPreferences;\r\nimport android.os.Bundle;\r\nimport android.preference.PreferenceManager;\r\nimport android.widget.TextView;\r\n\r\npublic class RequestBookActivity extends AppCompatActivity {\r\n    TextView bookName;\r\n    SharedPreferences preferFrom_FindBook;\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_request_book);\r\n\r\n        bookName = findViewById(R.id.requestBook_bookname);\r\n        preferFrom_FindBook = PreferenceManager.getDefaultSharedPreferences(this);\r\n        int picked_BookID = preferFrom_FindBook.getInt(\"interest_bookID\", 0);\r\n        bookName.setText(Integer.toString(picked_BookID));\r\n\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/readgrow/RequestBookActivity.java b/app/src/main/java/com/example/readgrow/RequestBookActivity.java
+--- a/app/src/main/java/com/example/readgrow/RequestBookActivity.java	(revision c139ba6af6938e3ac02b8765c46c9735857ca1a0)
++++ b/app/src/main/java/com/example/readgrow/RequestBookActivity.java	(date 1648884083593)
+@@ -2,13 +2,36 @@
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ 
++import android.content.Intent;
+ import android.content.SharedPreferences;
++import android.database.Cursor;
+ import android.os.Bundle;
+ import android.preference.PreferenceManager;
++import android.text.TextUtils;
++import android.view.View;
++import android.widget.Button;
++import android.widget.EditText;
+ import android.widget.TextView;
++import android.widget.Toast;
+ 
+ public class RequestBookActivity extends AppCompatActivity {
+     TextView bookName;
++    TextView author;
++    TextView publication;
++    TextView public_year;
++    TextView cost;
++    TextView bookOwner_name;
++    TextView ownerEmail;
++    TextView ownerAddress;
++    EditText requestMessage;
++    Button btnRequest;
++
++    int bookStatus;
++    int ID_bookOwner;
++    int loginID;
++    int picked_BookID;
++
++    BookDatabaseHelper bookDatabaseHelper;
+     SharedPreferences preferFrom_FindBook;
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+@@ -16,10 +39,66 @@
+         setContentView(R.layout.activity_request_book);
+ 
+         bookName = findViewById(R.id.requestBook_bookname);
++        author = findViewById(R.id.requestBook_authorname);
++        publication = findViewById(R.id.requestBook_publication);
++        public_year = findViewById(R.id.requestBook_year);
++        cost = findViewById(R.id.requestBook_totalCost);
++        bookOwner_name = findViewById(R.id.requestBook_bookOwnername);
++        ownerEmail = findViewById(R.id.requestBook_email);
++        ownerAddress = findViewById(R.id.requestBook_location);
++
++        requestMessage = findViewById(R.id.requestBook_message);
++        btnRequest = findViewById(R.id.requestBook_Button);
++
++        bookDatabaseHelper = new BookDatabaseHelper(this);
++
+         preferFrom_FindBook = PreferenceManager.getDefaultSharedPreferences(this);
+-        int picked_BookID = preferFrom_FindBook.getInt("interest_bookID", 0);
+-        bookName.setText(Integer.toString(picked_BookID));
++        picked_BookID = preferFrom_FindBook.getInt("interest_bookID", 0);
++        loginID = Integer.parseInt(preferFrom_FindBook.getString("userID", "0"));
++
++        Cursor cursor = bookDatabaseHelper.GetBookById(picked_BookID);
++        if(cursor.getCount()>0){
++            while (cursor.moveToNext()){
++                ID_bookOwner = cursor.getInt(1);
++                bookName.setText(cursor.getString(2));
++                author.setText(cursor.getString(3));
++                publication.setText(cursor.getString(4));
++                public_year.setText(cursor.getString(5));
++                bookStatus = cursor.getInt(6);
++                switch (bookStatus){
++                    case 0: cost.setText("The total cost is: $"+cursor.getInt(7));
++                    break;
++                    case 1: cost.setText("The total cost is: $0");
++                    break;
++                    case 2: cost.setText("The total cost is: $0");
++                    break;
++                }
++            }
++        }
++        Cursor cursorOwner = bookDatabaseHelper.GetBookReaderById(ID_bookOwner);
++        if(cursorOwner.getCount()>0){
++            while (cursorOwner.moveToNext()){
++                bookOwner_name.setText(cursorOwner.getString(1)); //user name
++                ownerAddress.setText(cursorOwner.getString(3)); //user address
++                ownerEmail.setText(cursorOwner.getString(5)); //user email
++            }
++        }
+ 
++        btnRequest.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                if(TextUtils.isEmpty(requestMessage.getText().toString())){
++                    requestMessage.setError("Please enter a message before requesting");
++                }else{
++                    bookDatabaseHelper.AddRequested_Book(picked_BookID, loginID, ID_bookOwner);
++                    bookDatabaseHelper.AddReaderMessage(loginID,ID_bookOwner,requestMessage.getText().toString(),
++                            "Request", picked_BookID);
++                    Toast.makeText(RequestBookActivity.this, "Request successful", Toast.LENGTH_SHORT).show();
++                    startActivity( new Intent(RequestBookActivity.this, FindBookActivity.class));
++                }
++
++            }
++        });
+     }
+ 
+ }
+\ No newline at end of file

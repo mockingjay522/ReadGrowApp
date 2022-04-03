@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ public class HomePage extends AppCompatActivity {
         findBook = findViewById(R.id.home_findBook);
         readingTracker = findViewById(R.id.home_readingTracker);
         userNameHoder = findViewById(R.id.home_text);
+        ImageView viewMessage = findViewById(R.id.viewMessage);
+        ImageView signOut = findViewById(R.id.signOut);
 
         // get the user name from SharedPreferences to be spotted in home_text (Hi User)
         SharedPreferences shareFromLogin = PreferenceManager.getDefaultSharedPreferences(this);
@@ -49,6 +52,20 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomePage.this, ReadingTracker.class));
+            }
+        });
+
+        viewMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomePage.this, viewMessgae.class));
+            }
+        });
+
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }

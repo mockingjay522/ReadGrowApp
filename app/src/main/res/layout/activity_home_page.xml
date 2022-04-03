@@ -72,4 +72,26 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_text" />
+
+    <ImageView
+        android:id="@+id/viewMessage"
+        android:layout_width="49dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/messageDesc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/messgae" />
+
+    <ImageView
+        android:id="@+id/signOut"
+        android:layout_width="49dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="344dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/signOutDesc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/signout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
