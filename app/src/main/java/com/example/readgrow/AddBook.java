@@ -17,6 +17,7 @@ public class AddBook extends AppCompatActivity {
 
         Button btnAdd = findViewById(R.id.btnAddBook);
         Button btnUpdate = findViewById(R.id.btnUpdateBook);
+        Button btnReply = findViewById(R.id.btnReplyRequest);
         //d
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,6 +30,12 @@ public class AddBook extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(AddBook.this, UpdateBook0.class));
+            }
+        });
+        btnReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AddBook.this, ReplyRequest.class));
             }
         });
     }

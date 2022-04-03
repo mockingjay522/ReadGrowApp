@@ -94,4 +94,6 @@
         <item>Not avalaible</item>
     </string-array>
     <string name="unavailable">Unavailable</string>
+    <string name="reply_Request">Reply Request</string>
+    <string name="listRequestedBook">List Requested Books</string>
 </resources>

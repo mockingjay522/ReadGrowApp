@@ -9,14 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class RecycleViewAdapter extends RecyclerView.Adapter {
     private LayoutInflater inflater;
-    private String [] testTitle;
-    private String [] testStatus;
+    private ArrayList <String> testTitle;
+    private ArrayList <String>  testStatus;
     public static ItemClickListener clickListener;
 
 
-    public RecycleViewAdapter(Context context, String [] _testTitle, String [] _testStatus){
+    public RecycleViewAdapter(Context context, ArrayList <String> _testTitle, ArrayList <String> _testStatus){
         inflater = LayoutInflater.from(context);
         testTitle = _testTitle;
         testStatus = _testStatus;
@@ -38,15 +40,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter {
         //assign values to the views we created in the recyclyer_view_row layout file
         //based on the position of the recycler view
         //hold the text, img... want to display
-       ((MyViewHolder) holder).bookTitle.setText(testTitle[position]);
-        ((MyViewHolder) holder).bookStatus.setText(testStatus[position]);
+       ((MyViewHolder) holder).bookTitle.setText(testTitle.get(position));
+        ((MyViewHolder) holder).bookStatus.setText(testStatus.get(position));
     }
 
     @Override
     public int getItemCount() {
         //the recycler view just wants to know the number of items you want display
         //Should be the length of the array want to display
-        return testTitle.length;
+        return testTitle.size();
     }
     void setClickListener (ItemClickListener itemClickListener){
         this.clickListener = itemClickListener;

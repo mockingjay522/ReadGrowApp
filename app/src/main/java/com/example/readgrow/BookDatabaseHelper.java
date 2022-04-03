@@ -49,7 +49,9 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
                 "receiver_id integer," +
                 "message_title text," +
                 "message_content text," +
-                "date text," +
+     //           "date text," +
+                "book_id integer," +
+                "FOREIGN KEY(book_id) REFERENCES book(book_id)," +
                 "FOREIGN KEY(sender_id,receiver_id) REFERENCES book_reader(reader_id,reader_id));");
 
 
@@ -86,6 +88,14 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
                "FOREIGN KEY(book_id) REFERENCES book(book_id)," +
                 "FOREIGN KEY(reader_id) REFERENCES book_reader(reader_id));");
 
+        /**requested_book table used to manage the books are request of the owner*/
+        db.execSQL("CREATE TABLE requested_book (request_id integer primary key," +
+                "book_id integer," +
+                "sender_id integer," +
+                "receiver_id integer," +
+                "FOREIGN KEY(book_id) REFERENCES book(book_id),"+
+                "FOREIGN KEY(sender_id,receiver_id) REFERENCES book_reader(reader_id,reader_id));");
+
     }
 
     @Override
@@ -99,6 +109,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         this.shareBookDB.execSQL("DROP TABLE IF EXISTS rent_book");
         this.shareBookDB.execSQL("DROP TABLE IF EXISTS reader_message");
         this.shareBookDB.execSQL("DROP TABLE IF EXISTS admin_message");
+        this.shareBookDB.execSQL("DROP TABLE IF EXISTS requested_book");
           onCreate(db);
 
     }
@@ -248,15 +259,15 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
      * @param receiverId
      * @param messageTitle
      * @param messageContent
-     * @param date
+     * @param bookID
      */
-    public int AddReaderMessage(int senderId,int receiverId, String messageTitle,String messageContent,String date){
+    public int AddReaderMessage(int senderId,int receiverId, String messageTitle,String messageContent,int bookID){
         ContentValues readerMessageTableValues = new ContentValues();
         readerMessageTableValues.put("sender_id",senderId);
         readerMessageTableValues.put("receiver_id",receiverId);
         readerMessageTableValues.put("message_title",messageTitle);
         readerMessageTableValues.put("message_content",messageContent);
-        readerMessageTableValues.put("date",date);
+        readerMessageTableValues.put("book_id",bookID);
 
         long recordId =this.shareBookDB.insert("reader_message",null,readerMessageTableValues);
         Log.i("addRecordReaderMessage", String.valueOf(recordId));
@@ -264,6 +275,19 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         return (int)recordId;
 
 
+    }
+    /**
+     * add a requested book
+     * */
+    public int AddRequested_Book(int bookID, int senderID,int receiverId){
+        ContentValues requested_BookTableValues = new ContentValues();
+        requested_BookTableValues.put("book_id",bookID);
+        requested_BookTableValues.put("sender_id",senderID);
+        requested_BookTableValues.put("receiver_id",receiverId);
+
+        long recordId =this.shareBookDB.insert("requested_book",null,requested_BookTableValues);
+        Log.i("addRequestedBook", String.valueOf(recordId));
+        return (int)recordId;
     }
 
     /***
@@ -495,18 +519,6 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         });
     }
 
-    public Cursor GetBookByPostalCode(String postalCode, int reader_id){
-//        return  this.shareBookDB.rawQuery("Select * from book Where postal_code = ?",new String[]{
-//                String.valueOf(postalCode)
-        return  this.shareBookDB.rawQuery(
-                "select b.book_id, b.title, b.author, b.publisher, b.publish_date, b.book_status, b.reader_id \n" +
-                        "from book b inner join book_reader u on b.reader_id = u.reader_id \n" +
-                        "where b.book_status < 3  and u.postal_code like ? and b.reader_id != ?",new String[]{
-                String.valueOf(postalCode),
-                String.valueOf(reader_id)
-        });
-    }
-
     public Cursor GetBooksByReaderId(int readerId){
         return  this.shareBookDB.rawQuery("Select * from book Where reader_id = ?",new String[]{
                 String.valueOf(readerId)
@@ -602,6 +614,47 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor GetOwnerPostalCode(int readerId) {
         return  this.shareBookDB.rawQuery("Select postal_code from book_reader Where reader_id = ?",new String[]{String.valueOf(readerId)});
+    }
+
+    public Cursor GetRequestedBook(int readerId) {
+        return  this.shareBookDB.rawQuery("Select b.book_id, b.title, r.sender_id " +
+                        "from book b inner join requested_book r " +
+                        "where b.book_id = r.book_id and r.receiver_id = ?",
+                new String[]{String.valueOf(readerId)});
+    }
+
+    public Cursor GetBookByPostalCode(String postalCode, int reader_id){
+        return  this.shareBookDB.rawQuery(
+                "select b.book_id, b.title, b.author, b.publisher, b.publish_date, b.book_status, b.reader_id \n" +
+                        "from book b inner join book_reader u on b.reader_id = u.reader_id \n" +
+                        "inner join requested_book r " +
+                        "where b.book_status < 3  and u.postal_code like ? and b.reader_id != ?" +
+                        "and b.book_id != r.book_id",new String[]{
+                        String.valueOf(postalCode),
+                        String.valueOf(reader_id)
+                });
+    }
+    public Cursor GetReaderMessageByRecieverAndBookID(int receiverId,int bookId ){
+        return  this.shareBookDB.rawQuery("Select * from reader_message Where receiver_id = ? and book_id=?",new String[]{
+                String.valueOf(receiverId),
+                String.valueOf(bookId),
+        });
+    }
+
+    public int DeleteRequestedBookByID(int book_id){
+        String[] whereValue = {String.valueOf(book_id)};
+        int deletionResult = this.shareBookDB.delete("requested_book","book_id=?",whereValue);
+        Log.i("deletionRequestedBook",String.valueOf(deletionResult));
+
+        return deletionResult;
+    }
+    public int Update_BookStatus_When_Accept(int book_id){
+        ContentValues bookTableValues = new ContentValues();
+        bookTableValues.put("book_status",3);
+        int numberOfRecords = this.shareBookDB.update("book",bookTableValues,"book_id=?", new String[]{
+                String.valueOf(book_id)});
+        Log.i("updateRecordBook", String.valueOf(numberOfRecords));
+        return numberOfRecords;
     }
     //</editor-fold>
 

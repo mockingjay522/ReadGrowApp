@@ -20,8 +20,8 @@
 
     <ListView
         android:id="@+id/MyBooks_listview"
-        android:layout_width="456dp"
-        android:layout_height="469dp"
+        android:layout_width="367dp"
+        android:layout_height="473dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
