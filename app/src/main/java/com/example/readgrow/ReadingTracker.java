@@ -50,13 +50,15 @@ public class ReadingTracker extends AppCompatActivity {
                 this.booksName.add(BookNameHelper(Integer.parseInt(rentedBook.getString(0))) + "  |  " + "Rented");
 
      //-3 get the user's book from shared
-        Cursor sharedBook = bookDatabaseHelper.GetShareBookByBookId(userID);
+        //Cursor sharedBook = bookDatabaseHelper.GetShareBookByBookId(userID);
+        Cursor sharedBook = bookDatabaseHelper.GetShareBookByReaderId(userID);
         if(sharedBook.getCount()>0)
             while (sharedBook.moveToNext())
                 this.booksName.add(BookNameHelper(Integer.parseInt(sharedBook.getString(0)))+ "  |  " + "Shared");
 
     //-3 get the user's book from GaveAway
-        Cursor gaveAwayBook = bookDatabaseHelper.GetGiveBookByBookId(userID);
+        //Cursor gaveAwayBook = bookDatabaseHelper.GetGiveBookByBookId(userID);
+        Cursor gaveAwayBook = bookDatabaseHelper.GetGiveBookByReaderId(userID);
         if(gaveAwayBook.getCount()>0)
             while (gaveAwayBook.moveToNext())
               this.booksName.add(BookNameHelper(Integer.parseInt(gaveAwayBook.getString(0)))+ "  |  " + "Taken");

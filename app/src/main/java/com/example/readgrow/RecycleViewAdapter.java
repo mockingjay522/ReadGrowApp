@@ -13,15 +13,15 @@ import java.util.ArrayList;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter {
     private LayoutInflater inflater;
-    private ArrayList <String> testTitle;
-    private ArrayList <String>  testStatus;
+    private ArrayList <Integer> testID;
+    private ArrayList <String>  testEmail;
     public static ItemClickListener clickListener;
 
 
-    public RecycleViewAdapter(Context context, ArrayList <String> _testTitle, ArrayList <String> _testStatus){
+    public RecycleViewAdapter(Context context, ArrayList <Integer> _testID, ArrayList <String> _testEmail){
         inflater = LayoutInflater.from(context);
-        testTitle = _testTitle;
-        testStatus = _testStatus;
+        testID = _testID;
+        testEmail = _testEmail;
     }
 
     @NonNull
@@ -40,15 +40,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter {
         //assign values to the views we created in the recyclyer_view_row layout file
         //based on the position of the recycler view
         //hold the text, img... want to display
-       ((MyViewHolder) holder).bookTitle.setText(testTitle.get(position));
-        ((MyViewHolder) holder).bookStatus.setText(testStatus.get(position));
+       ((MyViewHolder) holder).ID.setText(Integer.toString(testID.get(position)) );
+        ((MyViewHolder) holder).email.setText(testEmail.get(position));
     }
 
     @Override
     public int getItemCount() {
         //the recycler view just wants to know the number of items you want display
         //Should be the length of the array want to display
-        return testTitle.size();
+        return testID.size();
     }
     void setClickListener (ItemClickListener itemClickListener){
         this.clickListener = itemClickListener;
@@ -60,14 +60,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter {
         implements View.OnClickListener{
         //grabbing the views from our recycler_view_row layout file
         //kinda like in the onCreate method
-        TextView bookTitle, bookStatus;
+        TextView ID, email;
 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            bookTitle = itemView.findViewById(R.id.recycleview_title);
-            bookStatus = itemView.findViewById(R.id.recycleview_stutus);
-            bookStatus.setOnClickListener(this);
+            ID = itemView.findViewById(R.id.recycleview_ID);
+            email = itemView.findViewById(R.id.recycleview_Email);
+            email.setOnClickListener(this);
 
         }
 

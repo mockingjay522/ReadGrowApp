@@ -26,7 +26,8 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
                 " address Text," +
                 " postal_code Text," +
                 " email Text," +
-                " password Text);");
+                " password Text, " +
+                " user_status integer);");
 
         db.execSQL("CREATE TABLE book_reader_interest (reader_id integer, interest Text," +
                 " PRIMARY KEY (reader_id, interest)," +
@@ -138,11 +139,10 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         readerTableValues.put("postal_code",postalCode);
         readerTableValues.put("email",email);
         readerTableValues.put("password",password);
-
+        readerTableValues.put("user_status", 1);
         long recordId = this.shareBookDB.insert("book_reader",null,readerTableValues);
         Log.i("addRecordReader", String.valueOf(recordId));
         return (int)recordId;
-
     }
 
     /***
@@ -519,14 +519,14 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor GetBooksByReaderId(int readerId){
-        return  this.shareBookDB.rawQuery("Select * from book Where reader_id = ?",new String[]{
+        return  this.shareBookDB.rawQuery("Select * from book Where reader_id = ? and book_status < 4",new String[]{
                 String.valueOf(readerId)
         });
     }
 
     public Cursor GetBookReaderById(int readerId){
-        return  this.shareBookDB.rawQuery("Select * from book_reader Where reader_id = ?",new String[]{
-                String.valueOf(readerId)
+        return  this.shareBookDB.rawQuery("Select * from book_reader Where reader_id = ?"
+                ,new String[]{String.valueOf(readerId)
         });
     }
 
@@ -537,7 +537,8 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
      * @return we need to get the user id to pass it into SharePrefrence
      */
     public Cursor GetBookReaderByPassAndEmail(String password,String email){
-        return  this.shareBookDB.rawQuery("Select * from book_reader Where password = ? and email=? ",new String[]{
+        return  this.shareBookDB.rawQuery("Select * from book_reader Where password = ? and email=? " +
+                "and user_status = 1",new String[]{
                 String.valueOf(password),
                 String.valueOf(email)
 
@@ -654,16 +655,34 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         Log.i("updateRecordBook", String.valueOf(numberOfRecords));
         return numberOfRecords;
     }
-    public int Update_BookStatus_When_GiveAway(int book_id){
+    public int Update_BookStatus_When_GiveAway(int book_id, int receiverID){
         ContentValues bookTableValues = new ContentValues();
-
+        bookTableValues.put("reader_id",receiverID);
         bookTableValues.put("book_status",4);
         int numberOfRecords = this.shareBookDB.update("book",bookTableValues,"book_id=?", new String[]{
-                String.valueOf(book_id)});
+                String.valueOf(book_id), String.valueOf(receiverID)});
         Log.i("updateRecordBook", String.valueOf(numberOfRecords));
         return numberOfRecords;
     }
+
+    public int DeleteUser_By_Update_UserStatus(int reader_id){
+        ContentValues readerTableValues = new ContentValues();
+
+        readerTableValues.put("user_status",0);
+
+        int numberOfRecords = this.shareBookDB.update("book_reader",readerTableValues,"reader_id=?", new String[]{
+                String.valueOf(reader_id)});
+        Log.i("updateBookReader", String.valueOf(numberOfRecords));
+
+        return numberOfRecords;
+    }
+
+    public Cursor GetAvailableBookReader(){
+        //return this.shareBookDB.rawQuery("Select * from book_reader",null);
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String query = "Select * from book_reader where user_status = 1";
+        Cursor c = sqLiteDatabase.rawQuery(query,null);
+        return c;
+    }
     //</editor-fold>
-
-
 }

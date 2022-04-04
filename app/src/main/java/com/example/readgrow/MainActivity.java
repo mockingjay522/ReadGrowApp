@@ -59,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
         String email = txtEmail.getText().toString();
         String passWord = txtPassword.getText().toString();
+
+        /**Login by Admin*/
+        if(email.equals("admin")&&passWord.equals("admin")){
+            startActivity(new Intent(MainActivity.this, AdminHomePage.class));
+        }
+
         Cursor cursor = bookDatabaseHelper.GetBookReaderByPassAndEmail(passWord, email);
 
         if (cursor.getCount() > 0)

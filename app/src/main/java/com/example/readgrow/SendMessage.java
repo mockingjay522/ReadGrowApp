@@ -101,7 +101,7 @@ public class SendMessage extends AppCompatActivity {
                             bookDatabaseHelper.AddShareBook(requested_Book_ID,senderID,today.toString());
                         break;
                     case 2 : bookDatabaseHelper.AddGiveBook(requested_Book_ID,senderID, today.toString());
-                            updateStatus = bookDatabaseHelper.Update_BookStatus_When_GiveAway(requested_Book_ID);
+                            updateStatus = bookDatabaseHelper.Update_BookStatus_When_GiveAway(requested_Book_ID, senderID);
                         break;
                 }
                 if( (deleteRequest >0) && (updateStatus >0)){

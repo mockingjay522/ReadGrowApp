@@ -30,6 +30,7 @@ public class BookUser {
         this.postalCode = postalCode;
     }
 
+
     public String getPostalCode() {
         return postalCode;
     }

@@ -108,4 +108,8 @@
     <string name="unavailable">Unavailable</string>
     <string name="reply_Request">Reply Request</string>
     <string name="listRequestedBook">List Requested Books</string>
+    <string name="admin_createUser">Create New User</string>
+    <string name="admin_manageUser">Manage User</string>
+    <string name="admin_sendMessage">Send Message</string>
+    <string name="deleteUser">Delete User</string>
 </resources>

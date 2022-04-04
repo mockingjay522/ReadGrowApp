@@ -86,8 +86,9 @@ public class FindBookActivity extends AppCompatActivity {
                 Cursor cursorSecondary = databaseHelper.shareBookDB.rawQuery(
                 "select distinct b.book_id, b.title, b.book_status, b.reader_id \n" +
                         " from book b join book_reader u on b.reader_id = u.reader_id \n" +
-                        " where u.postal_code like " +"\"" + location + "\""+ " and b.reader_id != " + ID_login
-                + " and b.book_id not in (select book_id from requested_book)", null);
+                        " where u.postal_code like " +"\"" + location + "\""+ " and b.reader_id != " + ID_login +
+                        " and u.user_status = 1 and b.book_status < 3 " +
+                        " and b.book_id not in (select book_id from requested_book)", null);
                 if(cursorSecondary.getCount()>0) {
                     while (cursorSecondary.moveToNext()) {
                         listBook_ID.add(cursorSecondary.getInt(0));

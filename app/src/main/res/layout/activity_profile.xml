@@ -9,7 +9,7 @@
     <include layout="@layout/toolbar2"/>
 
     <Button
-        android:id="@+id/profile_updateBtn"
+        android:id="@+id/btnDeleteUser"
         android:layout_width="359dp"
         android:layout_height="51dp"
         android:layout_marginStart="26dp"

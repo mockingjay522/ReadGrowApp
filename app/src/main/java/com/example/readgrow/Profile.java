@@ -31,7 +31,7 @@ public class Profile extends AppCompatActivity {
         EditText address = findViewById(R.id.profile_address);
         EditText postalCode = findViewById(R.id.profile_postalcode);
         Spinner province = findViewById(R.id.profile_province);
-        Button btnUpdateProfile = findViewById(R.id.profile_updateBtn);
+        Button btnUpdateProfile = findViewById(R.id.btnDeleteUser);
 
         //Getting shared preferences to load the information
         SharedPreferences shareFormLogin = PreferenceManager.getDefaultSharedPreferences(this);
