@@ -3,7 +3,9 @@
     <string name="profile_info">Profile Information:</string>
     <string name="home_menu">Home</string>
     <string name="messages">Messages</string>
+    <string name="full_address">Full Address</string>
     <string name="logout">Sign out</string>
+    <string name="age">Age</string>
     <string name="app_logo_description">Logo of the Application</string>
     <string name="login_username_hint">Email</string>
     <string name="login_password_hint">Password</string>
