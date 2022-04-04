@@ -8,14 +8,22 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Profile extends AppCompatActivity {
     BookDatabaseHelper bookDatabaseHelper;
     BookUser bookUser;
+    SharedPreferences updateProfilePreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +32,12 @@ public class Profile extends AppCompatActivity {
 
         //Initializing views
         EditText name = findViewById(R.id.profile_name);
-        EditText username = findViewById(R.id.profile_username);
         EditText password = findViewById(R.id.profile_password);
         EditText email = findViewById(R.id.profile_email);
-        Spinner country = findViewById(R.id.profile_country);
         EditText address = findViewById(R.id.profile_address);
         EditText postalCode = findViewById(R.id.profile_postalcode);
-        Spinner province = findViewById(R.id.profile_province);
-        Button btnUpdateProfile = findViewById(R.id.btnDeleteUser);
+        EditText age = findViewById(R.id.profile_age);
+        Button btnUpdateProfile = findViewById(R.id.profile_updateBtn);
 
         //Getting shared preferences to load the information
         SharedPreferences shareFormLogin = PreferenceManager.getDefaultSharedPreferences(this);
@@ -50,15 +56,29 @@ public class Profile extends AppCompatActivity {
             }
         }
 
+        //Setting information loaded from the database
         name.setText(bookUser.getfName());
-        username.setText(bookUser.getUsername());
         password.setText(bookUser.getPassword());
         email.setText(bookUser.getEmail());
-//        country.setSe
         address.setText(bookUser.getAddress());
+        age.setText("" + bookUser.getAge());
+        String fullAddress = bookUser.getAddress();
+        address.setText(fullAddress);
         postalCode.setText(bookUser.getPostalCode());
 
 
+
+        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int userID = Integer.parseInt(shareFormLogin.getString("userID", ""));
+                updateProfilePreferences = PreferenceManager.getDefaultSharedPreferences(Profile.this);
+                bookDatabaseHelper = new BookDatabaseHelper(Profile.this);
+                bookDatabaseHelper.UpdateBookReader(userID, name.getText().toString(), Integer.parseInt(age.getText().toString()), address.getText().toString(), email.getText().toString(), password.getText().toString());
+                Toast.makeText(Profile.this, "Profile Updated!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Profile.this, HomePage.class));
+            }
+        });
 
         //Creating icons listeners
         viewMessage.setOnClickListener(new View.OnClickListener() {
