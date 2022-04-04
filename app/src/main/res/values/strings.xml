@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">ReadGrow</string>
+    <string name="profile_info">Profile Information:</string>
+    <string name="home_menu">Home</string>
+    <string name="messages">Messages</string>
+    <string name="logout">Sign out</string>
     <string name="app_logo_description">Logo of the Application</string>
     <string name="login_username_hint">Email</string>
     <string name="login_password_hint">Password</string>
@@ -11,13 +15,19 @@
     <string name="signUp1_username_email">Enter your email Address</string>
     <string name="signUp1_password_hint">Create Password</string>
     <string name="signUp1_button_text">Next</string>
+    <string name="full_name">Full Name</string>
     <string name="Message">Message</string>
+    <string name="UpdateProfile">Update Profile</string>
+    <string name="profile">profile</string>
     <string name="MessageHere">Write your message here.</string>
     <string name="signUp1_Account_text">Already have an account?</string>
     <string name="signUp1_signin_text"><u><b>Sign In.</b></u></string>
     <string name="signUp1_name_hint">Enter Your Full Name</string>
     <string name="signUp2_country_hint">Select Country</string>
     <string name="addBook">Add Book</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="sign_out">Sign out</string>
+    <string name="home">Home</string>
     <string name="updateBook">Update Book</string>
     <string name="bookName">Name of Book</string>
     <string name="bookAuthor">Author</string>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profile">
+
+    <include layout="@layout/toolbar2"/>
+
+    <Button
+        android:id="@+id/profile_updateBtn"
+        android:layout_width="359dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#3F51B5"
+        android:text="@string/UpdateProfile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_postalcode" />
+
+    <EditText
+        android:id="@+id/profile_name"
+        android:layout_width="359dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="26dp"
+        android:autofillHints=""
+        android:background="@drawable/text_border"
+        android:ems="10"
+        android:hint="@string/signUp1_name_hint"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileInfo" />
+
+    <EditText
+        android:id="@+id/profile_address"
+        android:layout_width="359dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:background="@drawable/text_border"
+        android:ems="10"
+        android:hint="@string/signUp2_address_hint"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_country" />
+
+    <Spinner
+        android:id="@+id/profile_province"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="26dp"
+        android:background="@drawable/text_border"
+        android:entries="@array/signUp2_province"
+        android:minHeight="48dp"
+        android:prompt="@string/signUp2_province_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_address" />
+
+    <EditText
+        android:id="@+id/profile_postalcode"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:background="@drawable/text_border"
+        android:ellipsize="none"
+        android:ems="10"
+        android:hint="@string/signUp2_postalCode_hint"
+        android:inputType="textPostalAddress"
+        android:minHeight="48dp"
+        android:padding="2dp"
+        android:textColorHint="#757575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_address" />
+
+    <Spinner
+        android:id="@+id/profile_country"
+        android:layout_width="359dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/text_border"
+        android:entries="@array/signUp2_countries"
+        android:minHeight="48dp"
+        android:prompt="@string/signUp2_country_hint"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_email" />
+
+    <EditText
+        android:id="@+id/profile_email"
+        android:layout_width="359dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:background="@drawable/text_border"
+        android:ems="10"
+        android:hint="@string/signUp1_username_email"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_password" />
+
+    <EditText
+        android:id="@+id/profile_password"
+        android:layout_width="359dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:background="@drawable/text_border"
+        android:ems="10"
+        android:hint="@string/signUp1_password_hint"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_username" />
+
+    <EditText
+        android:id="@+id/profile_username"
+        android:layout_width="359dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:background="@drawable/text_border"
+        android:ems="10"
+        android:hint="@string/signUp1_username_hint"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_name" />
+
+    <TextView
+        android:id="@+id/profileInfo"
+        android:layout_width="359dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="146dp"
+        android:text="@string/profile_info"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

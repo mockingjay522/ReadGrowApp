@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 userID = cursor.getString(0); // index 0 is user id
                 userName = cursor.getString(1); // index 0 is user id
                 //-2 show welcome toast
-                Toast.makeText(this, "you are welcome here  " + cursor.getString(1), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "You are welcome here  " + cursor.getString(1), Toast.LENGTH_LONG).show();
                 //-3 set shareFromLogin
                 shareFromLogin = PreferenceManager.getDefaultSharedPreferences(this);
                 SharedPreferences.Editor editor = shareFromLogin.edit();
