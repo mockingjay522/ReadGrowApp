@@ -8,17 +8,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
-
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Profile extends AppCompatActivity {
     BookDatabaseHelper bookDatabaseHelper;
@@ -37,7 +30,7 @@ public class Profile extends AppCompatActivity {
         EditText address = findViewById(R.id.profile_address);
         EditText postalCode = findViewById(R.id.profile_postalcode);
         EditText age = findViewById(R.id.profile_age);
-        Button btnUpdateProfile = findViewById(R.id.profile_updateBtn);
+        Button btnUpdateProfile = findViewById(R.id.btn_Edit_Profile);
 
         //Getting shared preferences to load the information
         SharedPreferences shareFormLogin = PreferenceManager.getDefaultSharedPreferences(this);

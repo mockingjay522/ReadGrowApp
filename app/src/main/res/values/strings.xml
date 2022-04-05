@@ -114,4 +114,8 @@
     <string name="admin_manageUser">Manage User</string>
     <string name="admin_sendMessage">Send Message</string>
     <string name="deleteUser">Delete User</string>
+    <string name="readingOnline">Reading Online</string>
+    <string name="borrowBook">Borrow From User</string>
+    <string name="sendMessage">Send Message</string>
+    <string name="hint_write_title">Write title of the message here</string>
 </resources>

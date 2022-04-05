@@ -10,6 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReadGrow">
         <activity
+            android:name=".SeeMessageFromAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".ListUserForSendMessage"
+            android:exported="false" />
+        <activity
+            android:name=".AdminSendMessage"
+            android:exported="false" />
+        <activity
+            android:name=".SourceOfBook"
+            android:exported="false" />
+        <activity
             android:name=".AdminDeleteUser"
             android:exported="false" />
         <activity
@@ -50,7 +62,6 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

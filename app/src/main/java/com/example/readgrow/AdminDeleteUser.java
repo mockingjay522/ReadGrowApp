@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -41,7 +40,7 @@ public class AdminDeleteUser extends AppCompatActivity {
         txtPassword = findViewById(R.id.deleteUser_Password);
         txtPostalCode = findViewById(R.id.deleteUser_PostalCode);
         txtAddress = findViewById(R.id.deleteUser_Address);
-        btnDeleteUser = findViewById(R.id.btnDeleteUser);
+        btnDeleteUser = findViewById(R.id.btn_Edit_Profile);
 
         preferFrom_AdminListUser = PreferenceManager.getDefaultSharedPreferences(this);
         picked_UserID = preferFrom_AdminListUser.getInt("chosenID_byAdmin", 0);

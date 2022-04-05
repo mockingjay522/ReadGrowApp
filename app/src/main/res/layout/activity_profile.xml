@@ -74,15 +74,14 @@
     <include layout="@layout/toolbar2"/>
 
     <Button
-        android:id="@+id/btnDeleteUser"
+        android:id="@+id/btn_Edit_Profile"
         android:layout_width="359dp"
         android:layout_height="51dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="25dp"
         android:backgroundTint="#3F51B5"
         android:text="@string/UpdateProfile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_postalcode" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/profile_name"
@@ -127,8 +126,8 @@
         android:id="@+id/profile_postalcode"
         android:layout_width="178dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:autofillHints=""
         android:background="@drawable/text_border"
         android:ellipsize="none"

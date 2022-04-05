@@ -46,7 +46,7 @@ public class HomePage extends AppCompatActivity {
         findBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomePage.this, FindBookActivity.class));
+                startActivity(new Intent(HomePage.this, SourceOfBook.class));
             }
         });
 
@@ -60,7 +60,7 @@ public class HomePage extends AppCompatActivity {
         viewMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomePage.this, ReplyRequest.class));
+                startActivity(new Intent(HomePage.this, SeeMessageFromAdmin.class));
             }
         });
 

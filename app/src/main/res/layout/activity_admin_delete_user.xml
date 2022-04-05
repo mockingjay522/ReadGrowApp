@@ -7,7 +7,7 @@
     tools:context=".AdminDeleteUser">
 
     <Button
-        android:id="@+id/btnDeleteUser"
+        android:id="@+id/btn_Edit_Profile"
         android:layout_width="140dp"
         android:layout_height="51dp"
         android:layout_marginStart="140dp"

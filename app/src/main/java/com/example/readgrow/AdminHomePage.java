@@ -35,6 +35,7 @@ public class AdminHomePage extends AppCompatActivity {
         btnAdminSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(AdminHomePage.this, ListUserForSendMessage.class));
             }
         });
     }
