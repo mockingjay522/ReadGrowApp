@@ -21,7 +21,7 @@ public class SourceOfBook extends AppCompatActivity {
         btnReadingOnline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity( new Intent(Intent.ACTION_VIEW, Uri.parse("https://openlibrary.org/")));
+                startActivity( new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.bookbub.com/welcome")));
             }
         });
 

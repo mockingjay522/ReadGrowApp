@@ -660,7 +660,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         bookTableValues.put("reader_id",receiverID);
         bookTableValues.put("book_status",4);
         int numberOfRecords = this.shareBookDB.update("book",bookTableValues,"book_id=?", new String[]{
-                String.valueOf(book_id), String.valueOf(receiverID)});
+                String.valueOf(book_id)});
         Log.i("updateRecordBook", String.valueOf(numberOfRecords));
         return numberOfRecords;
     }

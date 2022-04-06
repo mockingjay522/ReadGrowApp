@@ -134,7 +134,7 @@ public class UpdateBook extends AppCompatActivity {
                     if(TextUtils.isEmpty(rentCost.getText().toString()) && shareRdBtn.isChecked()) rentCost.setError("Missing the sharing cost");
 //
                 }else {
-                        if (shareRdBtn.isChecked() || rentRdBtn.isChecked() || give_AwayRdBtn.isChecked()) {
+                        if (shareRdBtn.isChecked() || rentRdBtn.isChecked() || give_AwayRdBtn.isChecked()|| unavailable_Btn.isChecked()) {
 
                             if (rentRdBtn.isChecked()) {
                                 status = 0;
