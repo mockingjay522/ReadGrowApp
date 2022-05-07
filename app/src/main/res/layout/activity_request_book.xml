@@ -7,35 +7,11 @@
     tools:context=".RequestBookActivity">
 
     <TextView
-        android:id="@+id/requestBook_label_bookname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="100dp"
-        android:text="@string/requestBook_bookname_label"
-        android:textColor="#1976D2"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/requestBook_bookname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
+        android:layout_marginStart="180dp"
         android:layout_marginTop="100dp"
-        android:textColor="#1976D2"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/requestBook_label_authorname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="130dp"
-        android:text="@string/requestBook_authorname_label"
         android:textColor="#1976D2"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,20 +21,8 @@
         android:id="@+id/requestBook_authorname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
+        android:layout_marginStart="180dp"
         android:layout_marginTop="130dp"
-        android:textColor="#1976D2"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/requestBook_label_publication"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="160dp"
-        android:text="@string/requestBook_publication_label"
         android:textColor="#1976D2"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,20 +32,8 @@
         android:id="@+id/requestBook_publication"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
+        android:layout_marginStart="180dp"
         android:layout_marginTop="160dp"
-        android:textColor="#1976D2"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/requestBook_label_year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="190dp"
-        android:text="@string/requestBook_year_label"
         android:textColor="#1976D2"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +43,7 @@
         android:id="@+id/requestBook_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
+        android:layout_marginStart="180dp"
         android:layout_marginTop="190dp"
         android:textColor="#1976D2"
         android:textSize="18sp"
@@ -102,7 +54,7 @@
         android:id="@+id/requestBook_label_bookOwnername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="220dp"
         android:text="@string/requestBook_bookOwnerName_label"
         android:textColor="#1976D2"
@@ -111,11 +63,48 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/requestBook_bookOwnername"
+        android:id="@+id/requestBook_label_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="188dp"
+        android:text="@string/requestBook_year_label"
+        android:textColor="#1976D2"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/requestBook_label_bookname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="100dp"
+        android:text="@string/requestBook_bookname_label"
+        android:textColor="#1976D2"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/requestBook_label_authorname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="128dp"
+        android:text="@string/requestBook_authorname_label"
+        android:textColor="#1976D2"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/requestBook_label_publication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="160dp"
+        android:text="@string/requestBook_publication_label"
         android:textColor="#1976D2"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,20 +114,9 @@
         android:id="@+id/requestBook_label_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="248dp"
         android:text="@string/requestBook_email_label"
-        android:textColor="#1976D2"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/requestBook_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="250dp"
         android:textColor="#1976D2"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -148,7 +126,7 @@
         android:id="@+id/requestBook_label_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="280dp"
         android:text="@string/requestBook_location_label"
         android:textColor="#1976D2"
@@ -157,10 +135,32 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/requestBook_location"
+        android:id="@+id/requestBook_bookOwnername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="220dp"
+        android:textColor="#1976D2"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/requestBook_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="250dp"
+        android:textColor="#1976D2"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/requestBook_location"
+        android:layout_width="0dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="180dp"
         android:layout_marginTop="280dp"
         android:textColor="#1976D2"
         android:textSize="18sp"
@@ -181,27 +181,52 @@
 
     <EditText
         android:id="@+id/requestBook_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="257dp"
+        android:layout_height="145dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="28dp"
+        android:autofillHints=""
+        android:background="@drawable/text_area_border"
         android:ems="10"
+        android:minLines="3"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical"
+        android:gravity="center"
         android:hint="@string/requestBook_message"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:textColorHint="#757575"
+        android:textColorHint="#5A6168"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requestBook_totalCost"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/requestBook_totalCost" />
 
     <Button
         android:id="@+id/requestBook_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/btnColor"
         android:text="@string/requestBook_send_button"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requestBook_message" />
+        app:layout_constraintTop_toBottomOf="@+id/requestBook_message"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="138dp"
+        android:layout_marginTop="34dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="117dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

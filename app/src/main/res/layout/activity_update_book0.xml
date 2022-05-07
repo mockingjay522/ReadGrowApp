@@ -20,10 +20,10 @@
 
     <ListView
         android:id="@+id/MyBooks_listview"
-        android:layout_width="409dp"
-        android:layout_height="589dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="11dp"
+        android:layout_width="367dp"
+        android:layout_height="473dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updateBook0_title" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,16 +26,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="28dp"
+        android:background="@drawable/text_border"
         android:entries="@array/signUp2_genre"
         android:minHeight="48dp"
         android:prompt="@string/signUp2_genre_hint"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUp1_username5" />
+        app:layout_constraintTop_toBottomOf="@+id/signUp2_address" />
 
     <EditText
-        android:id="@+id/signUp1_username5"
+        android:id="@+id/signUp2_address"
         android:layout_width="359dp"
         android:layout_height="0dp"
+        android:background="@drawable/text_border"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:autofillHints=""
@@ -55,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="44dp"
+        android:background="@drawable/text_border"
         android:entries="@array/signUp2_countries"
         android:minHeight="48dp"
         android:prompt="@string/signUp2_country_hint"
@@ -68,11 +71,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:autofillHints=""
+        android:background="@drawable/text_border"
         android:ellipsize="none"
         android:ems="10"
         android:hint="@string/signUp2_postalCode_hint"
         android:inputType="textPostalAddress"
         android:minHeight="48dp"
+        android:padding="2dp"
         android:textColorHint="#757575"
         app:layout_constraintStart_toEndOf="@+id/signUp2_province"
         app:layout_constraintTop_toBottomOf="@+id/signUp2_country" />
@@ -85,6 +90,7 @@
         android:layout_marginTop="116dp"
         android:entries="@array/signUp2_province"
         android:minHeight="48dp"
+        android:background="@drawable/text_border"
         android:prompt="@string/signUp2_province_hint"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUp_1_Logo2" />
@@ -100,11 +106,12 @@
         android:hint="@string/signUp2_age_hint"
         android:inputType="number"
         android:minHeight="48dp"
+        android:background="@drawable/text_border"
         android:textAlignment="center"
         android:textColorHint="#757575"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUp1_username5" />
+        app:layout_constraintTop_toBottomOf="@+id/signUp2_address" />
 
     <Button
         android:id="@+id/signUp2_button"
@@ -116,5 +123,16 @@
         android:text="@string/SignUp2_button_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUp2_age" />
+
+    <TextView
+        android:id="@+id/showShareRef"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="128dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUp2_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

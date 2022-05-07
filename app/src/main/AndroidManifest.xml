@@ -10,8 +10,41 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReadGrow">
         <activity
-            android:name=".HomePage"
+            android:name=".SeeMessageFromAdmin"
             android:exported="false" />
+        <activity
+            android:name=".ListUserForSendMessage"
+            android:exported="false" />
+        <activity
+            android:name=".AdminSendMessage"
+            android:exported="false" />
+        <activity
+            android:name=".SourceOfBook"
+            android:exported="false" />
+        <activity
+            android:name=".AdminDeleteUser"
+            android:exported="false" />
+        <activity
+            android:name=".AdminListUser"
+            android:exported="false" />
+        <activity
+            android:name=".Profile"
+            android:exported="false" />
+        <activity
+            android:name=".AdminHomePage"
+            android:exported="false" />
+        <activity
+            android:name=".SendMessage"
+            android:exported="false" />
+        <activity
+            android:name=".ReadingTracker"
+            android:exported="false" />
+        <activity
+            android:name=".ReplyRequest"
+            android:exported="false" />
+        <activity
+            android:name=".HomePage"
+            android:exported="true" />
         <activity
             android:name=".UpdateBook0"
             android:exported="false" />
@@ -28,7 +61,7 @@
             android:name=".AddBookPage"
             android:exported="false" />
         <activity
-            android:name=".AddBook"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,10 +73,10 @@
             android:name=".SignUpActivity2"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity1"
+            android:name=".AddBook"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SignUpActivity1"
             android:exported="false" />
     </application>
 
